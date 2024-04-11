@@ -5,10 +5,9 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { createContext, useState } from "react";
+import { MenuContext } from "./context";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const MenuContext = createContext("Home");
 
 export default function RootLayout({
   children,

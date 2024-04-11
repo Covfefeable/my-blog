@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import Home from "../pages/home";
 import { useContext } from "react";
-import { MenuContext } from "./layout";
+import { MenuContext } from "./context";
 
 export default function Page() {
   const menu = useContext(MenuContext);
