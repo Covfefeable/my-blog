@@ -1,0 +1,77 @@
+.aboutContent {
+  padding: 16px 0;
+  margin: 48px 0 64px 0;
+  padding-right: 40%;
+}
+
+.intro {
+  font-size: 32px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.introDetail {
+  font-size: 16px;
+  margin-top: 16px;
+  line-height: 1.2;
+}
+
+.postsContent {
+  border-left: 1px solid #e5e5e5;
+  padding-left: 4rem;
+}
+
+.date {
+  font-size: 18px;
+  line-height: 1.8;
+  color: slategray;
+}
+
+.articleContainer {
+  display: flex;
+  margin-bottom: 4rem;
+}
+
+.articleBox {
+  cursor: pointer;
+  margin-left: 4rem;
+  display: flex;
+  width: 800px;
+}
+.articleBox:hover {
+  transition: all 0.3s;
+  animation: pulse 0.5s;
+  background: snow;
+  box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.articleImage {
+  width: 200px;
+  height: 200px;
+  margin-right: 16px;
+  object-fit: cover;
+}
+
+.articleContent {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+}
+
+.articleTitle {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.articleDescription {
+  color: slategray;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 800px) {
+  .aboutContent {
+    padding-right: 0;
+  }
+}

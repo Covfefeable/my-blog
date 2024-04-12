@@ -1,7 +1,5 @@
 "use client";
-import { useRouter } from "next/router";
 import styles from "./index.module.css";
-import { useEffect } from "react";
 
 interface HeaderProps {
   showMenu: boolean;

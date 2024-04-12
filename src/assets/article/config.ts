@@ -10,7 +10,7 @@ export const articles = [
   {
     cover: "test.png",
     title: "实时追踪上百万个手机是种怎样的体验？",
-    date: "2017-08-01",
+    date: "2017-07-23",
     description:
       "要实时追踪上百万台手机，是一项非常复杂的工程。那么具体该如何实现？",
     id: 1,

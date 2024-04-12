@@ -2,6 +2,7 @@ import styles from "./index.module.css";
 import Image from "next/image";
 import img from "../../assets/image/test.png";
 interface BlogPostCardProps {
+  id: number;
   title: string;
   description: string;
   date: string;
@@ -13,7 +14,9 @@ export default function BlogPostCard(props: BlogPostCardProps) {
     <div className={styles.card} onClick={props.handleClick}>
       <div className={styles.cardHeader}>
         <Image
-          src={img}
+          src={`/articles/${props.id}/cover.png`}
+          width={300}
+          height={200}
           alt=""
           className={styles.headerImage}
         />

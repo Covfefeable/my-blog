@@ -27,6 +27,7 @@ export default function Home() {
           return (
             <BlogPostCard
               key={i.id}
+              id={i.id}
               title={i.title}
               description={i.description}
               date={i.date}

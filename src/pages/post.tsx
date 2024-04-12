@@ -10,6 +10,7 @@ export default function Post() {
   const [info, setInfo] = useState({
     title: "",
     date: "",
+    id: 0,
   });
   const getArticle = async () => {
     const urlParams = new URLSearchParams(location.search);
@@ -42,6 +43,7 @@ export default function Post() {
     setInfo({
       title: article.title,
       date: article.date,
+      id: article.id,
     });
   };
 
@@ -55,8 +57,10 @@ export default function Post() {
       <title>{info.title}</title>
       <section className={styles.articleContainer}>
         <article className={styles.article}>
-          <div className={styles.title}>{info.title}</div>
-          <div className={styles.date}>2021-08-01</div>
+          <div className={styles.headerContent}>
+            <div className={styles.title}>{info.title}</div>
+            <div className={styles.date}>{info.date}</div>
+          </div>
           <div
             dangerouslySetInnerHTML={{ __html: article }}
             className={styles.root}

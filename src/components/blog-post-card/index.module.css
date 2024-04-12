@@ -10,6 +10,12 @@
   background: linear-gradient(to right, #ffffff, #ece9e6);
 }
 
+.card:hover {
+  transition: all 0.3s;
+  animation: pulse 0.5s;
+  box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.2);
+}
+
 .headerImage {
   width: 400px;
   height: 280px;

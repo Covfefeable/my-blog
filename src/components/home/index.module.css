@@ -34,3 +34,14 @@
   width: 100%;
   margin-bottom: 48px;
 }
+
+@media screen and (max-width: 800px) {
+  .aboutContent {
+    padding-right: 0;
+  }
+  .recentPostsContent {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}

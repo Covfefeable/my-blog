@@ -1,5 +1,6 @@
 .articleContainer {
-  padding: 36px 64px;
+  background: rgb(248, 250, 250);
+  padding: 36px 12rem;
   min-height: 100vh;
 }
 

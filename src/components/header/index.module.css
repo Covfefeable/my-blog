@@ -1,7 +1,7 @@
 .header {
   box-sizing: border-box;
   font-family: "Courier New", Courier, monospace;
-  height: 60px;
+  min-height: 60px;
   font-size: 14px;
   display: flex;
   justify-content: space-between;
@@ -28,4 +28,18 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 28px;
+}
+
+@media screen and (max-width: 800px) {
+  .header {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 16px;
+  }
+  .menu {
+    margin-top: 16px;
+    justify-content: center;
+    gap: 32px;
+  }
 }
