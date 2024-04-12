@@ -1,6 +1,6 @@
 "use client";
 import styles from "./page.module.css";
-import Home from "../pages/home";
+import Home from "../components/home";
 import { useContext } from "react";
 import { MenuContext } from "./context";
 

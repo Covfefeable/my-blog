@@ -6,11 +6,17 @@ export default function Home() {
   const articlesCopy: Article[] = JSON.parse(
     JSON.stringify(articles)
   ).reverse();
+
+  // fetch("/articles/2/article.md").then((res) => {
+  //   res.text().then((text) => {
+  //     console.log(111, text);
+  //   })
+  // })
   return (
     <main>
       <section className={styles.aboutContent}>
-        <p className={styles.intro}>frontend developer,</p>
-        <p className={styles.intro}>cybersecurity enthusiast &</p>
+        <p className={styles.intro}>frontend engineer,</p>
+        <p className={styles.intro}>cybersecurity researcher &</p>
         <p className={styles.intro}>deep learning beginner</p>
         <p className={styles.introDetail}>
           Hi! I am QuJie and I do frontend development for a living,

@@ -1,0 +1,604 @@
+.articleContainer {
+  padding: 36px 64px;
+  min-height: 100vh;
+}
+
+.article {
+  background: rgb(250, 255, 255);
+  padding: 36px;
+}
+
+.title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.date {
+  font-size: 1.2rem;
+  color: rgb(100, 100, 100);
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgb(200, 200, 200);
+  padding-bottom: 12px;
+}
+
+.root {
+  width: 100%;
+  overflow: auto;
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --cnfont: var(--font);
+  --size: 20px;
+  --width: 800px;
+  --space: 0;
+  --lineheight: 1.8;
+  --weight: 400;
+  --blockspace: 20px;
+  --indent: 0em;
+  --titlealign: left;
+  --align: left;
+  --imageleft: auto;
+  --imageright: auto;
+  --imagehide: block;
+  --margin: 80px;
+  --padding: 80px;
+  --columncount: 2;
+  --columngap: 60px;
+  --columnwidth: 90%;
+  --title1: 2em;
+  --title1weight: 500;
+  --title2: 1.6em;
+  --title2weight: 500;
+  --title3: 1.2em;
+  --title3weight: 500;
+  --title4: 1em;
+  --title4weight: 500;
+  --title5: 1em;
+  --title5weight: 500;
+  --title6: 1em;
+  --title6weight: 500;
+  --color: #1b1b1b;
+  --link: #416ed2;
+  --hover: #305ab7;
+  --visited: #305ab7;
+  --select: #1b1b1b;
+  --selectbg: #bbd6fc;
+  --bg-r: 237;
+  --bg-g: 237;
+  --bg-b: 237;
+  --bg: #ededed;
+  --canvas: #ffffff;
+}
+.root a {
+  text-decoration: none;
+}
+.root code,
+.root tt {
+  border-radius: 3px;
+  padding: 0 5px;
+  margin: 0 5px;
+}
+.root pre {
+  padding: 0.6em 0.8em;
+  word-wrap: break-word;
+  border-radius: 3px;
+  overflow: auto;
+}
+.root pre code {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  background: 0 0;
+  border: 0;
+}
+.root kbd {
+  margin: 0 0.2em;
+  padding: 0.15em 0.4em 0.1em;
+  font-size: 90%;
+  border-bottom-width: 2px;
+  border-radius: 3px;
+}
+.root blockquote {
+  padding: 0.1em 1em;
+  opacity: 0.85;
+}
+.root blockquote > :first-child {
+  margin-top: 0px;
+}
+.root blockquote > :last-child {
+  margin-bottom: 0px;
+}
+.root blockquote p {
+  margin: 0;
+}
+.root hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+.root table {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-collapse: collapse;
+}
+.root table pre {
+  white-space: pre-wrap;
+}
+.root figure {
+  overflow: auto;
+}
+.root figure > img,
+.root figure > table,
+.root figure > pre {
+  margin: 0 !important;
+}
+.root tr th,
+.root tr td {
+  padding: 6px 13px;
+}
+.root tr th p {
+  margin: 0;
+}
+.root img,
+.root video {
+  max-width: 100%;
+  height: auto;
+}
+.root embed {
+  max-width: 100%;
+}
+.root li div,
+.root li p {
+  margin: 0;
+}
+.root mark {
+  padding: 0;
+  margin: 0;
+  color: initial;
+  background-color: initial;
+}
+.root svg {
+  width: 20px;
+  height: 20px;
+}
+.root .MathJax_SVG svg {
+  width: auto;
+  height: auto;
+}
+.root :focus {
+  outline: none;
+}
+.root [role="separator"]::after {
+  content: "";
+  display: block;
+  clear: both;
+  margin: 25px 0;
+  height: 2px;
+  overflow: hidden;
+  border: none;
+  opacity: 0.1;
+  background: var(--color);
+  padding: 0;
+}
+.root [role="separator"]:last-child::after {
+  display: none;
+}
+.root .line {
+  display: block;
+}
+.root .left {
+  float: left;
+  margin-right: 12px;
+}
+.root .right {
+  float: right;
+  margin-left: 12px;
+}
+.root .both {
+  clear: both;
+}
+.root .full-width {
+  width: 100%;
+  max-width: 100% !important;
+}
+.root .noise {
+  display: none;
+}
+.root .block {
+  display: block;
+}
+.root .inline-block {
+  display: inline-block;
+}
+.root .flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.root .inline-flex {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+.root .zone-width {
+  min-width: 0;
+}
+.root {
+  color: var(--color);
+  background: var(--canvas);
+}
+.root code,
+.root tt {
+  border: 1px solid rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.6);
+  background: rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.4);
+}
+.root pre {
+  background: rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.5);
+}
+.root kbd {
+  border: 1px solid rgba(var(--bg-r), var(--bg-g), var(--bg-b), 1);
+}
+.root blockquote {
+  border-left: 4px solid rgba(var(--bg-r), var(--bg-g), var(--bg-b), 1);
+}
+.root hr {
+  border-bottom: 1px solid rgba(var(--bg-r), var(--bg-g), var(--bg-b), 1);
+}
+.root table th:hover,
+.root table tr:hover {
+  background: rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.6);
+}
+.root table tr {
+  border-bottom: 1px solid rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.6);
+}
+.root table thead tr:first-child {
+  background: rgba(var(--bg-r), var(--bg-g), var(--bg-b), 0.4);
+}
+.root h1,
+.root h2,
+.root h3,
+.root h4,
+.root h5,
+.root h6 {
+  color: var(--color);
+}
+.root a {
+  color: var(--link);
+}
+.root a:hover {
+  color: var(--hover);
+}
+.root a:active {
+  color: var(--visited);
+}
+.root a:visited {
+  color: var(--visited);
+}
+.root ::selection {
+  color: var(--select);
+  background-color: var(--selectbg);
+}
+.root .title a {
+  color: var(--color);
+}
+.root .title a:hover {
+  color: var(--link);
+}
+.root .footer {
+  color: var(--color);
+}
+.root.solid {
+  background: var(--canvas);
+}
+.root {
+  margin: 0;
+  padding: 1px;
+  text-shadow: none;
+  font-size: var(--size);
+  font-family: var(--font);
+  font-weight: var(--weight);
+  font-variant: tabular-nums;
+  line-height: var(--lineheight);
+  font-feature-settings: "tnum";
+}
+.root h1 {
+  font-size: var(--title1);
+  font-weight: var(--title1weight);
+}
+.root h2 {
+  font-size: var(--title2);
+  font-weight: var(--title2weight);
+}
+.root h3 {
+  font-size: var(--title3);
+  font-weight: var(--title3weight);
+}
+.root h4 {
+  font-size: var(--title4);
+  font-weight: var(--title4weight);
+}
+.root h5 {
+  font-size: var(--title5);
+  font-weight: var(--title5weight);
+}
+.root h6 {
+  font-size: var(--title6);
+  font-weight: var(--title6weight);
+}
+.root h1,
+.root h2,
+.root h3,
+.root h4,
+.root h5,
+.root h6 {
+  text-indent: 0;
+}
+.root ol,
+.root ul {
+  text-indent: 0;
+}
+.root pre,
+.root code,
+.root blockquote {
+  text-indent: 0;
+}
+.root p,
+.root blockquote,
+.root ul,
+.root ol,
+.root dl,
+.root table,
+.root pre,
+.root section,
+.root figcaption,
+.root li,
+.root .block {
+  margin: var(--blockspace) 0;
+}
+.root .flex p,
+.root .inline-flex p,
+.root .flex blockquote,
+.root .inline-flex blockquote,
+.root .flex ul,
+.root .inline-flex ul,
+.root .flex ol,
+.root .inline-flex ol,
+.root .flex dl,
+.root .inline-flex dl,
+.root .flex table,
+.root .inline-flex table,
+.root .flex pre,
+.root .inline-flex pre,
+.root .flex section,
+.root .inline-flex section,
+.root .flex figcaption,
+.root .inline-flex figcaption,
+.root .flex .block,
+.root .inline-flex .block {
+  margin: 0;
+}
+.root .flex > *,
+.root .inline-flex > * {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.root .flex > *:first-child,
+.root .inline-flex > *:first-child {
+  margin-left: 0 !important;
+}
+.root .flex > *:last-child,
+.root .inline-flex > *:last-child {
+  margin-right: 0 !important;
+}
+.root .container {
+  min-height: 610px;
+  max-width: var(--width);
+  margin: var(--margin) auto;
+}
+.root .page {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  word-break: break-word;
+  text-indent: var(--indent);
+  letter-spacing: var(--space);
+  text-align: var(--align);
+  border-bottom: 1px solid var(--color);
+}
+.root .page > *:first-child {
+  margin-top: 0;
+}
+.root .page > *:last-child {
+  margin-bottom: 0;
+}
+.root .page:last-child {
+  margin-bottom: 0;
+  border-bottom-width: 0;
+}
+.root .page:before,
+.root .page:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0px;
+}
+.root .page img {
+  display: var(--imagehide);
+}
+.root .page img.large {
+  margin-top: var(--blockspace) !important;
+  margin-bottom: var(--blockspace) !important;
+  margin-left: var(--imageleft) !important;
+  margin-right: var(--imageright) !important;
+}
+.root .page img.tiny,
+.root .page img.base64 {
+  width: auto;
+}
+.root .page figure {
+  overflow: auto;
+}
+.root .page figure > img.large,
+.root .page figure > table,
+.root .page figure > pre {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.root .page figure > figcaption {
+  text-align: center;
+  font-size: 90%;
+  opacity: 0.8;
+  margin-top: 6px;
+}
+.root .page p > img.large,
+.root .page a img {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.root .page .title {
+  text-indent: 0;
+  margin-bottom: 0;
+  text-align: var(--titlealign);
+}
+.root .page .meta {
+  font-size: 80%;
+  text-indent: 0;
+  text-align: var(--titlealign);
+  margin-bottom: var(--blockspace);
+}
+.root .page .meta > span {
+  opacity: 0.7;
+  position: relative;
+  margin-right: 24px;
+}
+.root .page .meta > span::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  top: 47%;
+  display: block;
+  width: 3px;
+  height: 3px;
+  background: var(--color);
+  border-radius: 50%;
+}
+.root .page .meta > span:last-child::after {
+  display: none;
+}
+.root .page .meta.has-avatar .avatar {
+  float: left;
+  opacity: 1;
+  width: 46px;
+  height: 46px;
+  margin-right: 16px;
+  background: var(--bg);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.root .page .meta.has-avatar .author {
+  opacity: 1;
+  line-height: 1.3;
+  display: block;
+}
+.root .page .meta.has-avatar .author::after {
+  display: none;
+}
+.root .page .meta::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.root .page .excerpt {
+  text-indent: 0;
+  border-color: var(--link);
+  background: var(--bg);
+}
+.root .page .excerpt p {
+  font-size: 90%;
+}
+.root .page .cover {
+  text-indent: 0;
+  margin-bottom: var(--blockspace);
+}
+.root .page .cover img {
+  margin: 0 !important;
+  width: 100%;
+}
+.root .page .footer {
+  text-indent: 0;
+  margin: calc(var(--blockspace) * 2) 0 0;
+}
+.root .page .footer .tags > a {
+  cursor: pointer;
+  font-size: 80%;
+  min-height: 27px;
+  border-radius: 15px;
+  background: var(--bg);
+  padding: 0px 12px 1px 4px;
+  margin: 0 5px 4px 0;
+  display: inline-block;
+}
+.root .page .footer .tags > a::before {
+  content: "#";
+  margin-right: 4px;
+  background: var(--canvas);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--link);
+  line-height: 20px;
+  border-radius: 50px;
+  display: inline-block;
+}
+.root .page .footer .tags > a:hover {
+  color: var(--select);
+  background-color: var(--selectbg);
+}
+.root .page-footer {
+  text-align: center;
+  opacity: 0.4;
+  font-size: 15px;
+  padding: 0 0 20px;
+}
+.root .page-footer .link {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 6px 0;
+  padding: 0;
+}
+.root .page-footer .link li {
+  margin: 0 5px;
+}
+.root .page-footer .link li a {
+  color: var(--color);
+}
+.root .tex,
+.root .katex-display {
+  text-align: center;
+  margin: 50px 0;
+}
+.zh-cn {
+  font-family: var(--cnfont);
+}
+@media screen and (max-width: 600px) {
+  .root .container {
+    margin: 20px 16px;
+  }
+}
+
+.root.paper {
+  background: var(--bg);
+}
+
+.root.paper .page {
+  background: var(--canvas);
+  padding: var(--padding);
+  border-bottom-width: 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
