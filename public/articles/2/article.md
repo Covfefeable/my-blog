@@ -65,8 +65,6 @@ x.matMul(y).print(); // [[10, 13], [22, 29]]
 
 矩阵的转置就是将矩阵的所有元素绕着一条从第1行第1列元素出发的右下方45度的射线作镜面反转，即得到矩阵的转置。
 
-![transpose](http://118.195.181.201/imgs/art_1/matrix_transpose.png)
-
 ```javascript
 const x = tf.tensor2d([[1, 2], [3, 4], [5, 6]]);
 x.transpose().print(); // [[1, 3, 5], [2, 4, 6]]  

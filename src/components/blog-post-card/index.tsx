@@ -5,11 +5,12 @@ interface BlogPostCardProps {
   title: string;
   description: string;
   date: string;
+  handleClick: () => void;
 }
 
 export default function BlogPostCard(props: BlogPostCardProps) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={props.handleClick}>
       <div className={styles.cardHeader}>
         <Image
           src={img}

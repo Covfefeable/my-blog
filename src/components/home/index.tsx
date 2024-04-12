@@ -7,11 +7,6 @@ export default function Home() {
     JSON.stringify(articles)
   ).reverse();
 
-  // fetch("/articles/2/article.md").then((res) => {
-  //   res.text().then((text) => {
-  //     console.log(111, text);
-  //   })
-  // })
   return (
     <main>
       <section className={styles.aboutContent}>
@@ -35,6 +30,9 @@ export default function Home() {
               title={i.title}
               description={i.description}
               date={i.date}
+              handleClick={() => {
+                window.open(`/post?id=${i.id}`);
+              }}
             />
           );
         })}
