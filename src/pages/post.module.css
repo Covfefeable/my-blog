@@ -10,7 +10,7 @@
 }
 
 .title {
-  font-size: 2.3rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 6px;
 }
@@ -31,7 +31,7 @@
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --cnfont: var(--font);
-  --size: 20px;
+  --size: 18px;
   --width: 800px;
   --space: 0;
   --lineheight: 1.8;
@@ -72,6 +72,19 @@
   --bg: #ededed;
   --canvas: #ffffff;
 }
+
+@media screen and (max-width: 800px) {
+  .articleContainer {
+    padding: 24px 12px;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .root {
+    --size: 14px;
+  }
+}
+
 .root a {
   text-decoration: none;
 }

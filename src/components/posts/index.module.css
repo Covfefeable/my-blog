@@ -74,4 +74,17 @@
   .aboutContent {
     padding-right: 0;
   }
+  .postsContent {
+    padding-left: 16px;
+  }
+  .articleBox {
+    flex-direction: column;
+    margin-left: 0;
+    width: 100%;
+  }
+  .articleImage {
+    width: 100%;
+    height: 200px;
+    margin-right: 0;
+  }
 }
