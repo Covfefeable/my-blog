@@ -1,9 +1,9 @@
 "use client";
-import { Layout } from "@/app/layout";
 import styles from "./post.module.css";
 import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { articles } from "@/assets/article/config";
+import { Layout } from "@/app/basic-layout";
 
 export default function Post() {
   const [article, setArticle] = useState("Blog post not found.");

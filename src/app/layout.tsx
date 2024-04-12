@@ -5,15 +5,14 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { createContext, useState } from "react";
 import { MenuContext } from "./context";
+import { Layout } from "./basic-layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-  showMenu = true,
 }: Readonly<{
   children: React.ReactNode;
-  showMenu?: boolean;
 }>) {
   const [menu, setMenu] = useState("Home");
   return (
@@ -24,30 +23,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
-        <Layout showMenu={showMenu} setMenu={setMenu} menu={menu}>
+        <Layout showMenu={true} setMenu={setMenu} menu={menu}>
           {children}
         </Layout>
       </body>
     </html>
-  );
-}
-
-export function Layout({
-  children,
-  showMenu,
-  setMenu,
-  menu = '',
-}: Readonly<{
-  children: React.ReactNode;
-  showMenu?: boolean;
-  setMenu?: (item: string) => void;
-  menu?: string;
-}>) {
-  return (
-    <>
-      <Header onSelect={setMenu} showMenu={!!showMenu} />
-        <MenuContext.Provider value={menu}>{children}</MenuContext.Provider>
-      <Footer />
-    </>
   );
 }
