@@ -18,3 +18,12 @@
 .beian {
   cursor: pointer;
 }
+
+@media screen and (max-width: 800px){
+  .footerContent {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
