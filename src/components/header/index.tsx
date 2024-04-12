@@ -14,7 +14,7 @@ export default function Header(props: HeaderProps) {
   return (
     <header className={styles.header}>
       <span className={styles.logo} onClick={backToHome}>
-        Covfefeable&apos;s Blog
+        JayChiu&apos;s Blog
       </span>
       {props.showMenu && (
         <div className={styles.menu}>

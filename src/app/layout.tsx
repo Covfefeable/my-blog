@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Covfefeable&apos;s Blog</title>
+        <title>JayChiu&apos;s Blog</title>
         <meta name="description" content="A blog about software development." />
         <link rel="icon" href="/favicon.ico" />
       </head>

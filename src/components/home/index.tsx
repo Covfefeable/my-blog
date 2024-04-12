@@ -14,7 +14,7 @@ export default function Home() {
         <p className={styles.intro}>cybersecurity researcher &</p>
         <p className={styles.intro}>deep learning beginner</p>
         <p className={styles.introDetail}>
-          Hi! I am QuJie and I do frontend development for a living,
+          Hi! I am JayChiu and I do frontend development for a living,
           like to find and exploit vulnerabilities in web application.
           I am also learning about deep learning and its applications. for more
           details, check out my blog posts.
