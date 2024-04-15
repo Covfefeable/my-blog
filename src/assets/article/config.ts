@@ -1,5 +1,4 @@
 export interface Article {
-  cover: string;
   title: string;
   date: string;
   description: string;
@@ -8,7 +7,6 @@ export interface Article {
 
 export const articles = [
   {
-    cover: "test.png",
     title: "实时追踪上百万个手机是种怎样的体验？",
     date: "2017-07-23",
     description:
@@ -16,7 +14,27 @@ export const articles = [
     id: 1,
   },
   {
-    cover: "test.png",
+    title: "Web安全之XSS攻击与防范",
+    date: "2020-07-05",
+    description:
+      "Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。",
+    id: 6,
+  },
+  {
+    title: "前端反调试的手段与应用",
+    date: "2021-03-27",
+    description:
+      "根据系统的信息敏感程度，我们可以逐级调整反调试逻辑的严密程度，相关手段其实是非常多的，只是必要与否的问题。",
+    id: 7,
+  },
+  {
+    title: "如何有效保护你的代码 - 浅谈代码混淆",
+    date: "2021-05-21",
+    description:
+      "代码混淆与主动的反调试措施有着相同的根本目的，都是为了防止别人了解代码的执行逻辑，但是从策略上讲，两者的达到目的方式很不一样。",
+    id: 5,
+  },
+  {
     title: "Tensorflow.js（一）初探深度学习",
     date: "2021-08-01",
     description:
@@ -24,7 +42,6 @@ export const articles = [
     id: 2,
   },
   {
-    cover: "test.png",
     title: "Tensorflow.js（二）：深度学习如何在前端发挥作用",
     date: "2022-03-25",
     description:
@@ -32,7 +49,6 @@ export const articles = [
     id: 3,
   },
   {
-    cover: "test.png",
     title: "Tensorflow.js（三）：基于 node 使用卷积神经网络进行文本识别",
     date: "2023-04-20",
     description:

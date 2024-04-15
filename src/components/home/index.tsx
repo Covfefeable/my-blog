@@ -21,7 +21,7 @@ export default function Home() {
         </p>
       </section>
 
-      <div className={styles.recentPostsTitle}>Recent Blog Posts <a className={styles.findOutMore}>find out more</a></div>
+      <div className={styles.recentPostsTitle}>Recent Posts</div>
       <section className={styles.recentPostsContent}>
         {articlesCopy.slice(0, 3).map((i) => {
           return (

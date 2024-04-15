@@ -1,10 +1,7 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import { createContext, useState } from "react";
-import { MenuContext } from "./context";
+import { useState } from "react";
 import { Layout } from "./basic-layout";
 
 const inter = Inter({ subsets: ["latin"] });

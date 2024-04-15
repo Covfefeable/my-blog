@@ -87,4 +87,8 @@
     height: 200px;
     margin-right: 0;
   }
+  .date {
+    font-size: 16px;
+    min-width: 110px;
+  }
 }
