@@ -1,0 +1,6 @@
+.navMode {
+  cursor: pointer;
+  user-select: none;
+  transform: var(--nav-icon-transform);
+  transition: all 0.2s ease-in-out;
+}

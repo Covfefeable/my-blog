@@ -9,7 +9,7 @@
 
 .content {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--content-bg);
   min-height: 100vh;
   padding: 0 32px;
 }

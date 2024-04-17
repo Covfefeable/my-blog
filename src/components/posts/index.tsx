@@ -1,9 +1,8 @@
 import { Article, articles } from "@/assets/article/config";
 import styles from "./index.module.css";
-import BlogPostCard from "@/components/blog-post-card";
 import Image from "next/image";
 
-export default function Home() {
+export default function Posts() {
   const articlesCopy: Article[] = JSON.parse(
     JSON.stringify(articles)
   ).reverse();

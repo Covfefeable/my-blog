@@ -4,6 +4,7 @@ import Home from "../components/home";
 import { useContext } from "react";
 import { MenuContext } from "./context";
 import Posts from "@/components/posts";
+import About from "@/components/about";
 
 export default function Page() {
   const menu = useContext(MenuContext);
@@ -12,7 +13,7 @@ export default function Page() {
       <section className={styles.content}>
         {menu === "Home" ? <Home /> : null}
         {menu === "Posts" ? <Posts /> : null}
-      {/* {menu === "About" ? <About /> : null} */}
+        {menu === "About" ? <About /> : null}
       </section>
     </main>
   );

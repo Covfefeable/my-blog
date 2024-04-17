@@ -17,7 +17,7 @@
 }
 
 .postsContent {
-  border-left: 1px solid #e5e5e5;
+  border-left: 1px solid var(--header-border-color);
   padding-left: 4rem;
 }
 
@@ -41,8 +41,8 @@
 .articleBox:hover {
   transition: all 0.3s;
   animation: pulse 0.5s;
-  background: snow;
-  box-shadow: 0 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+  background: var(--post-bg);
+  box-shadow: var(--card-box-shadow);
 }
 
 .articleImage {

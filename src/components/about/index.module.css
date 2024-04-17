@@ -1,0 +1,63 @@
+.aboutContent {
+  padding: 16px 0;
+  margin: 48px 0 32px 0;
+  padding-right: 40%;
+}
+
+.intro {
+  font-size: 32px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.introDetail {
+  font-size: 16px;
+  margin-top: 16px;
+  line-height: 1.2;
+}
+
+.contactContent {
+  display: flex;
+}
+
+.contactItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 32px;
+}
+
+.contactItem span {
+  margin-left: 8px;
+}
+
+.contactItem span:hover {
+  color: #0070f3;
+}
+
+.tooltip {
+  display: none;
+  position: relative;
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 82px;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #0070f3 transparent;
+}
+
+/* // .email hover 时，显示 tooltip */
+.email:hover + .tooltip {
+  display: block;
+  position: absolute;
+  margin-bottom: 64px;
+  background-color: #0070f3;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}

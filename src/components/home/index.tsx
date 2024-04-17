@@ -12,12 +12,9 @@ export default function Home() {
       <section className={styles.aboutContent}>
         <p className={styles.intro}>frontend engineer,</p>
         <p className={styles.intro}>cybersecurity researcher &</p>
-        <p className={styles.intro}>deep learning beginner</p>
+        <p className={styles.intro}>long termist</p>
         <p className={styles.introDetail}>
-          Hi! I am JayChiu and I do frontend development for a living,
-          like to find and exploit vulnerabilities in web application.
-          I am also learning about deep learning and its applications. for more
-          details, check out my blog posts.
+          Hi, feel free to browse!
         </p>
       </section>
 

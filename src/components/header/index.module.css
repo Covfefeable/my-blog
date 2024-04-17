@@ -7,15 +7,21 @@
   justify-content: space-between;
   flex-flow: row wrap;
   padding: 16px 128px 16px 16px;
-  color: #2f2f2f;
-  background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
+  color: var(--header-font-color);
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--header-border-color);
 }
 
 .logo {
   cursor: pointer;
   font-size: 24px;
   font-weight: 600;
+}
+
+.rightContent {
+  display: flex;
+  align-items: center;
+  gap: 32px
 }
 
 .menu {

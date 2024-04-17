@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { useEffect, useState } from "react";
 import { articles } from "@/assets/article/config";
 import { Layout } from "@/app/basic-layout";
+import "@/app/globals.css";
 
 export default function Post() {
   const [article, setArticle] = useState("Blog post not found.");

@@ -1,11 +1,11 @@
 .articleContainer {
-  background: rgb(248, 250, 250);
+  background: var(--color-bg);
   padding: 36px 12rem;
   min-height: 100vh;
 }
 
 .article {
-  background: rgb(250, 255, 255);
+  background: var(--content-bg);
   padding: 36px;
 }
 
@@ -71,6 +71,20 @@
   --bg-b: 237;
   --bg: #ededed;
   --canvas: #ffffff;
+}
+
+html[mode="dark"] .root{
+  --color: #e0e0e0;
+  --link: #7ca7f7;
+  --hover: #5c8cd8;
+  --visited: #5c8cd8;
+  --select: #e0e0e0;
+  --selectbg: #3a3a3a;
+  --bg-r: 64;
+  --bg-g: 64;
+  --bg-b: 64;
+  --bg: #222;
+  --canvas: var(--content-bg);
 }
 
 @media screen and (max-width: 800px) {
