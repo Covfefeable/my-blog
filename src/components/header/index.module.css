@@ -21,6 +21,7 @@
 .rightContent {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 32px
 }
 
@@ -43,8 +44,10 @@
     justify-content: center;
     padding-right: 16px;
   }
-  .menu {
+  .rightContent {
     margin-top: 16px;
+  }
+  .menu {
     justify-content: center;
     gap: 32px;
   }
