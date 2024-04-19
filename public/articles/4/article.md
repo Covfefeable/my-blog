@@ -1,5 +1,7 @@
 接着上期，本文将介绍基于 node 环境，通过 tensorflow.js 使用卷积神经网络进行分类任务处理，并将模型迁移至浏览器使用，在开始之前，我们需要再重新回忆一下相关概念。
 
+[点这里查看代码](https://github.com/Covfefeable/tfjs-node-CNN)
+
 ## A) Tensor Again
 
 ### 基本回顾
