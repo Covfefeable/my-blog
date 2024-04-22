@@ -61,3 +61,16 @@
   padding: 8px;
   border-radius: 4px;
 }
+
+@media screen and (max-width: 850px) {
+  .aboutContent {
+    padding-right: 0;
+  }
+  .contactContent {
+    flex-direction: column;
+  }
+  .contactItem {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+}
