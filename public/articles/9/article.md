@@ -22,6 +22,18 @@
 
 <img src="/articles/9/images/RNN-unrolled.png" width='600' style='display: block;margin: 0 auto;' />
 
+下面这个动态图示会让人更容易理解：
+
+<img src="/articles/9/images/rnn-dy.gif" width='800' style='display: block;margin: 0 auto;' />
+
+上一个神经网络的输出会作为下一个神经网络的输入，
+
+<img src="/articles/9/images/rnn-pass.gif" width='600' style='display: block;margin: 0 auto;' />
+
+那么每个 RNN 单元是如何工作的呢？我们可以看到，RNN 单元有两个输入，一个是输入值 Xt，另一个是上一个 RNN 单元的输出值 Ht-1，然后通过一个激活函数（通常是 tanh 函数）来计算当前的输出值 Ht。
+
+<img src="/articles/9/images/rnn-work-dy.gif" width='600' style='display: block;margin: 0 auto;' />
+
 这种链状的结构就已经揭示了循环神经网络与处理序列数据密切相关，在过去，循环神经网络在语音识别、自然语言处理等领域已经取得了很大的成功。虽然现在已经发展出了更好的架构，但循环神经网络仍然是一个很好的起点。
 
 而 LSTM（Long Short-Term Memory）是一种特殊的循环神经网络，对于很多任务来说，它的效果要比普通的循环神经网络好很多。
@@ -74,11 +86,15 @@ LSTM 的第一步是决定我们要从细胞状态中遗忘哪些信息。这个
 
 <img src="/articles/9/images/LSTM3-focus-f.png" width='600' style='display: block;margin: 0 auto;' />
 
+<img src="/articles/9/images/forget-gate-dy.gif" width='600' style='display: block;margin: 0 auto;' />
+
 LSTM 的第二步是决定我们要在细胞状态中存储哪些新的信息。这分为两个部分。首先，一个称为“输入门”的 sigmoid 层决定哪些值将要被更新。接着 tanh 层创建一个新的候选值向量 C̃t。在下一步中，我们将把这两个值结合起来，以更新细胞状态。
 
 依旧是上面的例子，当我们遇到了新的主语 “这个女孩”，我们就需要存储 “这个女孩” 的信息，并在之后转而使用代词 “她”。
 
 <img src="/articles/9/images/LSTM3-focus-i.png" width='600' style='display: block;margin: 0 auto;' />
+
+<img src="/articles/9/images/input-gate-dy.gif" width='600' style='display: block;margin: 0 auto;' />
 
 现在就可以更新旧的细胞状态了，从Ct-1进入新的细胞状态Ct。图示步骤已经决定了要做什么。
 
@@ -87,6 +103,8 @@ LSTM 的第二步是决定我们要在细胞状态中存储哪些新的信息。
 在上面的例子中，我们会在此处实际删除有关旧主语的性别信息并添加新主语的性别信息。
 
 <img src="/articles/9/images/LSTM3-focus-C.png" width='600' style='display: block;margin: 0 auto;' />
+
+<img src="/articles/9/images/update-cell-dy.gif" width='600' style='display: block;margin: 0 auto;' />
 
 最后一步就需要决定要输出什么。输出值基于细胞状态，但会被过滤处理。首先进过一个 sigmoid 层，它决定我们要输出细胞状态的哪些部分。然后，我们将细胞状态通过tanh（将值收敛到-1到1）并将其乘以 sigmoid 门的输出，这样就实现只输出我们决定输出的部分。
 
@@ -248,7 +266,7 @@ eta=0.0 ================================================================>
 currectCount: 246, wrongCount: 54， accuracy: 0.82
 ```
 
-可以看到，模型在训练集上的准确率达到了 97.2%，在测试集上的准确率达到了 82%。效果还算不错。
+可以看到，模型在训练集上的准确率达到了 97.2%，在测试集上的准确率达到了 82%。在较少的训练集的情况下，这样的效果还算不错。
 
 ## D) LSTM 在前端的应用
 
@@ -257,3 +275,17 @@ currectCount: 246, wrongCount: 54， accuracy: 0.82
 另外，或许我们可以记录用户的鼠标或键盘的时序行为，来判断用户的行为是否正常，而不是总是弹出一个验证码。
 
 再或者，我们可以收集大量的日志数据（如 nginx 的 access.log），并标注正常和异常的请求，然后进行训练，来实现一个异常请求分类器，来阻塞恶意请求。
+
+## E) LSTM 与 Transformer
+
+这两种架构都用于处理数据序列。LSTM 按顺序处理数据，一次处理一部分。其记忆单元可以在整个序列中携带信息，以克服短期记忆问题。适合特别关注序列顺序的任务，例如时间序列预测；而 Transformer 会立即处理整个序列，而不是按顺序处理。使用注意力机制来权衡输入数据不同部分的重要性。适合需要理解整个序列上下文的任务，例如语言翻译。
+
+举个例子，LSTM 或 RNN 就像一页一页地阅读一本书，LSTM 会记住整个情节，而 RNN 会忘记一些情节，而 Transformer 就像扫描整本书并立即理解所有内容。
+
+至于选择哪一个模型取决于具体任务、数据集特征和计算资源。他们都在不同的应用中都非常有效，但 Transformer 在管理大规模数据和捕获复杂关系的能力通常使其在许多现代 NLP 任务中具有优势。
+
+## E) 参考来源
+
+- [Understanding LSTM Networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+- [Illustrated Guide to LSTM’s and GRU’s: A step by step explanation](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21)
+- [TensorFlow.js](https://www.tensorflow.org/js)
