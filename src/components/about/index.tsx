@@ -8,10 +8,10 @@ export default function About() {
       <section className={styles.aboutContent}>
         <p className={styles.intro}>Hi there!</p>
         <p className={styles.introDetail}>
-          I am JayChiu and I work as a front-end engineer for more than {' '}
-          {new Date().getFullYear() - 2020} years. I am also a cybersecurity
+          I am JayChiu and I work as a front end engineer for more than {' '}
+          {new Date().getFullYear() - 2020} years. I am also a amateur cybersecurity
           researcher, like to find vulnerabilities in web application. these
-          years I have been working on deep learning and has built some funny
+          years I have been working on deep learning, llm and has built some funny
           projects with it. for more details, check out my <a>project list</a>.
         </p>
       </section>
