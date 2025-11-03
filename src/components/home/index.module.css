@@ -13,7 +13,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: slideUp 0.8s ease-out;
+  background-size: 200% 200%;
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), gradientShift 3s ease infinite;
 }
 
 .introDetail {
@@ -21,17 +22,33 @@
   line-height: 1.7;
   color: var(--font-color-secondary);
   margin-top: var(--spacing-lg);
-  animation: slideUp 0.8s ease-out 0.2s both;
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
 }
 
 .introDetail a {
   font-weight: 600;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
+}
+
+.introDetail a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .introDetail a:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.introDetail a:hover::after {
+  width: 100%;
 }
 
 .recentPostsTitle {
@@ -40,7 +57,7 @@
   margin-bottom: var(--spacing-xl);
   color: var(--font-color);
   position: relative;
-  animation: slideUp 0.8s ease-out 0.4s both;
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
 }
 
 .recentPostsTitle::after {
@@ -52,6 +69,7 @@
   height: 4px;
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   border-radius: var(--radius-sm);
+  animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
 }
 
 .recentPostsContent {
@@ -59,8 +77,15 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--spacing-xl);
   margin-bottom: var(--spacing-2xl);
-  animation: slideUp 0.8s ease-out 0.6s both;
 }
+
+.recentPostsContent > * {
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.recentPostsContent > *:nth-child(1) { animation-delay: 0.6s; }
+.recentPostsContent > *:nth-child(2) { animation-delay: 0.7s; }
+.recentPostsContent > *:nth-child(3) { animation-delay: 0.8s; }
 
 @media screen and (max-width: 768px) {
   .aboutContent {

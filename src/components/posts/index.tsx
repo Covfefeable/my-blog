@@ -9,7 +9,7 @@ export default function Posts() {
 
   return (
     <main className={styles.postsContainer}>
-      <h1 className={styles.title}>所有文章</h1>
+      <h1 className={styles.title}>All Posts</h1>
       
       <div className={styles.postsGrid}>
         {articlesCopy.map((article) => (
