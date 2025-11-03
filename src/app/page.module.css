@@ -1,22 +1,45 @@
 .main {
-  font-family: "Courier New", Courier, monospace;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   min-height: 100vh;
-  padding: 32px 12rem;
+  background: var(--color-bg);
 }
 
 .content {
-  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-xl);
   background-color: var(--content-bg);
-  min-height: 100vh;
-  padding: 0 32px;
+  min-height: calc(100vh - 160px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-box-shadow);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  animation: fadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
 }
 
-@media screen and (max-width: 800px) {
-  .main {
-    margin: 16px 0;
-    padding: 0 16px;
+.content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  animation: slideInRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    margin: var(--spacing-md);
+    padding: var(--spacing-xl) var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .content {
+    margin: var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-sm);
   }
 }

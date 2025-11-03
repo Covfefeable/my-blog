@@ -10,20 +10,27 @@ export default function Home() {
   return (
     <main>
       <section className={styles.aboutContent}>
-        <p className={styles.intro}>A funny frontend engineer,</p>
-        <p className={styles.intro}>Amateur cybersecurity researcher</p>
+        <p className={styles.intro}>Frontend engineer,</p>
+        <p className={styles.intro}>Cybersecurity researcher</p>
         <p className={styles.introDetail}>
-          I am a frontend engineer who is passionate about web development and
-          cybersecurity. I am currently working as a frontend engineer at {" "}
+          I&apos;m currently a frontend engineer at {" "}
           <a
             href="https://www.meizu.com/"
             target="_blank"
             rel="noreferrer"
             className={styles.link}
           >
-            meizu
+            Meizu
           </a>
-          . I am also like to learn about stock trading and investing.
+          , and previously worked as a cybersecurity editor at {" "}
+          <a 
+            href="https://www.freebuf.com" 
+            target="_blank" 
+            rel="noreferrer"
+            className={styles.link}
+          >
+            FreeBuf
+          </a>.
         </p>
       </section>
 

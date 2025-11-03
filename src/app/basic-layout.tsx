@@ -15,7 +15,7 @@ export function Layout({
 }>) {
   return (
     <>
-      <Header onSelect={setMenu} showMenu={!!showMenu} />
+      <Header onSelect={setMenu} showMenu={!!showMenu} currentMenu={menu} />
       <MenuContext.Provider value={menu}>{children}</MenuContext.Provider>
       <Footer />
     </>
