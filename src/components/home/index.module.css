@@ -1,42 +1,100 @@
 .aboutContent {
-  padding: 16px 0;
-  margin: 48px 0 64px 0;
-  padding-right: 35%;
+  padding: var(--spacing-2xl) 0;
+  margin-bottom: var(--spacing-2xl);
+  max-width: 800px;
 }
 
 .intro {
-  font-size: 32px;
-  line-height: 1.5;
-  font-weight: 600;
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: slideUp 0.8s ease-out;
 }
 
 .introDetail {
-  font-size: 16px;
-  margin-top: 16px;
-  line-height: 1.2;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--font-color-secondary);
+  margin-top: var(--spacing-lg);
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+.introDetail a {
+  font-weight: 600;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.introDetail a:hover {
+  transform: translateY(-1px);
 }
 
 .recentPostsTitle {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
-.recentPostsContent {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 32px;
-  justify-content: flex-start;
-  width: 100%;
-  margin-bottom: 48px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xl);
+  color: var(--font-color);
+  position: relative;
+  animation: slideUp 0.8s ease-out 0.4s both;
 }
 
-@media screen and (max-width: 800px) {
+.recentPostsTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: var(--radius-sm);
+}
+
+.recentPostsContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+  animation: slideUp 0.8s ease-out 0.6s both;
+}
+
+@media screen and (max-width: 768px) {
   .aboutContent {
-    padding-right: 0;
+    max-width: 100%;
   }
+  
+  .intro {
+    font-size: 2.5rem;
+  }
+  
+  .introDetail {
+    font-size: 1rem;
+  }
+  
+  .recentPostsTitle {
+    font-size: 1.75rem;
+  }
+  
   .recentPostsContent {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 16px;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .intro {
+    font-size: 2rem;
+  }
+  
+  .recentPostsTitle {
+    font-size: 1.5rem;
+  }
+  
+  .recentPostsContent {
+    gap: var(--spacing-md);
   }
 }

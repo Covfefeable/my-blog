@@ -1,76 +1,125 @@
 .aboutContent {
-  padding: 16px 0;
-  margin: 48px 0 32px 0;
-  padding-right: 40%;
+  padding: var(--spacing-2xl) 0;
+  margin-bottom: var(--spacing-2xl);
+  max-width: 800px;
+  animation: slideUp 0.8s ease-out;
 }
 
 .intro {
-  font-size: 32px;
-  line-height: 1.5;
-  font-weight: 600;
+  font-size: 3rem;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .introDetail {
-  font-size: 16px;
-  margin-top: 16px;
-  line-height: 1.2;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--font-color-secondary);
 }
 
 .contactContent {
   display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  animation: slideUp 0.8s ease-out 0.2s both;
+  margin-top: var(--spacing-xl);
 }
 
 .contactItem {
-  cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 32px;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--secondary-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  font-size: 0.875rem;
+}
+
+.contactItem:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--card-box-shadow);
 }
 
 .contactItem span {
-  margin-left: 8px;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.contactItem span:hover {
-  color: #0070f3;
+.email {
+  position: relative;
 }
 
 .tooltip {
   display: none;
-  position: relative;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  margin-bottom: var(--spacing-sm);
+  z-index: 10;
 }
 
-.tooltip::before {
+.tooltip::after {
   content: '';
   position: absolute;
-  top: 32px;
-  left: 82px;
+  top: 100%;
+  left: 50%;
   transform: translateX(-50%);
-  border-width: 10px 10px 0;
-  border-style: solid;
-  border-color: #0070f3 transparent;
+  border: 6px solid transparent;
+  border-top-color: var(--primary-color);
 }
 
-/* // .email hover 时，显示 tooltip */
-.email:hover + .tooltip {
+.email:hover .tooltip {
   display: block;
-  position: absolute;
-  margin-bottom: 64px;
-  background-color: #0070f3;
-  color: #fff;
-  padding: 8px;
-  border-radius: 4px;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 768px) {
   .aboutContent {
-    padding-right: 0;
+    max-width: 100%;
   }
+  
+  .intro {
+    font-size: 2.5rem;
+  }
+  
+  .introDetail {
+    font-size: 1rem;
+  }
+  
   .contactContent {
     flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
   }
+  
   .contactItem {
-    margin-right: 0;
-    margin-bottom: 16px;
+    justify-content: flex-start;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .intro {
+    font-size: 2rem;
+  }
+  
+  .contactContent {
+    gap: var(--spacing-sm);
   }
 }
