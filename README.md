@@ -4,7 +4,7 @@
 
 ## 本地开发
 
-环境要求：Node.js 20、pnpm 11。
+环境要求：Node.js 18.17+、pnpm 9。
 
 ```bash
 pnpm install
