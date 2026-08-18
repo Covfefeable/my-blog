@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { useState } from "react";
 import { Layout } from "./basic-layout";
+import { I18nextProvider } from "react-i18next";
+import i18n from "@/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +22,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
-        <Layout showMenu={true} setMenu={setMenu} menu={menu}>
-          {children}
-        </Layout>
+        <I18nextProvider i18n={i18n}>
+          <Layout showMenu={true} setMenu={setMenu} menu={menu}>
+            {children}
+          </Layout>
+        </I18nextProvider>
       </body>
     </html>
   );

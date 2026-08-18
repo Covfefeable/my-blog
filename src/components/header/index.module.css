@@ -136,6 +136,25 @@ html[mode="dark"] .header {
   overflow: hidden;
 }
 
+.languageToggle {
+  min-width: 40px;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--secondary-color);
+  color: var(--font-color);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.languageToggle:hover {
+  color: white;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
 .themeToggle::before {
   content: '';
   position: absolute;

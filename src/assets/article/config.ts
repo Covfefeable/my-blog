@@ -77,4 +77,11 @@ export const articles = [
       "Readability 是一个可以提取网页正文的算法，它可以将网页中的广告、导航、评论等非正文内容过滤掉，只保留正文内容。",
     id: 10,
   },
+  {
+    title: "让大模型自己写量化策略，最后能赚钱吗？",
+    date: "2026-06-15",
+    description:
+      "从结构化策略 DSL、AI Agent 自动迭代到跨标的与跨时间回测，记录 Stock Broker AI 量化策略研究平台的设计与实现。",
+    id: 11,
+  },
 ];

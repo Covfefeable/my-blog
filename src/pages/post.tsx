@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { articles } from "@/assets/article/config";
 import { Layout } from "@/app/basic-layout";
 import "@/app/globals.css";
+import { useTranslation } from "react-i18next";
 
 export default function Post() {
-  const [article, setArticle] = useState("Blog post not found.");
+  const { t } = useTranslation();
+  const [article, setArticle] = useState("");
   const [info, setInfo] = useState({
     title: "",
     date: "",
@@ -63,7 +65,7 @@ export default function Post() {
             <div className={styles.date}>{info.date}</div>
           </div>
           <div
-            dangerouslySetInnerHTML={{ __html: article }}
+            dangerouslySetInnerHTML={{ __html: article || t("post.notFound") }}
             className={styles.root}
           />
         </article>

@@ -4,7 +4,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
         <span className={styles.copyRight}>
-          &copy; 2023-2024 llmol.com 版权所有
+          &copy; 2023-{new Date().getFullYear()} llmol.com 版权所有
         </span>
         <a className={styles.beian} href="https://beian.miit.gov.cn">
           备案号：粤ICP备2024229772号

@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import NavMode from "@/assets/icon/nav-mode";
 import styles from "./index.module.css";
+import { detectLanguage } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
   showMenu: boolean;
@@ -10,6 +12,8 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     // 初始化主题设置
     const savedTheme = localStorage.getItem("theme");
@@ -17,7 +21,24 @@ export default function Header(props: HeaderProps) {
     const initialTheme = savedTheme || systemTheme;
     
     document.documentElement.setAttribute("mode", initialTheme);
-  }, []);
+
+    const initialLanguage = detectLanguage();
+    void i18n.changeLanguage(initialLanguage);
+    document.documentElement.lang = initialLanguage;
+  }, [i18n]);
+
+  const menuItems = [
+    { id: "Home", label: t("nav.home") },
+    { id: "Posts", label: t("nav.posts") },
+    { id: "About", label: t("nav.about") },
+  ];
+
+  const changeLanguage = () => {
+    const nextLanguage = i18n.resolvedLanguage === "zh-CN" ? "en" : "zh-CN";
+    void i18n.changeLanguage(nextLanguage);
+    window.localStorage.setItem("language", nextLanguage);
+    document.documentElement.lang = nextLanguage;
+  };
 
   const backToHome = () => {
     window.location.href = "/";
@@ -32,22 +53,31 @@ export default function Header(props: HeaderProps) {
         <div className={styles.rightContent}>
           {props.showMenu && (
             <nav className={styles.menu}>
-              {["Home", "Posts", "About"].map((item) => (
+              {menuItems.map((item) => (
                 <span
-                  key={item}
+                  key={item.id}
                   className={`${styles.menuItem} ${
-                    props.currentMenu === item ? styles.active : ""
+                    props.currentMenu === item.id ? styles.active : ""
                   }`}
-                  onClick={() => props.onSelect?.(item)}
+                  onClick={() => props.onSelect?.(item.id)}
                 >
-                  {item}
+                  {item.label}
                 </span>
               ))}
             </nav>
           )}
           <button
+            type="button"
+            className={styles.languageToggle}
+            onClick={changeLanguage}
+            aria-label={t("nav.switchLanguage")}
+          >
+            {i18n.resolvedLanguage === "zh-CN" ? "EN" : "中"}
+          </button>
+          <button
+            type="button"
             className={styles.themeToggle}
-            aria-label="Toggle theme"
+            aria-label={t("nav.toggleTheme")}
           >
             <NavMode
               onClick={() => {
