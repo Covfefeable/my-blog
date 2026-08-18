@@ -1,12 +1,16 @@
 .articleContainer {
   background: var(--color-bg);
-  padding: 36px 12rem;
+  padding: 36px clamp(16px, 6vw, 96px);
   min-height: 100vh;
 }
 
 .article {
   background: var(--content-bg);
   padding: 36px;
+  max-width: 980px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-box-shadow);
 }
 
 .title {
@@ -16,6 +20,7 @@
 }
 
 .date {
+  display: block;
   font-size: 1.2rem;
   color: rgb(100, 100, 100);
   margin-bottom: 24px;

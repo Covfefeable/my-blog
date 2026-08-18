@@ -1,3 +1,5 @@
+"use client";
+
 import Github from "@/assets/icon/github";
 import styles from "./index.module.css";
 import Mail from "@/assets/icon/mail";
@@ -15,25 +17,23 @@ export default function About() {
       </p>
 
       <div className={styles.contactContent}>
-        <div
+        <a
           className={styles.contactItem}
-          onClick={() => {
-            window.open("https://github.com/Covfefeable");
-          }}
+          href="https://github.com/Covfefeable"
+          target="_blank"
+          rel="noreferrer"
         >
           <Github /> <span>@Covfefeable</span>
-        </div>
-        <div
+        </a>
+        <a
           className={`${styles.contactItem} ${styles.email}`}
-          onClick={() => {
-            window.open("mailto:rears_seasons_0n@icloud.com");
-          }}
+          href="mailto:rears_seasons_0n@icloud.com"
         >
           <Mail /> <span>{t("about.sendEmail")}</span>
           <div className={styles.tooltip}>
             {t("about.emailTooltip")}
           </div>
-        </div>
+        </a>
       </div>
     </main>
   );

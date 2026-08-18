@@ -1,3 +1,5 @@
+"use client";
+
 import { Article, articles } from "@/assets/article/config";
 import BlogPostCard from "@/components/blog-post-card";
 import styles from "./index.module.css";
@@ -5,9 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Posts() {
   const { t } = useTranslation();
-  const articlesCopy: Article[] = JSON.parse(
-    JSON.stringify(articles)
-  ).reverse();
+  const articlesCopy: Article[] = [...articles].reverse();
 
   return (
     <main className={styles.postsContainer}>
@@ -21,9 +21,6 @@ export default function Posts() {
             title={article.title}
             date={article.date}
             description={article.description}
-            handleClick={() => {
-              window.open(`/post?id=${article.id}`);
-            }}
           />
         ))}
       </div>

@@ -1,10 +1,11 @@
 import style from "./icon.module.css";
-export default function NavMode(props: { onClick: () => void }) {
+export default function NavMode() {
   return (
     // <span>
       <svg
         className={style.navMode}
-        onClick={props.onClick}
+        aria-hidden="true"
+        focusable="false"
         width="18px"
         height="18px"
         viewBox="0 0 1024 1024"

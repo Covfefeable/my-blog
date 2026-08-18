@@ -11,7 +11,7 @@ const resources = {
       home: {
         role: "Frontend engineer,",
         interest: "Cybersecurity researcher",
-        introduction: "I'm currently a frontend engineer at <meizu>Meizu</meizu>, and previously worked as a cybersecurity editor at <freebuf>FreeBuf</freebuf>.",
+        introduction: "I previously worked as a frontend engineer at <meizu>Meizu</meizu> and as a cybersecurity editor at <freebuf>FreeBuf</freebuf>.",
         recentPosts: "Recent Posts",
       },
       posts: { all: "All Posts" },
@@ -30,7 +30,7 @@ const resources = {
       home: {
         role: "前端工程师，",
         interest: "网络安全爱好者",
-        introduction: "目前在 <meizu>魅族</meizu> 从事前端开发工作，曾任 <freebuf>FreeBuf</freebuf> 网络安全编辑。",
+        introduction: "曾在 <meizu>魅族</meizu> 从事前端开发工作，也曾担任 <freebuf>FreeBuf</freebuf> 网络安全编辑。",
         recentPosts: "最近更新",
       },
       posts: { all: "全部文章" },

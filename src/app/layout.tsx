@@ -1,32 +1,29 @@
-"use client";
-import { Inter } from "next/font/google";
+import type { Metadata } from "next";
 import "./globals.css";
-import { useState } from "react";
 import { Layout } from "./basic-layout";
-import { I18nextProvider } from "react-i18next";
-import i18n from "@/i18n";
+import Providers from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const siteUrl = "https://llmol.com";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const [menu, setMenu] = useState("Home");
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: { default: "JayChiu's Blog", template: "%s | JayChiu's Blog" },
+  description: "记录前端开发、网络安全、AI 与个人项目实践。",
+  icons: { icon: "/favicon.ico" },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: "JayChiu's Blog",
+    title: "JayChiu's Blog",
+    description: "记录前端开发、网络安全、AI 与个人项目实践。",
+  },
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <title>JayChiu&apos;s Blog</title>
-        <meta name="description" content="A blog about software development." />
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body className={inter.className}>
-        <I18nextProvider i18n={i18n}>
-          <Layout showMenu={true} setMenu={setMenu} menu={menu}>
-            {children}
-          </Layout>
-        </I18nextProvider>
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body>
+        <Providers><Layout>{children}</Layout></Providers>
       </body>
     </html>
   );
