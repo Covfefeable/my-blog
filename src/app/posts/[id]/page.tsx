@@ -6,6 +6,7 @@ import path from "node:path";
 import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 import { articles } from "@/assets/article/config";
+import ArticleContent from "./article-content";
 import styles from "./post.module.css";
 
 type PostPageProps = { params: { id: string } };
@@ -79,7 +80,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <Link href="/#archive">← 返回文章档案</Link>
         </aside>
         <article className={styles.article}>
-          <div className={styles.root} dangerouslySetInnerHTML={{ __html: content }} />
+          <ArticleContent html={content} />
           <footer className={styles.articleEnd}><span>END OF RECORD · 记录结束</span><Link href="/#archive">继续浏览文章档案 →</Link></footer>
         </article>
       </div>

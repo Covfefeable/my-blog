@@ -1,15 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="1120" viewBox="0 0 800 1120">
   <rect width="800" height="1120" rx="58" fill="#07110e"/>
   <path d="M0 0h800v18H0z" fill="#39ff88"/>
-  <text x="62" y="110" fill="#39ff88" font-family="monospace" font-size="28" letter-spacing="5">CAPABILITIES</text>
-  <text x="62" y="210" fill="#f0fff8" font-family="Arial,sans-serif" font-size="52" font-weight="700">ACCESS PROFILE</text>
-  <g font-family="monospace" font-size="26"><text x="62" y="320" fill="#91a69e">FRONTEND</text><text x="738" y="320" text-anchor="end" fill="#39ff88">EXPERT</text><path d="M62 348h676" stroke="#24493c"/><path d="M62 348h620" stroke="#39ff88" stroke-width="5"/>
-  <text x="62" y="430" fill="#91a69e">SECURITY</text><text x="738" y="430" text-anchor="end" fill="#22d3ee">RESEARCH</text><path d="M62 458h676" stroke="#24493c"/><path d="M62 458h530" stroke="#22d3ee" stroke-width="5"/>
-  <text x="62" y="540" fill="#91a69e">AI / AGENTS</text><text x="738" y="540" text-anchor="end" fill="#39ff88">ACTIVE</text><path d="M62 568h676" stroke="#24493c"/><path d="M62 568h570" stroke="#39ff88" stroke-width="5"/>
-  <text x="62" y="650" fill="#91a69e">CREATIVE CODE</text><text x="738" y="650" text-anchor="end" fill="#22d3ee">BUILDING</text><path d="M62 678h676" stroke="#24493c"/><path d="M62 678h595" stroke="#22d3ee" stroke-width="5"/></g>
+  <text x="62" y="110" fill="#39ff88" font-family="monospace" font-size="28" letter-spacing="5">CURRENT PROJECT</text>
+  <text x="62" y="210" fill="#f0fff8" font-family="Arial,sans-serif" font-size="62" font-weight="700">OHMYCODE</text>
+  <text x="62" y="258" fill="#91a69e" font-family="monospace" font-size="23" letter-spacing="2">OPEN-SOURCE CODE AGENT WORKSPACE</text>
+  <path d="M62 310h676" stroke="#24493c"/>
+  <g font-family="monospace">
+    <text x="62" y="382" fill="#527268" font-size="21">RUNTIME</text><text x="62" y="430" fill="#f0fff8" font-size="29">LOCAL TOOLS / TERMINALS</text>
+    <text x="62" y="512" fill="#527268" font-size="21">EXECUTION</text><text x="62" y="560" fill="#f0fff8" font-size="29">RECOVERABLE / PERSISTENT</text>
+    <text x="62" y="642" fill="#527268" font-size="21">COLLABORATION</text><text x="62" y="690" fill="#f0fff8" font-size="29">MULTI-AGENT SYSTEM</text>
+  </g>
   <rect x="62" y="760" width="676" height="180" rx="26" fill="#0e211a" stroke="#285c49"/>
-  <text x="96" y="818" fill="#91a69e" font-family="monospace" font-size="21">IF FOUND, RETURN TO</text>
-  <text x="96" y="882" fill="#f0fff8" font-family="Arial,sans-serif" font-size="46" font-weight="700">LLMOL.COM</text>
-  <circle cx="673" cy="850" r="38" fill="none" stroke="#39ff88" stroke-width="5"/><path d="M655 850l12 12 25-29" fill="none" stroke="#39ff88" stroke-width="6"/>
-  <text x="62" y="1040" fill="#527268" font-family="monospace" font-size="22" letter-spacing="3">SECURE IDENTITY TOKEN · 2026</text>
+  <text x="96" y="818" fill="#91a69e" font-family="monospace" font-size="21">WORKING ACROSS</text>
+  <text x="96" y="870" fill="#f0fff8" font-family="Arial,sans-serif" font-size="34" font-weight="700">TYPESCRIPT / REACT / AI</text>
+  <text x="96" y="912" fill="#39ff88" font-family="monospace" font-size="22">WEB SECURITY / CREATIVE CODE</text>
+  <text x="62" y="1040" fill="#527268" font-family="monospace" font-size="22" letter-spacing="3">CLICK TO FLIP / DRAG TO INSPECT</text>
 </svg>

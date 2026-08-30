@@ -84,4 +84,11 @@ export const articles = [
       "从结构化策略 DSL、AI Agent 自动迭代到跨标的与跨时间回测，记录 Stock Broker AI 量化策略研究平台的设计与实现。",
     id: 11,
   },
+  {
+    title: "我为什么又写了一个 Code Agent？OhMyCode 的设计与实现",
+    date: "2026-08-31",
+    description:
+      "从本地终端、文件工具和可恢复执行，到上下文压缩与 Multi-Agent，记录 OhMyCode 从聊天界面逐渐长成 Agent 工作空间的过程。",
+    id: 12,
+  },
 ];

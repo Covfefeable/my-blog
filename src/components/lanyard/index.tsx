@@ -25,6 +25,7 @@ function Band({ mobile }: { mobile: boolean }) {
   const joint3 = useRef<any>(null);
   const card = useRef<any>(null);
   const line = useRef<MeshLineGeometry>(null);
+  const pointerStart = useRef({ x: 0, y: 0 });
   const [dragged, setDragged] = useState<THREE.Vector3 | false>(false);
   const [hovered, setHovered] = useState(false);
   const front = useTexture("/lanyard/badge-front.svg");
@@ -108,16 +109,22 @@ function Band({ mobile }: { mobile: boolean }) {
             onPointerUp={(event) => {
               (event.target as any)?.releasePointerCapture(event.pointerId);
               setDragged(false);
+              const moved = Math.hypot(event.nativeEvent.clientX - pointerStart.current.x, event.nativeEvent.clientY - pointerStart.current.y);
+              if (!mobile && moved < 6 && card.current) {
+                const velocity = card.current.angvel();
+                card.current.setAngvel({ x: velocity.x, y: velocity.y + 9.5, z: velocity.z }, true);
+              }
             }}
             onPointerDown={(event) => {
               if (mobile) return;
+              pointerStart.current = { x: event.nativeEvent.clientX, y: event.nativeEvent.clientY };
               (event.target as any)?.setPointerCapture(event.pointerId);
               setDragged(new THREE.Vector3().copy(event.point).sub(vector.copy(card.current.translation())));
             }}
           >
             <mesh castShadow>
               <boxGeometry args={[2.44, 3.4, 0.11, 8, 8, 2]} />
-              <meshPhysicalMaterial color="#dfece7" roughness={0.42} metalness={0.08} clearcoat={0.7} clearcoatRoughness={0.2} />
+              <meshPhysicalMaterial color="#dfece7" roughness={0.4} metalness={0.08} clearcoat={0.82} clearcoatRoughness={0.16} iridescence={0.22} iridescenceIOR={1.2} />
             </mesh>
             <mesh position={[0, 0, 0.058]}>
               <planeGeometry args={[2.38, 3.34]} />
@@ -142,7 +149,7 @@ function Band({ mobile }: { mobile: boolean }) {
   );
 }
 
-export default function Lanyard() {
+export default function Lanyard({ ariaLabel = "Interactive draggable badge" }: { ariaLabel?: string }) {
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
@@ -153,7 +160,7 @@ export default function Lanyard() {
   }, []);
 
   return (
-    <div className={styles.wrapper} aria-label="可拖动的 Jay Chiu 数字工牌">
+    <div className={styles.wrapper} aria-label={ariaLabel}>
       <Canvas camera={{ position: [0, 0, mobile ? 36 : 30], fov: mobile ? 24 : 20 }} dpr={[1, mobile ? 1 : 1.5]} gl={{ alpha: true, antialias: !mobile }}>
         <ambientLight intensity={Math.PI * 0.8} />
         <Physics gravity={[0, -38, 0]} timeStep={mobile ? 1 / 30 : 1 / 60}>

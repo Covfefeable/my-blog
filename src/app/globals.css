@@ -90,15 +90,6 @@ body > main {
   width: 100%;
 }
 
-body:has([data-home-intro]) header {
-  position: fixed !important;
-  inset: 0 0 auto;
-  opacity: 0 !important;
-  pointer-events: none;
-  transform: translateY(-100%) !important;
-  animation: none !important;
-}
-
 body:has([data-portal-home]) {
   background: #05070a;
 }

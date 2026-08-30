@@ -8,17 +8,17 @@
   <rect width="800" height="1120" rx="58" fill="url(#grid)"/>
   <path d="M0 0h800v150H0z" fill="#07110e"/>
   <circle cx="70" cy="75" r="13" fill="#39ff88"/>
-  <text x="108" y="91" fill="#eafff5" font-family="Arial,sans-serif" font-size="38" font-weight="700" letter-spacing="6">CREATIVE LAB</text>
-  <text x="62" y="220" fill="#2e5147" font-family="monospace" font-size="26" letter-spacing="3">VISITOR / JC-07</text>
+  <text x="108" y="91" fill="#eafff5" font-family="Arial,sans-serif" font-size="38" font-weight="700" letter-spacing="6">PERSONNEL ACCESS</text>
+  <text x="62" y="220" fill="#2e5147" font-family="monospace" font-size="26" letter-spacing="3">IDENTITY / JC-07</text>
   <circle cx="400" cy="430" r="150" fill="#07110e"/>
   <circle cx="400" cy="430" r="135" fill="none" stroke="url(#holo)" stroke-width="4" stroke-dasharray="12 8"/>
-  <text x="400" y="477" text-anchor="middle" fill="url(#holo)" font-family="Arial,sans-serif" font-size="142" font-weight="800">JC</text>
-  <text x="62" y="690" fill="#07110e" font-family="Arial,sans-serif" font-size="78" font-weight="800" letter-spacing="-2">JAY CHIU</text>
-  <text x="64" y="744" fill="#24785e" font-family="monospace" font-size="28" letter-spacing="3">FRONTEND ENGINEER</text>
+  <text x="400" y="477" text-anchor="middle" fill="url(#holo)" font-family="Arial,sans-serif" font-size="112" font-weight="800">DEV</text>
+  <text x="62" y="680" fill="#07110e" font-family="Arial,sans-serif" font-size="52" font-weight="800" letter-spacing="-1.5">FRONTEND ENGINEER</text>
+  <text x="64" y="740" fill="#24785e" font-family="monospace" font-size="25" letter-spacing="3">SECURITY / AI / INTERACTION</text>
   <path d="M62 800h676" stroke="#52756a" stroke-opacity=".35"/>
-  <text x="62" y="862" fill="#2e5147" font-family="monospace" font-size="24">CLEARANCE</text>
-  <text x="738" y="862" text-anchor="end" fill="#07110e" font-family="monospace" font-size="28" font-weight="700">LEVEL 07</text>
-  <text x="62" y="916" fill="#2e5147" font-family="monospace" font-size="24">STATUS</text>
-  <text x="738" y="916" text-anchor="end" fill="#148958" font-family="monospace" font-size="28" font-weight="700">ACTIVE</text>
+  <text x="62" y="862" fill="#2e5147" font-family="monospace" font-size="24">PRIMARY STACK</text>
+  <text x="738" y="862" text-anchor="end" fill="#07110e" font-family="monospace" font-size="27" font-weight="700">TS / REACT</text>
+  <text x="62" y="916" fill="#2e5147" font-family="monospace" font-size="24">CURRENT STATUS</text>
+  <text x="738" y="916" text-anchor="end" fill="#148958" font-family="monospace" font-size="27" font-weight="700">OPEN TO TALK</text>
   <g fill="#07110e"><path d="M62 974h18v74H62zM91 974h8v74h-8zM110 974h27v74h-27zM149 974h10v74h-10zM171 974h36v74h-36zM219 974h13v74h-13zM245 974h8v74h-8zM266 974h30v74h-30zM308 974h17v74h-17zM337 974h42v74h-42zM391 974h9v74h-9zM412 974h25v74h-25zM449 974h12v74h-12zM473 974h34v74h-34zM519 974h8v74h-8zM539 974h29v74h-29zM580 974h15v74h-15zM607 974h41v74h-41zM660 974h10v74h-10zM682 974h56v74h-56z"/></g>
 </svg>
