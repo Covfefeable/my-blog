@@ -24,6 +24,7 @@
 .roles { color: var(--portal-cyan); font-size: clamp(.78rem, 1.2vw, 1rem); letter-spacing: .1em; }.roles span { color: #334a53; margin: 0 8px; }
 .statement { max-width: 520px; margin-top: 32px; color: var(--portal-muted); font-family: Arial, sans-serif; font-size: clamp(1rem, 1.5vw, 1.22rem); line-height: 1.65; }
 .heroActions { display: flex; gap: 12px; margin-top: 34px; }.heroActions button, .heroActions a { padding: 14px 17px; border: 1px solid var(--portal-line); background: rgba(9,20,18,.65); color: var(--portal-text); font: 700 11px/1 monospace; letter-spacing: .1em; cursor: pointer; transition: .25s ease; }.heroActions button { background: var(--portal-green); border-color: var(--portal-green); color: #03100a; }.heroActions button:hover, .heroActions a:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(57,255,136,.12); }
+.heroActions .secondaryAction { border-color: var(--portal-line); background: rgba(9,20,18,.65); color: var(--portal-text); }
 .coordinates { display: flex; gap: 22px; margin-top: 48px; color: #53656c; font-size: 9px; letter-spacing: .12em; }
 .lanyardStage { position: absolute; z-index: 1; inset: 0 0 0 49%; animation: stageIn .7s ease both; }.dragHint { position: absolute; right: 8%; bottom: 56px; color: var(--portal-muted); font-size: 10px; letter-spacing: .14em; }.dragHint span { color: var(--portal-green); margin-right: 8px; }
 .badgeLoading { display: grid; height: 100%; place-items: center; color: var(--portal-green); font-size: 10px; letter-spacing: .18em; }

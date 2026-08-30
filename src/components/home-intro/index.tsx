@@ -20,11 +20,9 @@ export default function HomeIntro() {
 
   useEffect(() => {
     const shouldSkip = Boolean(window.location.hash)
-      || sessionStorage.getItem("home-intro-played") === "true"
       || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (shouldSkip) setComplete(true);
-    else sessionStorage.setItem("home-intro-played", "true");
     setIntroChecked(true);
   }, []);
 

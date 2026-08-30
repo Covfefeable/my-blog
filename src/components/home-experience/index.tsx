@@ -110,7 +110,7 @@ export default function HomeExperience() {
           <p className={styles.statement}>{copy.statement}</p>
           <div className={styles.heroActions}>
             <button type="button" onClick={() => scrollTo("archive")}>{copy.enter} <span>↘</span></button>
-            <button type="button" onClick={() => scrollTo("personnel")}>{copy.profile} <span>→</span></button>
+            <button type="button" className={styles.secondaryAction} onClick={() => scrollTo("personnel")}>{copy.profile} <span>→</span></button>
           </div>
           <div className={styles.coordinates}>
             <span>NODE 07</span><span>SHENZHEN / CN</span><span>LATENCY 12MS</span>
