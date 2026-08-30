@@ -61,7 +61,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <main className={styles.archivePage} data-archive-page>
       <nav className={styles.archiveNav} aria-label="文章导航">
         <Link href="/" className={styles.brand}><i /> JC / ARCHIVE</Link>
-        <div><Link href="/">首页 HOME</Link><Link href="/posts">文章 RECORDS</Link><Link href="/#personnel">关于 PROFILE</Link></div>
+        <div><Link href="/">首页 HOME</Link><Link href="/#archive">文章 RECORDS</Link><Link href="/#personnel">关于 PROFILE</Link></div>
       </nav>
       <header className={styles.hero}>
         <div className={styles.heroGrid} />
@@ -76,11 +76,11 @@ export default async function PostPage({ params }: PostPageProps) {
         <aside className={styles.sideRail}>
           <span>DOCUMENT INFO · 文档信息</span>
           <dl><div><dt>编号</dt><dd>JC-{String(article.id).padStart(3, "0")}</dd></div><div><dt>日期</dt><dd>{article.date}</dd></div><div><dt>语言</dt><dd>中文 / ZH</dd></div><div><dt>状态</dt><dd className={styles.active}>● ACTIVE</dd></div></dl>
-          <Link href="/posts">← 返回文章档案</Link>
+          <Link href="/#archive">← 返回文章档案</Link>
         </aside>
         <article className={styles.article}>
           <div className={styles.root} dangerouslySetInnerHTML={{ __html: content }} />
-          <footer className={styles.articleEnd}><span>END OF RECORD · 记录结束</span><Link href="/posts">继续浏览文章档案 →</Link></footer>
+          <footer className={styles.articleEnd}><span>END OF RECORD · 记录结束</span><Link href="/#archive">继续浏览文章档案 →</Link></footer>
         </article>
       </div>
     </main>

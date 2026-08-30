@@ -156,7 +156,7 @@ export default function HomeExperience() {
         <section className={styles.archive} id="archive">
           <header className={styles.sectionHeader}>
             <div><span>03 / ACTIVITY LOGS · 活动记录</span><h2>{copy.archiveTitle}</h2></div>
-            <Link href="/posts">{copy.allRecords} <span>↗</span></Link>
+            <span>{copy.allRecords}</span>
           </header>
           <div className={styles.logList}>
             {allArticles.map((article, index) => (
