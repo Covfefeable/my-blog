@@ -1,49 +1,53 @@
 .sequence {
-  height: 400vh;
+  height: 600vh;
   background: var(--content-bg);
+  overscroll-behavior: none;
+}
+
+.preparing {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: #05070a;
 }
 
 .stickyStage {
   position: sticky;
   top: 0;
-  min-height: 100dvh;
+  height: 100dvh;
   overflow: hidden;
-  background: var(--content-bg);
+  background: #069fd0;
 }
 
+.poster,
 .canvas {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100dvh;
   pointer-events: none;
+}
+
+.poster {
+  z-index: 2;
+  background: #069fd0 url("/home-intro/original/frame-000.webp") center / cover no-repeat;
+  opacity: 1;
+  transition: opacity 120ms linear;
+}
+
+.posterHidden {
+  opacity: 0;
+}
+
+.canvas {
+  z-index: 3;
+  display: block;
+  opacity: 0;
   transition: opacity 80ms linear;
 }
 
-.sitePreview,
-.homeContent {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-2xl) var(--spacing-xl);
-}
-
-.sitePreview {
-  min-height: 100dvh;
-  background: var(--content-bg);
-}
-
-.homeContent {
-  display: block;
-  min-height: calc(100dvh - 160px);
-  margin-block: var(--spacing-xl);
-  background: var(--content-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--card-box-shadow);
-}
-
-.homeContent > main > section:last-child {
-  margin-bottom: 0;
+.canvasReady {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -55,15 +59,7 @@
 
 @media screen and (max-width: 768px) {
   .sequence {
-    height: 300vh;
+    height: 500vh;
   }
 
-  .sitePreview,
-  .homeContent {
-    padding-inline: var(--spacing-md);
-  }
-
-  .homeContent {
-    margin: var(--spacing-md);
-  }
 }

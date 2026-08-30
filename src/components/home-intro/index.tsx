@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Home from "@/components/home";
+import HomeExperience, { PortalPreview } from "@/components/home-experience";
 import styles from "./index.module.css";
 
 const FRAME_COUNT = 360;
@@ -11,19 +11,47 @@ const frameUrl = (index: number) => `/home-intro/original/frame-${String(index).
 
 export default function HomeIntro() {
   const [complete, setComplete] = useState(false);
+  const [introChecked, setIntroChecked] = useState(false);
+  const [frameReady, setFrameReady] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const justFinishedRef = useRef(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setComplete(true);
-      return;
-    }
+    const shouldSkip = sessionStorage.getItem("home-intro-played") === "true"
+      || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (shouldSkip) setComplete(true);
+    else sessionStorage.setItem("home-intro-played", "true");
+    setIntroChecked(true);
+  }, []);
+
+  useEffect(() => {
+    if (!complete || !justFinishedRef.current) return;
+
+    justFinishedRef.current = false;
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    window.scrollTo({ top: 0, behavior: "instant" });
+    const releaseScroll = window.setTimeout(() => {
+      document.documentElement.style.overflow = previousOverflow;
+    }, 900);
+
+    return () => {
+      window.clearTimeout(releaseScroll);
+      document.documentElement.style.overflow = previousOverflow;
+    };
+  }, [complete]);
+
+  useEffect(() => {
+    if (!introChecked || complete) return;
 
     gsap.registerPlugin(ScrollTrigger);
     const canvas = canvasRef.current;
     const section = sectionRef.current;
-    if (!canvas || !section) return;
+    const stage = stageRef.current;
+    if (!canvas || !section || !stage) return;
 
     const context = canvas.getContext("2d");
     if (!context) return;
@@ -35,14 +63,17 @@ export default function HomeIntro() {
       return image;
     });
     const playhead = { frame: 0 };
+    let hasDrawnFrame = false;
+    let completionStarted = false;
 
     const draw = () => {
       const image = images[Math.round(playhead.frame)];
       if (!image?.complete || !image.naturalWidth) return;
 
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      const width = Math.round(window.innerWidth * ratio);
-      const height = Math.round(window.innerHeight * ratio);
+      const stageBounds = stage.getBoundingClientRect();
+      const width = Math.max(1, Math.round(stageBounds.width * ratio));
+      const height = Math.max(1, Math.round(stageBounds.height * ratio));
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width;
         canvas.height = height;
@@ -53,9 +84,19 @@ export default function HomeIntro() {
       const drawHeight = image.naturalHeight * scale;
       context.clearRect(0, 0, width, height);
       context.drawImage(image, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
+
+      if (!hasDrawnFrame) {
+        hasDrawnFrame = true;
+        setFrameReady(true);
+      }
     };
 
     images[0].addEventListener("load", draw, { once: true });
+    images.forEach((image, index) => {
+      image.addEventListener("load", () => {
+        if (index === Math.round(playhead.frame)) draw();
+      });
+    });
     const scope = gsap.context(() => {
       gsap.to(playhead, {
         frame: FRAME_COUNT - 1,
@@ -69,34 +110,43 @@ export default function HomeIntro() {
           scrub: 0.15,
           onUpdate: ({ progress }) => {
             canvas.style.opacity = String(1 - gsap.utils.clamp(0, 1, (progress - 0.88) / 0.12));
-            if (progress >= 0.995) {
+            if (progress >= 0.995 && !completionStarted) {
+              completionStarted = true;
+              justFinishedRef.current = true;
               setComplete(true);
-              requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "instant" }));
             }
           },
         },
       });
     }, section);
 
-    const onResize = () => draw();
+    const onResize = () => {
+      // Pinch zoom changes the visual viewport but not the layout. Resizing the
+      // canvas here would clear the current frame and expose the poster again.
+      if (window.visualViewport && window.visualViewport.scale !== 1) return;
+      draw();
+    };
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("resize", onResize);
       scope.revert();
     };
-  }, []);
+  }, [complete, introChecked]);
+
+  if (!introChecked && !complete) {
+    return <div className={styles.preparing}><PortalPreview /></div>;
+  }
 
   if (complete) {
-    return <section className={styles.homeContent}><Home /></section>;
+    return <HomeExperience />;
   }
 
   return (
     <section ref={sectionRef} className={styles.sequence} data-home-intro aria-label="首页开场动画">
-      <div className={styles.stickyStage}>
-        <div className={styles.sitePreview} aria-hidden="true">
-          <Home />
-        </div>
-        <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
+      <div ref={stageRef} className={styles.stickyStage}>
+        <PortalPreview />
+        <div className={`${styles.poster} ${frameReady ? styles.posterHidden : ""}`} aria-hidden="true" />
+        <canvas ref={canvasRef} className={`${styles.canvas} ${frameReady ? styles.canvasReady : ""}`} aria-hidden="true" />
       </div>
     </section>
   );

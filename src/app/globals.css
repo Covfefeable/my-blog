@@ -99,6 +99,28 @@ body:has([data-home-intro]) header {
   animation: none !important;
 }
 
+body:has([data-portal-home]) {
+  background: #05070a;
+}
+
+body:has([data-portal-home]) > header,
+body:has([data-portal-home]) > footer,
+body:has([data-portal-home]) header,
+body:has([data-portal-home]) footer {
+  display: none;
+}
+
+body:has([data-archive-page]) {
+  background: #05070a;
+}
+
+body:has([data-archive-page]) > header,
+body:has([data-archive-page]) > footer,
+body:has([data-archive-page]) header:not([class]),
+body:has([data-archive-page]) footer:not([class]) {
+  display: none;
+}
+
 a {
   color: var(--primary-color);
   text-decoration: none;

@@ -1,5 +1,5 @@
 .main {
-  min-height: calc(100dvh - 160px);
+  min-height: 100dvh;
   background: var(--color-bg);
 }
 

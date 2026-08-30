@@ -4,6 +4,7 @@ const nextConfig = {
   output: "standalone",
   experimental: {
     serverComponentsExternalPackages: ["sanitize-html"],
+    webpackBuildWorker: false,
   },
   images: {
     remotePatterns: [],
