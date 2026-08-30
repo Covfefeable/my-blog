@@ -61,7 +61,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <main className={styles.archivePage} data-archive-page>
       <nav className={styles.archiveNav} aria-label="文章导航">
         <Link href="/" className={styles.brand}><i /> JC / ARCHIVE</Link>
-        <div><Link href="/">首页 HOME</Link><Link href="/posts">文章 RECORDS</Link><Link href="/about">关于 PROFILE</Link></div>
+        <div><Link href="/">首页 HOME</Link><Link href="/posts">文章 RECORDS</Link><Link href="/#personnel">关于 PROFILE</Link></div>
       </nav>
       <header className={styles.hero}>
         <div className={styles.heroGrid} />

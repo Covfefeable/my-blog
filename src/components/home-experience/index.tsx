@@ -110,7 +110,7 @@ export default function HomeExperience() {
           <p className={styles.statement}>{copy.statement}</p>
           <div className={styles.heroActions}>
             <button type="button" onClick={() => scrollTo("archive")}>{copy.enter} <span>↘</span></button>
-            <Link href="/about">{copy.profile} <span>→</span></Link>
+            <button type="button" onClick={() => scrollTo("personnel")}>{copy.profile} <span>→</span></button>
           </div>
           <div className={styles.coordinates}>
             <span>NODE 07</span><span>SHENZHEN / CN</span><span>LATENCY 12MS</span>
@@ -173,7 +173,7 @@ export default function HomeExperience() {
         <section className={styles.personnel} id="personnel">
           <span className={styles.fileLabel}>04 / PERSONNEL FILE · 人员档案</span>
           <div className={styles.personnelGrid}>
-            <div><p className={styles.quote}>“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”</p><Link href="/about">READ FULL PROFILE ↗</Link></div>
+            <div><p className={styles.quote}>“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”</p><button type="button" onClick={() => scrollTo("identity")}>BACK TO IDENTITY ↗</button></div>
             <dl>
               <div><dt>NAME</dt><dd>Jay Chiu</dd></div>
               <div><dt>ROLE</dt><dd>Frontend Engineer</dd></div>

@@ -19,7 +19,8 @@ export default function HomeIntro() {
   const justFinishedRef = useRef(false);
 
   useEffect(() => {
-    const shouldSkip = sessionStorage.getItem("home-intro-played") === "true"
+    const shouldSkip = Boolean(window.location.hash)
+      || sessionStorage.getItem("home-intro-played") === "true"
       || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (shouldSkip) setComplete(true);
@@ -42,6 +43,14 @@ export default function HomeIntro() {
       window.clearTimeout(releaseScroll);
       document.documentElement.style.overflow = previousOverflow;
     };
+  }, [complete]);
+
+  useEffect(() => {
+    if (!complete || !window.location.hash) return;
+    const targetId = window.location.hash.slice(1);
+    requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ block: "start" });
+    });
   }, [complete]);
 
   useEffect(() => {
