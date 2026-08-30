@@ -2,7 +2,7 @@
 
 ## A) 回顾
 
-关于 TensorFlow 的基本概念，我们在之前的文章中已经介绍过了，这里就不再赘述。如果你还不了解 TensorFlow，可以参考之前的文章。点击这里查看：[TensorFlow 往期](/post?id=4)。
+关于 TensorFlow 的基本概念，我们在之前的文章中已经介绍过了，这里就不再赘述。如果你还不了解 TensorFlow，可以参考之前的文章。点击这里查看：[TensorFlow 往期](/posts/4)。
 
 ## B) 文本情感分类
 
