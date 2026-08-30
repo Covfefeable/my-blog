@@ -173,13 +173,14 @@ export default function HomeExperience() {
         <section className={styles.personnel} id="personnel">
           <span className={styles.fileLabel}>04 / PERSONNEL FILE · 人员档案</span>
           <div className={styles.personnelGrid}>
-            <div><p className={styles.quote}>“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”</p><button type="button" onClick={() => scrollTo("identity")}>BACK TO IDENTITY ↗</button></div>
+            <div><p className={styles.quote}>“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GITHUB / @Covfefeable ↗</a></div>
             <dl>
               <div><dt>NAME</dt><dd>Jay Chiu</dd></div>
               <div><dt>ROLE</dt><dd>Frontend Engineer</dd></div>
               <div><dt>LOCATION</dt><dd>Shenzhen, China</dd></div>
               <div><dt>FOCUS</dt><dd>Security / AI / Creative Code</dd></div>
               <div><dt>EXPERIENCE</dt><dd>Meizu / FreeBuf</dd></div>
+              <div><dt>GITHUB</dt><dd><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">@Covfefeable ↗</a></dd></div>
             </dl>
           </div>
         </section>
