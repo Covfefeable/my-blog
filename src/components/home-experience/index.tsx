@@ -62,8 +62,8 @@ export default function HomeExperience() {
     statement: "用代码、好奇心，以及一点可控的混乱，构建让人记得住的数字体验。",
     enter: "进入文章档案",
     profile: "查看个人档案",
-    accessTitle: "我现在在做什么",
-    accessIntro: "这里不是权限说明，而是我最近投入时间最多的项目、研究方向和创作主题。",
+    accessTitle: "当前工作",
+    accessIntro: "集中展示我最近正在推进的项目、持续研究的技术方向，以及目前的合作状态。",
     archiveTitle: "文章档案",
     allRecords: `查看全部 ${articles.length} 条记录`,
     contactLead: "本次访问已记录",
@@ -73,8 +73,8 @@ export default function HomeExperience() {
     statement: "Building interfaces with code, curiosity and a little controlled chaos.",
     enter: "ENTER ARCHIVE",
     profile: "PERSONNEL FILE",
-    accessTitle: "What I am working on",
-    accessIntro: "The projects, research topics and creative experiments receiving most of my attention right now.",
+    accessTitle: "Current work",
+    accessIntro: "The active projects, ongoing research topics and collaboration status shaping my work right now.",
     archiveTitle: "Writing archive",
     allRecords: `VIEW ALL ${articles.length} RECORDS`,
     contactLead: "YOUR VISIT HAS BEEN LOGGED",
@@ -124,9 +124,9 @@ export default function HomeExperience() {
       </section>
 
       <main className={styles.content}>
-        <section className={styles.clearance} id="clearance">
+        <section className={styles.clearance} id="focus">
           <header className={styles.sectionHeader}>
-            <div><span>02 / CURRENT FOCUS · 当前方向</span><h2>{copy.accessTitle}</h2></div>
+            <div><span>02 / CURRENT WORK · 当前工作</span><h2>{copy.accessTitle}</h2></div>
             <p>{copy.accessIntro}</p>
           </header>
           <div className={styles.bento}>
@@ -195,7 +195,7 @@ export default function HomeExperience() {
 
       <nav className={styles.dock} aria-label="Quick navigation">
         <button type="button" onClick={() => scrollTo("identity")} aria-label="Identity"><Icon>⌂</Icon><small>IDENTITY</small></button>
-        <button type="button" onClick={() => scrollTo("clearance")} aria-label="Current focus"><Icon>✦</Icon><small>FOCUS</small></button>
+        <button type="button" onClick={() => scrollTo("focus")} aria-label="Current work"><Icon>✦</Icon><small>WORK</small></button>
         <button type="button" onClick={() => scrollTo("archive")} aria-label="Archive"><Icon>▤</Icon><small>ARCHIVE</small></button>
         <button type="button" onClick={() => scrollTo("personnel")} aria-label="Personnel"><Icon>◎</Icon><small>PROFILE</small></button>
         <button type="button" onClick={() => scrollTo("contact")} aria-label="Contact"><Icon>↗</Icon><small>CONTACT</small></button>

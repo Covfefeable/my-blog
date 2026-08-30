@@ -20,6 +20,7 @@ export default function HomeIntro() {
 
   useEffect(() => {
     const shouldSkip = Boolean(window.location.hash)
+      || sessionStorage.getItem("home-intro-played") === "true"
       || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (shouldSkip) setComplete(true);
@@ -30,6 +31,7 @@ export default function HomeIntro() {
     if (!complete || !justFinishedRef.current) return;
 
     justFinishedRef.current = false;
+    sessionStorage.setItem("home-intro-played", "true");
     const previousOverflow = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
     window.scrollTo({ top: 0, behavior: "instant" });
