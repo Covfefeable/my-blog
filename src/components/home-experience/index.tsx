@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import Image from "next/image";
+import ProjectFilm from "@/components/project-film";
+import Registration from "@/components/registration";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { articles } from "@/assets/article/config";
@@ -84,7 +85,6 @@ export default function HomeExperience() {
     focusFieldLabel: "方向",
     focusFieldValue: "安全 / AI / 创意编程",
     experienceLabel: "经历",
-    dragBadge: "拖动 / 点击翻面",
     lanyardLabel: "可拖动的数字工牌",
     dockIdentity: "主页",
     dockWork: "工作",
@@ -128,7 +128,6 @@ export default function HomeExperience() {
     focusFieldLabel: "FOCUS",
     focusFieldValue: "Security / AI / Creative Code",
     experienceLabel: "EXPERIENCE",
-    dragBadge: "DRAG / CLICK TO FLIP",
     lanyardLabel: "Interactive draggable badge",
     dockIdentity: "IDENTITY",
     dockWork: "WORK",
@@ -176,23 +175,28 @@ export default function HomeExperience() {
 
         <div className={styles.lanyardStage}>
           <Lanyard ariaLabel={copy.lanyardLabel} />
-          <p className={styles.dragHint}><span>↔</span> {copy.dragBadge}</p>
         </div>
       </section>
 
       <div className={styles.content}>
+        <section className={styles.archive} id="archive">
+          <header className={styles.sectionHeader}><h2>{copy.archiveTitle}</h2></header>
+          <div className={styles.logList}>
+            {visibleArticles.map((article) => <Link href={`/posts/${article.id}`} className={styles.logRow} key={article.id}>
+              <time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time>
+              <div><h3>{article.title}</h3><p>{article.description}</p></div>
+              <span className={styles.openLog}>{copy.openRecord}</span>
+            </Link>)}
+          </div>
+          {!showAllArticles && allArticles.length > 5 && <button className={styles.loadMore} type="button" onClick={() => setShowAllArticles(true)}>{copy.loadMore} ↓</button>}
+        </section>
         <section className={styles.clearance} id="focus">
           <header className={styles.sectionHeader}>
             <h2>{copy.accessTitle}</h2>
             <p>{copy.accessIntro}</p>
           </header>
           <div className={styles.bento}>
-            <a className={`${styles.panel} ${styles.panelLead} ${styles.panelLink}`} href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">
-              <span className={styles.panelCode}>{copy.featuredLabel}</span>
-              <div><p>{copy.featuredKicker}</p><h3>OhMyCode</h3><p>{copy.featuredDescription}</p></div>
-              <Image className={styles.projectImage} src="/articles/12/images/workspace-chat.png" alt={isZh ? "OhMyCode 工作空间与对话界面" : "OhMyCode workspace and chat interface"} width={1600} height={1000} />
-              <span className={styles.panelAction}>{copy.featuredAction}</span>
-            </a>
+            <ProjectFilm isZh={isZh} />
             <a className={`${styles.panel} ${styles.panelStatus} ${styles.panelLink}`} href="/resume/qu-jie-frontend-engineer.pdf" target="_blank" rel="noreferrer">
               <span className={styles.panelCode}>{copy.resumeLabel}</span>
               <span className={styles.resumeMark}>CV</span>
@@ -232,7 +236,7 @@ export default function HomeExperience() {
           <a href="mailto:rears_seasons_0n@icloud.com">{copy.contactAction} <span>↗</span></a>
         </section>
       </div>
-      <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#contact">{copy.dockContact}</a></footer>
+      <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><Registration /><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#contact">{copy.dockContact}</a></footer>
     </div>
   );
 }

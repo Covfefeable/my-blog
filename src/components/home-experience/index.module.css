@@ -4,14 +4,14 @@
   background:var(--portal-bg); color:var(--portal-text); min-height:100dvh; overflow:clip;
   font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif;
 }
-.navigation { display:flex; justify-content:space-between; align-items:center; width:min(1120px,calc(100% - 64px)); height:80px; margin:auto; border-bottom:1px solid var(--portal-line); }
+.navigation { position:relative; z-index:5; display:flex; justify-content:space-between; align-items:center; width:calc(100% - clamp(40px,6vw,120px)); height:80px; margin:auto; border-bottom:1px solid var(--portal-line); }
 .navigation a { color:var(--portal-text); font-size:14px; }
 .navigation .wordmark { font-weight:700; font-size:19px; letter-spacing:-.5px; }
 .wordmark span { color:var(--portal-muted); font-size:13px; font-weight:400; letter-spacing:0; }
 .navigation > div { display:flex; align-items:center; gap:28px; }
 .navigation button { padding:7px 9px; border:1px solid var(--portal-line); background:transparent; color:var(--portal-text); cursor:pointer; }
 .navigation a:hover,.footer a:hover { color:var(--portal-green); }
-.hero { position:relative; width:min(1120px,calc(100% - 64px)); min-height:650px; margin:auto; isolation:isolate; scroll-margin-top:24px; }
+.hero { position:relative; width:calc(100% - clamp(40px,6vw,120px)); min-height:680px; margin:auto; isolation:isolate; scroll-margin-top:24px; }
 .heroCopy { position:absolute; left:0; top:48%; transform:translateY(-50%); width:49%; z-index:2; }
 .hero h1 { margin:0 0 24px; font-size:clamp(3rem,6.8vw,6.2rem); line-height:1; letter-spacing:-.065em; white-space:nowrap; }
 .roles { color:var(--portal-green); font-size:14px; line-height:1.7; }
@@ -20,10 +20,10 @@
 .heroActions button { padding:13px 20px; border:1px solid var(--portal-green); background:var(--portal-green); color:#f4f5f2; font:500 14px/1.3 Arial,sans-serif; cursor:pointer; transition:transform .2s,background .2s; }
 .heroActions .secondaryAction { background:transparent; border-color:var(--portal-line); color:var(--portal-text); }
 .heroActions button:hover { transform:translateY(-2px); }
-.lanyardStage { position:absolute; inset:0 -40px 0 48%; }
+.lanyardStage { position:absolute; inset:0 -20px 0 48%; z-index:3; }
 .dragHint { position:absolute; bottom:24px; right:20%; color:var(--portal-muted); font-size:11px; }
 .badgeLoading { display:grid; height:100%; place-items:center; color:var(--portal-muted); font-size:12px; }
-.content { display:flex; flex-direction:column; width:min(1120px,calc(100% - 64px)); margin:auto; }
+.content { display:flex; flex-direction:column; width:calc(100% - clamp(40px,6vw,120px)); margin:auto; }
 .clearance,.archive,.personnel { padding:80px 0; border-top:1px solid var(--portal-line); scroll-margin-top:32px; }
 .archive { order:-1; }
 .sectionHeader { margin-bottom:36px; }
@@ -74,7 +74,7 @@
 .contact { padding:70px 0 85px; border-top:1px solid var(--portal-line); }
 .contact h2 { max-width:680px; margin:0 0 24px; font-size:clamp(1.8rem,3vw,2.5rem); line-height:1.4; letter-spacing:-1px; }
 .contact > a { color:var(--portal-green); font-size:15px; text-decoration:underline; text-underline-offset:6px; }
-.footer { display:flex; gap:28px; width:min(1120px,calc(100% - 64px)); margin:auto; padding:24px 0 32px; border-top:1px solid var(--portal-line); color:var(--portal-muted); font-size:12px; }
+.footer { display:flex; flex-wrap:wrap; gap:20px 28px; width:calc(100% - clamp(40px,6vw,120px)); margin:auto; padding:24px 0 32px; border-top:1px solid var(--portal-line); color:var(--portal-muted); font-size:12px; }
 .footer > span { margin-right:auto; }
 .footer a { color:var(--portal-muted); }
 @keyframes pulse { from { opacity:.7; transform:scale(.45); } to { opacity:0; transform:scale(1.1); } }
@@ -84,7 +84,7 @@
   .navigation { height:70px; }
   .navigation > div { gap:15px; }
   .wordmark span { display:none; }
-  .hero { min-height:1000px; }
+  .hero { min-height:880px; }
   .heroCopy { top:64px; width:100%; transform:none; }
   .hero h1 { font-size:clamp(3rem,13vw,5rem); }
   .statement { max-width:460px; font-size:16px; }

@@ -7,6 +7,7 @@ import { marked } from "marked";
 import sanitizeHtml from "sanitize-html";
 import { articles } from "@/assets/article/config";
 import ArticleContent from "./article-content";
+import Registration from "@/components/registration";
 import styles from "./post.module.css";
 
 type PostPageProps = { params: { id: string } };
@@ -74,7 +75,7 @@ export default async function PostPage({ params }: PostPageProps) {
       <div className={styles.readingLayout}>
         <article className={styles.article}>
           <ArticleContent html={content} />
-          <footer className={styles.articleEnd}><span>感谢阅读</span><Link href="/#archive">更多文章 →</Link></footer>
+          <footer className={styles.articleEnd}><span>感谢阅读</span><Link href="/#archive">更多文章 →</Link><Registration /></footer>
         </article>
       </div>
     </main>

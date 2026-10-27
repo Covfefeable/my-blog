@@ -18,7 +18,8 @@ import styles from "./index.module.css";
 
 type BodyRef = React.MutableRefObject<any>;
 
-function Band({ mobile }: { mobile: boolean }) {
+function Band({ mobile, flipped, reduced, onFlip }: { mobile: boolean; flipped: boolean; reduced: boolean; onFlip(): void }) {
+  const face = useRef<THREE.Group>(null);
   const fixed = useRef<any>(null);
   const joint1 = useRef<any>(null);
   const joint2 = useRef<any>(null);
@@ -63,7 +64,8 @@ function Band({ mobile }: { mobile: boolean }) {
     return () => void (document.body.style.cursor = "auto");
   }, [dragged, hovered, mobile]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
+    if (face.current) face.current.rotation.y = reduced ? (flipped ? Math.PI : 0) : THREE.MathUtils.damp(face.current.rotation.y, flipped ? Math.PI : 0, 6, delta);
     if (dragged && !mobile) {
       vector.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera as any);
       direction.copy(vector).sub(state.camera.position).normalize();
@@ -96,7 +98,7 @@ function Band({ mobile }: { mobile: boolean }) {
 
   return (
     <>
-      <group position={[0, mobile ? 9 : 4.8, 0]}>
+      <group position={[0, 4.8, 0]}>
         <RigidBody ref={fixed} {...bodyProps} type="fixed" />
         <RigidBody ref={joint1} {...bodyProps} position={[0.5, 0, 0]}><BallCollider args={[0.1]} /></RigidBody>
         <RigidBody ref={joint2} {...bodyProps} position={[1, 0, 0]}><BallCollider args={[0.1]} /></RigidBody>
@@ -104,20 +106,19 @@ function Band({ mobile }: { mobile: boolean }) {
         <RigidBody ref={card} {...bodyProps} position={[2.25, -0.2, 0]} type={dragged ? "kinematicPosition" : "dynamic"}>
           <CuboidCollider args={[1.22, 1.7, 0.055]} />
           <group
+            ref={face}
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}
             onPointerUp={(event) => {
               (event.target as any)?.releasePointerCapture(event.pointerId);
               setDragged(false);
               const moved = Math.hypot(event.nativeEvent.clientX - pointerStart.current.x, event.nativeEvent.clientY - pointerStart.current.y);
-              if (!mobile && moved < 6 && card.current) {
-                const velocity = card.current.angvel();
-                card.current.setAngvel({ x: velocity.x, y: velocity.y + 9.5, z: velocity.z }, true);
-              }
+              if (moved < 6) onFlip();
             }}
+            onPointerCancel={() => setDragged(false)}
             onPointerDown={(event) => {
-              if (mobile) return;
               pointerStart.current = { x: event.nativeEvent.clientX, y: event.nativeEvent.clientY };
+              if (mobile || reduced) return;
               (event.target as any)?.setPointerCapture(event.pointerId);
               setDragged(new THREE.Vector3().copy(event.point).sub(vector.copy(card.current.translation())));
             }}
@@ -149,22 +150,28 @@ function Band({ mobile }: { mobile: boolean }) {
   );
 }
 
-export default function Lanyard({ ariaLabel = "Interactive draggable badge" }: { ariaLabel?: string }) {
+export default function Lanyard({ ariaLabel = "Personal badge" }: { ariaLabel?: string }) {
   const [mobile, setMobile] = useState(false);
+  const [flipped, setFlipped] = useState(false);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const update = () => setMobile(window.innerWidth < 768);
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => setReduced(preference.matches);
+    updateMotion();
+    preference.addEventListener("change", updateMotion);
     update();
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    return () => { window.removeEventListener("resize", update); preference.removeEventListener("change", updateMotion); };
   }, []);
 
   return (
-    <div className={styles.wrapper} aria-label={ariaLabel}>
+    <div className={styles.wrapper} role="button" tabIndex={0} aria-label={ariaLabel} aria-pressed={flipped} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setFlipped((value) => !value); } }}>
       <Canvas camera={{ position: [0, 0, mobile ? 36 : 30], fov: mobile ? 24 : 20 }} dpr={[1, mobile ? 1 : 1.5]} gl={{ alpha: true, antialias: !mobile }}>
         <ambientLight intensity={Math.PI * 0.8} />
-        <Physics gravity={[0, -38, 0]} timeStep={mobile ? 1 / 30 : 1 / 60}>
-          <Band mobile={mobile} />
+        <Physics key={mobile ? "mobile" : "desktop"} gravity={[0, -38, 0]} timeStep={mobile ? 1 / 30 : 1 / 60}>
+          <Band mobile={mobile} flipped={flipped} reduced={reduced} onFlip={() => setFlipped((value) => !value)} />
         </Physics>
         <Environment blur={0.8}>
           <Lightformer intensity={5} color="#39ff88" position={[-4, 2, 5]} scale={[8, 8, 1]} />
