@@ -91,18 +91,16 @@ body > main {
 }
 
 body:has([data-portal-home]) {
-  background: #05070a;
+  background: #f4f5f2;
 }
 
 body:has([data-portal-home]) > header,
-body:has([data-portal-home]) > footer,
-body:has([data-portal-home]) header,
-body:has([data-portal-home]) footer {
+body:has([data-portal-home]) > footer {
   display: none;
 }
 
 body:has([data-archive-page]) {
-  background: #05070a;
+  background: #f4f5f2;
 }
 
 body:has([data-archive-page]) > header,

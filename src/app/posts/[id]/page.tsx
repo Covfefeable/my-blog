@@ -61,27 +61,20 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <main className={styles.archivePage} data-archive-page>
       <nav className={styles.archiveNav} aria-label="文章导航">
-        <Link href="/" className={styles.brand}><i /> JC / ARCHIVE</Link>
-        <div><Link href="/">首页 HOME</Link><Link href="/#archive">文章 RECORDS</Link><Link href="/#personnel">关于 PROFILE</Link></div>
+        <Link href="/" className={styles.brand}>Jay Chiu</Link>
+        <div><Link href="/">首页</Link><Link href="/#archive">文章</Link><Link href="/#personnel">关于</Link></div>
       </nav>
       <header className={styles.hero}>
-        <div className={styles.heroGrid} />
-        <div className={styles.recordMeta}><span>ARCHIVE RECORD / {String(article.id).padStart(2, "0")}</span><span>访问权限：公开 PUBLIC</span></div>
         <div className={styles.heroContent}>
-          <p>研究记录 · RESEARCH LOG</p><h1>{article.title}</h1><p className={styles.description}>{article.description}</p>
-          <div className={styles.heroFooter}><time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time><span>BY JAY CHIU</span><span>STATUS / PUBLISHED</span></div>
+          <h1>{article.title}</h1><p className={styles.description}>{article.description}</p>
+          <div className={styles.heroFooter}><time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time><span>Jay Chiu</span></div>
         </div>
         <div className={styles.cover} style={{ backgroundImage: `url(/articles/${article.id}/cover.png)` }} role="img" aria-label={`${article.title} 封面`} />
       </header>
       <div className={styles.readingLayout}>
-        <aside className={styles.sideRail}>
-          <span>DOCUMENT INFO · 文档信息</span>
-          <dl><div><dt>编号</dt><dd>JC-{String(article.id).padStart(3, "0")}</dd></div><div><dt>日期</dt><dd>{article.date}</dd></div><div><dt>语言</dt><dd>中文 / ZH</dd></div><div><dt>状态</dt><dd className={styles.active}>● ACTIVE</dd></div></dl>
-          <Link href="/#archive">← 返回文章档案</Link>
-        </aside>
         <article className={styles.article}>
           <ArticleContent html={content} />
-          <footer className={styles.articleEnd}><span>END OF RECORD · 记录结束</span><Link href="/#archive">继续浏览文章档案 →</Link></footer>
+          <footer className={styles.articleEnd}><span>感谢阅读</span><Link href="/#archive">更多文章 →</Link></footer>
         </article>
       </div>
     </main>
