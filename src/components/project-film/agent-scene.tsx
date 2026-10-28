@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./agent-scene.module.css";
+import VoiceOrb from "./voice-orb";
 
 
 const thoughtNotes = [
@@ -38,11 +39,12 @@ export default function AgentScene({ isZh }: { isZh: boolean }) {
         })}
       </div></div>)}
     </div>
-    <header className={styles.heading} data-team-heading><p>Multi-Agent</p><h4>{isZh ? "开发、审查，再实际测试" : "Build, review, then test"}</h4></header>
+    <header className={styles.heading} data-team-heading><p>Multi-Agent</p><h4>{isZh ? "多Agent协同，事半功倍" : "Multiple agents. Greater impact."}</h4></header>
     <div className={styles.task} data-team-task>
-      <div><span>{roles.host}</span><strong>{isZh ? "给文章图片加上点击预览" : "Add image previews to articles"}</strong></div>
+      <div><span>{roles.host}</span><strong data-team-task-text>{isZh ? "给文章中的图片加上点击预览功能" : "Add click-to-preview functionality to article images"}</strong></div>
       <span className={styles.dispatch} data-team-dispatch>{isZh ? "拆解任务" : "Delegate"}<svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 10h14m-5-5 5 5-5 5" /></svg></span>
     </div>
+    <VoiceOrb />
     <div className={styles.deck} data-team-deck>
       <article className={styles.agent} data-team-card data-team-developer>
         <header><div><h5>{roles.developer}</h5><p>{isZh ? "实现预览交互" : "Build the interaction"}</p></div><i /></header>
@@ -95,6 +97,6 @@ export default function AgentScene({ isZh }: { isZh: boolean }) {
         </div>
       </article>
     </div>
-    <div className={styles.result} data-team-result><h5>{isZh ? "图片预览已完成" : "Image preview complete"}</h5></div>
+    <div className={styles.result} data-team-result role="img" aria-label={isZh ? "任务完成" : "Task complete"}><svg className={styles.completionMark} viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle data-team-complete-ring cx="32" cy="32" r="27" /><path data-team-complete-check d="m19 32 9 9 18-19" /></svg><span className={styles.confetti} aria-hidden="true">{Array.from({ length: 48 }, (_, index) => <i data-team-confetti key={index} style={{ backgroundColor: ["#397c50", "#f1b94c", "#e783a0", "#6f9fd5", "#ba91d2", "#ef8157"][index % 6] }} />)}</span></div>
   </div>;
 }

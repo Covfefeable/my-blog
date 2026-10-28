@@ -9,7 +9,7 @@ import { createAgentAnimation } from "./agent-animation";
 import styles from "./index.module.css";
 
 const COLLAB_SPEED = 1.4;
-const COLLAB_EXTENSION = 9 / COLLAB_SPEED - 1.12;
+const COLLAB_EXTENSION = 11.7 / COLLAB_SPEED - 1.12;
 const VIDEO_SCROLL_FACTOR = 3;
 const VIDEO_WINDOWS = [{ start: .43, end: .77 }, { start: 2.4, end: 2.82 }];
 const VIDEO_EXTENSION = VIDEO_WINDOWS.reduce((total, window) => total + (window.end - window.start) * (VIDEO_SCROLL_FACTOR - 1), 0);
@@ -104,7 +104,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         if (!animation) return;
         const time = narrativeTime(animation.time());
         rain.dataset.running = String(time >= 4.25 + COLLAB_EXTENSION && time < 6.58 + COLLAB_EXTENSION && !document.hidden);
-        thoughts.dataset.running = String(time >= 2.98 && time < 2.98 + 8.03 / COLLAB_SPEED && !document.hidden);
+        thoughts.dataset.running = String(time >= 2.98 && time < 2.98 + 9.23 / COLLAB_SPEED && !document.hidden);
         const zoom = Math.pow(clamp((time - .12) / .3), 3);
         const scale = 1 + (geometry.scale - 1) * zoom;
         const x = geometry.shiftX * zoom, y = geometry.shiftY * zoom;
@@ -286,13 +286,13 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
     const stopWhenHidden = () => { if (document.hidden) { video.pause(); androidMovie.current?.pause(); } };
     document.addEventListener("visibilitychange", stopWhenHidden);
     return () => { media.revert(); phone?.pause(); document.removeEventListener("visibilitychange", stopWhenHidden); };
-  }, []);
+  }, [isZh]);
 
 
 
   return <section className={styles.showcase} ref={root} aria-label="OhMyCode" style={{ "--movie-ratio": videoRatio } as CSSProperties}>
     <div className={styles.cinema} data-film-stage>
-      <div className={styles.headline}><h3 aria-label="OhMyCode"><span className={styles.initialO} aria-hidden="true">O</span><span className={styles.wordRest} aria-hidden="true">h<span className={styles.brandAccent}>My</span>Code</span></h3><p>{isZh ? "写代码。也走出编辑器。" : "Write code. Go beyond the editor."}</p></div>
+      <div className={styles.headline}><h3 aria-label="OhMyCode"><span className={styles.initialO} aria-hidden="true">O</span><span className={styles.wordRest} aria-hidden="true">h<span className={styles.brandAccent}>My</span>Code</span></h3><p>{isZh ? "写代码，也不仅仅是写代码" : "Write code. And go beyond it."}</p></div>
       <div className={styles.frames}>
       <div className={`${styles.videoShell} ${styles.browserShell}`}>
         <video ref={movie} className={styles.movie} width={1600} height={748} muted playsInline preload="metadata" poster="/projects/ohmycode/browser-poster.jpg" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoHeight) setVideoRatio(video.videoWidth / video.videoHeight); }} onError={() => setFailed(true)} aria-label={isZh ? "OhMyCode 真实客户端：Agent 操作内置浏览器" : "Actual OhMyCode client: an agent operating its built-in browser"}>
@@ -324,7 +324,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       </div>
       <div className={styles.detailsScene} data-end-content>
     <div className={styles.details}>
-      <p className={styles.description}>{isZh ? "OhMyCode 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : "OhMyCode is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
+      <p className={styles.description}>Oh<span className={styles.brandAccent}>My</span>Code{isZh ? " 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : " is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
       <div className={styles.links}><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
     </div>
       </div>

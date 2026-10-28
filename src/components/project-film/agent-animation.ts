@@ -6,6 +6,10 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
   const cards = roles.map(find);
   const mobile = stage.clientWidth <= 900;
   const animation = gsap.timeline();
+  const ring = find("complete-ring") as unknown as SVGGeometryElement;
+  const check = find("complete-check") as unknown as SVGGeometryElement;
+  const ringLength = ring.getTotalLength();
+  const checkLength = check.getTotalLength();
   const frontOrder = [...roles];
   const focus = (role: string, at: number) => {
     const alreadyFront = frontOrder[0] === role;
@@ -70,11 +74,45 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
     .to(find("test-body"), { padding: 0, duration: .45 }, 7.9)
     .to(find("deck"), { width: Math.min(stage.clientWidth * .88, 740), height: Math.min(stage.clientHeight * .44, 400), top: "27%", duration: .65, ease: "power2.inOut" }, 7.9)
     .to(find("test-canvas"), { height: Math.min(stage.clientHeight * .44, 400), borderRadius: 10, borderWidth: 0, duration: .65, ease: "power2.inOut" }, 7.9)
-    .fromTo(find("result"), { top: stage.clientHeight * .27 + Math.min(stage.clientHeight * .44, 400) + 28, xPercent: 0, y: 15, autoAlpha: 0 }, { autoAlpha: 1, y: 0, duration: .22 }, 8.4);
+    .fromTo(find("result"), { top: stage.clientHeight * .27 + Math.min(stage.clientHeight * .44, 400) + 28, xPercent: 0, y: 0, autoAlpha: 0 }, { autoAlpha: 1, duration: 0 }, 8.7)
+    .fromTo(ring, { strokeDasharray: ringLength, strokeDashoffset: ringLength }, { strokeDashoffset: 0, duration: .46, ease: "none" }, 8.7)
+    .fromTo(check, { strokeDasharray: checkLength, strokeDashoffset: checkLength }, { strokeDashoffset: 0, duration: .3, ease: "none" }, 9.18);
+  const celebration = gsap.timeline({ paused: true });
+  section.querySelectorAll<HTMLElement>("[data-team-confetti]").forEach((piece, index) => {
+    const angle = Math.PI + ((index * 2.39996) % Math.PI);
+    const distance = (mobile ? 90 : 140) + (index * 47 % (mobile ? 100 : 170));
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+    celebration.fromTo(piece, { x: 0, y: 0, autoAlpha: 0, scale: .4, rotation: index * 31 }, {
+      keyframes: [
+        { x: x * .72, y, autoAlpha: 1, scale: 1, rotation: index * 31 + 130, duration: .4, ease: "power2.out" },
+        { x, y: y * .15 + 110, autoAlpha: 0, scale: .7, rotation: index * 31 + 400, duration: .9, ease: "power1.in" },
+      ],
+    }, (index % 5) * .025);
+  });
   focus("developer", 1.2);
   focus("reviewer", 2.3);
   focus("tester", 3.98);
   focus("developer", 5.6);
   focus("tester", 6.7);
+  // Give voice input its own opening beat, then preserve the existing workflow.
+  animation.shiftChildren(1.2, true, .45);
+  const taskText = find("task-text");
+  animation.fromTo(taskText, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.12, ease: `steps(${Array.from(taskText.textContent || "").length})` }, .22);
+  animation.fromTo(find("dispatch"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .1 }, 1.4)
+    .fromTo(find("voice"), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: .15 }, .08)
+    .fromTo(find("voice"), { attr: { "data-speaking": "false" } }, { attr: { "data-speaking": "true" }, duration: .001 }, .18)
+    .set(find("voice"), { attr: { "data-speaking": "false" } }, 1.48)
+    .to(find("voice"), { autoAlpha: 0, y: -12, duration: .2 }, 1.48);
+  let celebrated = false;
+  animation.to({}, { duration: .85 }, 10.68);
+  animation.eventCallback("onUpdate", () => {
+    const time = animation.time();
+    if (time < 9.9) celebrated = false;
+    if (time >= 10.72 && !celebrated) {
+      celebrated = true;
+      celebration.restart();
+    }
+  });
   return animation;
 }

@@ -24,7 +24,7 @@
 .phoneShell { --shell-opacity:1; position:absolute; inset:-12px -12px -42px; border:12px solid rgb(42 64 50 / var(--shell-opacity)); border-bottom-width:42px; border-radius:28px; box-shadow:inset 0 0 0 1px rgb(161 176 165 / var(--shell-opacity)),0 0 0 1px rgb(13 27 19 / var(--shell-opacity)); transform-style:preserve-3d; }
 .phoneRim,.phoneBack { position:absolute; inset:-12px -12px -42px; border-radius:28px; }
 .phoneRim { border:12px solid rgb(20 45 29 / var(--shell-opacity)); border-bottom-width:42px; box-shadow:0 0 0 1px rgb(53 80 63 / var(--shell-opacity)); }
-.phoneBack { background:rgb(17 39 26 / var(--shell-opacity)); transform:translateZ(-16px); }
+.phoneBack { background:#000; transform:translateZ(-16px) rotateY(180deg); backface-visibility:hidden; }
 .phoneShell::before { content:""; position:absolute; right:-15px; top:25%; width:3px; height:32px; border-radius:2px; background:rgb(129 152 137 / var(--shell-opacity)); transform:translateZ(-7px); }
 .phoneShell::after { content:""; position:absolute; top:-7px; left:50%; width:38px; height:6px; border-radius:5px; background:rgb(11 22 15 / var(--shell-opacity)); transform:translateX(-50%) translateZ(1px); }
 .phoneNavigation { position:absolute; bottom:-32px; left:12%; right:12%; height:22px; display:flex; align-items:center; justify-content:space-around; opacity:var(--shell-opacity); transform:translateZ(1px); }
