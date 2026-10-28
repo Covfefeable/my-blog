@@ -2,53 +2,79 @@ import gsap from "gsap";
 
 export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
   const find = (name: string) => section.querySelector<HTMLElement>(`[data-team-${name}]`)!;
-  const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-team-card]"));
+  const roles = ["developer", "reviewer", "tester"];
+  const cards = roles.map(find);
   const mobile = stage.clientWidth <= 900;
-  const centerCard = (card: HTMLElement) => {
-    const bounds = card.getBoundingClientRect();
-    const stageBounds = stage.getBoundingClientRect();
-    return stageBounds.left + stageBounds.width / 2 - bounds.left - bounds.width / 2;
-  };
   const animation = gsap.timeline();
-  animation.fromTo(find("task"), { xPercent: -50, yPercent: -50, x: 0, y: 0, autoAlpha: 0, scale: .92 }, { autoAlpha: 1, scale: 1, duration: .25 }, 0)
-    .to(find("task"), { top: mobile ? "20%" : "23%", scale: mobile ? .94 : .85, duration: .3, ease: "power2.inOut" }, .45)
-    .to(find("dispatch"), { autoAlpha: 0, duration: .16 }, .54)
-    .fromTo(cards, { x: (_index, card) => centerCard(card), y: -65, scale: .65, autoAlpha: 0 }, { x: 0, y: 0, scale: 1, autoAlpha: 1, duration: .35, stagger: .045, ease: "power2.inOut" }, .72)
-    .fromTo(section.querySelectorAll("[data-team-code]"), { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: .22, stagger: .12, ease: "none" }, 1.4)
-    .fromTo(find("cursor"), { x: 30, y: 20, autoAlpha: 0 }, { x: -12, y: -12, autoAlpha: 1, duration: .22, ease: "power2.inOut" }, 2.5)
-    .to(find("cursor"), { scale: .75, duration: .07, yoyo: true, repeat: 1 }, 2.76)
-    .to(find("test-image"), { scale: 1.4, duration: .18, ease: "power2.inOut" }, 2.9)
-    .to(find("test-image"), { scale: 1, duration: .18, ease: "power2.inOut" }, 3.34)
-    .fromTo(section.querySelectorAll("[data-team-check]"), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: .12, stagger: .3 }, 3.12)
-    .fromTo(find("finding"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .18 }, 4.18)
-    .fromTo(find("return"), { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: .16 }, 4.48)
-    .to(find("file"), { autoAlpha: 0, duration: .15 }, 5.05)
-    .fromTo(find("incoming"), { autoAlpha: 0, y: 5 }, { autoAlpha: 1, y: 0, duration: .18 }, 5.05)
-    .to(find("return"), { autoAlpha: 0, duration: .15 }, 5.05)
-    .fromTo(find("fix"), { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: .3, ease: "none" }, 5.28)
-    .fromTo(find("revision"), { autoAlpha: 0, y: 7 }, { autoAlpha: 1, y: 0, duration: .16 }, 5.62)
-    .to(find("finding"), { autoAlpha: 0, duration: .15 }, 6.18)
-    .fromTo(find("approved"), { autoAlpha: 0, y: 7 }, { autoAlpha: 1, y: 0, duration: .18 }, 6.38)
-    .to([find("task"), find("heading")], { autoAlpha: 0, y: -18, duration: .25 }, 7.1)
-    .to(cards, { x: (_index, card) => centerCard(card), y: -30, scale: .5, autoAlpha: 0, duration: .3, stagger: .035, ease: "power2.inOut" }, 7.12)
-    .fromTo(find("result"), { xPercent: -50, yPercent: -50, autoAlpha: 0, scale: .94, y: 25 }, { autoAlpha: 1, scale: 1, y: 0, duration: .3, ease: "power2.out" }, 7.44);
-  const highlight = (role: string | null, at: number, warning = false) => {
-    for (const card of cards) {
-      const active = role === null || card.hasAttribute(`data-team-${role}`);
-      animation.set(card, { attr: { "data-active": String(active) } }, at)
-        .to(card, {
-          opacity: active ? 1 : .55,
-          borderColor: active ? (warning ? "#b78a3f" : "#397c50") : "#bdcdbf",
-          boxShadow: active ? `inset 0 0 0 1px ${warning ? "#b78a3f" : "#397c50"}` : "inset 0 0 0 1px transparent",
-          duration: .16,
-        }, at);
-    }
+  const frontOrder = [...roles];
+  const focus = (role: string, at: number) => {
+    const alreadyFront = frontOrder[0] === role;
+    frontOrder.splice(frontOrder.indexOf(role), 1);
+    frontOrder.unshift(role);
+    frontOrder.forEach((name, rank) => {
+      const card = find(name);
+      const active = rank === 0;
+      animation.set(card, { attr: { "data-active": String(active) } }, at);
+      if (active && !alreadyFront) {
+        const pull = mobile ? Math.max(24, (stage.clientWidth - card.offsetWidth) / 2 - 18) : card.offsetWidth * .8;
+        animation.to(card, { x: pull, y: -30, rotation: mobile ? 4 : 8, duration: .14, ease: "power2.in" }, at)
+          .set(card, { zIndex: 5 }, at + .14)
+          .to(card, { x: 0, y: 0, z: 0, scale: 1, rotation: 0, duration: .2, ease: "power2.out" }, at + .14);
+      } else {
+        animation.set(card, { zIndex: 3 - rank }, at + .14)
+          .to(card, { x: rank * (mobile ? 15 : 22), y: rank * 15, z: -rank * 16, scale: 1 - rank * .035, rotation: rank === 0 ? 0 : (rank % 2 ? -3 : 4), duration: .3, ease: "power2.inOut" }, at);
+      }
+      animation.to(card, { opacity: 1, borderColor: active ? "#397c50" : "#b7c8ba", boxShadow: active ? "inset 0 0 0 1px #397c50,0 18px 36px #203d231a" : "0 4px 14px #203d2312", duration: .16 }, at);
+    });
   };
-  highlight("developer", 1.2);
-  highlight("tester", 2.3);
-  highlight("reviewer", 3.98, true);
-  highlight("developer", 4.85);
-  highlight("reviewer", 5.98);
-  highlight(null, 6.85);
+  animation.fromTo(find("task"), { xPercent: -50, yPercent: -50, x: 0, y: 0, autoAlpha: 0, scale: .92 }, { autoAlpha: 1, scale: 1, duration: .25 }, 0)
+    .to(find("task"), { top: mobile ? "20%" : "22%", scale: mobile ? .94 : .85, duration: .3, ease: "power2.inOut" }, .45)
+    .to(find("dispatch"), { autoAlpha: 0, duration: .16 }, .54)
+    .fromTo(find("thoughts"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .3 }, .72)
+    .fromTo(cards, { x: 0, y: -70, scale: .7, autoAlpha: 0 }, { x: index => index * (mobile ? 15 : 22), y: index => index * 15, z: index => -index * 16, scale: index => 1 - index * .035, rotation: index => index === 0 ? 0 : index % 2 ? -3 : 4, autoAlpha: 1, duration: .35, stagger: .045 }, .72)
+    .fromTo(section.querySelectorAll("[data-team-code]"), { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: .2, stagger: .1, ease: "none" }, 1.58)
+    .fromTo(find("lens"), { autoAlpha: 0, x: -10, y: 0 }, { autoAlpha: 1, x: 30, y: 12, duration: .22, ease: "power2.inOut" }, 2.66)
+    .to(find("lens"), { x: 70, y: 42, duration: .3, ease: "power2.inOut" }, 2.94)
+    .to(find("lens"), { x: 25, y: 68, duration: .25, ease: "power2.inOut" }, 3.28)
+    .to(find("lens"), { autoAlpha: 0, duration: .12 }, 3.56)
+    .fromTo(find("review-pass"), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: .16 }, 3.65)
+    .fromTo(find("cursor"), { x: 30, y: 20, autoAlpha: 0 }, { x: -12, y: -12, autoAlpha: 1, duration: .18 }, 4.34)
+    .to(find("cursor"), { scale: .75, duration: .07, yoyo: true, repeat: 1 }, 4.55)
+    .fromTo(find("preview"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .1 }, 4.65)
+    .fromTo(find("test-image"), { scale: .65 }, { scale: 1, duration: .2, ease: "power2.out" }, 4.65)
+    .fromTo(find("scroll-probe"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .08 }, 4.85)
+    .fromTo(section.querySelector("[data-team-check]"), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: .12 }, 4.8)
+    .to(find("test-page"), { y: -22, duration: .22, ease: "power2.inOut" }, 4.85)
+    .fromTo(find("finding"), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: .16 }, 5.06)
+    .to(find("tester"), { borderColor: "#b78a3f", duration: .12 }, 5.06)
+    .fromTo(find("return"), { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: .14 }, 5.3)
+    .to(find("file"), { autoAlpha: 0, duration: .12 }, 5.96)
+    .fromTo(find("incoming"), { autoAlpha: 0, y: 5 }, { autoAlpha: 1, y: 0, duration: .14 }, 5.96)
+    .to(find("return"), { autoAlpha: 0, duration: .12 }, 5.96)
+    .fromTo(find("fix"), { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: .25, ease: "none" }, 6.12)
+    .fromTo(find("revision"), { autoAlpha: 0, y: 7 }, { autoAlpha: 1, y: 0, duration: .15 }, 6.42)
+    .to(find("finding"), { autoAlpha: 0, duration: .15 }, 7.05)
+    .to(find("scroll-probe"), { autoAlpha: 1, duration: .08 }, 6.98)
+    .to(find("scroll-probe"), { autoAlpha: 0, duration: .1 }, 7.18)
+    .to(find("cursor"), { left: "94%", top: "5%", x: 0, y: 0, duration: .2 }, 6.98)
+    .to(find("preview"), { autoAlpha: 0, duration: .12 }, 7.22)
+    .to(find("preview"), { autoAlpha: 1, duration: .12 }, 7.58)
+    .fromTo(section.querySelectorAll("[data-team-check]")[1], { display: "none", autoAlpha: 0, y: 8 }, { display: "flex", autoAlpha: 1, y: 0, duration: .12 }, 7.15)
+    .to(find("test-page"), { y: 0, duration: .15 }, 7.18)
+    .fromTo(find("approved"), { autoAlpha: 0, y: 7 }, { autoAlpha: 1, y: 0, duration: .16 }, 7.38)
+    .to([find("task"), find("heading")], { autoAlpha: 0, y: -18, duration: .2 }, 7.78)
+    .to(find("thoughts"), { autoAlpha: 0, duration: .25 }, 7.78)
+    .to([find("developer"), find("reviewer")], { autoAlpha: 0, scale: .9, duration: .25 }, 7.8)
+    .to([find("test-header"), find("tests"), find("test-outcome"), find("cursor")], { autoAlpha: 0, duration: .18 }, 7.8)
+    .to(find("test-header"), { height: 0, paddingTop: 0, paddingBottom: 0, borderBottomWidth: 0, duration: .45 }, 7.9)
+    .to(find("test-body"), { padding: 0, duration: .45 }, 7.9)
+    .to(find("deck"), { width: Math.min(stage.clientWidth * .88, 740), height: Math.min(stage.clientHeight * .44, 400), top: "27%", duration: .65, ease: "power2.inOut" }, 7.9)
+    .to(find("test-canvas"), { height: Math.min(stage.clientHeight * .44, 400), borderRadius: 10, borderWidth: 0, duration: .65, ease: "power2.inOut" }, 7.9)
+    .fromTo(find("result"), { top: stage.clientHeight * .27 + Math.min(stage.clientHeight * .44, 400) + 28, xPercent: 0, y: 15, autoAlpha: 0 }, { autoAlpha: 1, y: 0, duration: .22 }, 8.4);
+  focus("developer", 1.2);
+  focus("reviewer", 2.3);
+  focus("tester", 3.98);
+  focus("developer", 5.6);
+  focus("tester", 6.7);
   return animation;
 }

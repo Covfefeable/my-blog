@@ -16,8 +16,22 @@
 .bridge h4 > span { display:block; }
 .bridge h4 > span:last-child { color:#246447; }
 .bridge [data-phone-prefix],.bridge [data-phone-word] { display:inline-block; }
-.bridge [data-phone-word] { backface-visibility:hidden; }
-.phoneScreen { position:absolute; z-index:4; display:block; object-fit:fill; visibility:hidden; pointer-events:none; will-change:transform; }
+.bridge [data-phone-word] { position:relative; color:var(--ohmycode-accent); transform-style:preserve-3d; backface-visibility:hidden; }
+.phoneFace { position:relative; display:block; color:var(--ohmycode-accent); text-shadow:0 -1px 0 #a7dfb7; }
+.phoneDepth { position:absolute; inset:0; display:block; color:#0c4827; }
+.phoneScreen { position:absolute; z-index:4; display:block; visibility:hidden; pointer-events:none; transform-style:preserve-3d; will-change:transform; }
+.phoneScreen > img { display:block; width:100%; height:100%; object-fit:fill; backface-visibility:hidden; transform:translateZ(.5px); }
+.phoneShell { --shell-opacity:1; position:absolute; inset:-12px -12px -42px; border:12px solid rgb(42 64 50 / var(--shell-opacity)); border-bottom-width:42px; border-radius:28px; box-shadow:inset 0 0 0 1px rgb(161 176 165 / var(--shell-opacity)),0 0 0 1px rgb(13 27 19 / var(--shell-opacity)); transform-style:preserve-3d; }
+.phoneRim,.phoneBack { position:absolute; inset:-12px -12px -42px; border-radius:28px; }
+.phoneRim { border:12px solid rgb(20 45 29 / var(--shell-opacity)); border-bottom-width:42px; box-shadow:0 0 0 1px rgb(53 80 63 / var(--shell-opacity)); }
+.phoneBack { background:rgb(17 39 26 / var(--shell-opacity)); transform:translateZ(-16px); }
+.phoneShell::before { content:""; position:absolute; right:-15px; top:25%; width:3px; height:32px; border-radius:2px; background:rgb(129 152 137 / var(--shell-opacity)); transform:translateZ(-7px); }
+.phoneShell::after { content:""; position:absolute; top:-7px; left:50%; width:38px; height:6px; border-radius:5px; background:rgb(11 22 15 / var(--shell-opacity)); transform:translateX(-50%) translateZ(1px); }
+.phoneNavigation { position:absolute; bottom:-32px; left:12%; right:12%; height:22px; display:flex; align-items:center; justify-content:space-around; opacity:var(--shell-opacity); transform:translateZ(1px); }
+.phoneNavigation i { display:block; width:11px; height:11px; border:1.5px solid #e0e9e3; }
+.phoneNavigation i:first-child { width:0; height:0; border:6px solid transparent; border-left:0; border-right:9px solid #e0e9e3; }
+.phoneNavigation i:nth-child(2) { border-radius:50%; }
+.phoneNavigation i:last-child { border-radius:1px; }
 .bridge p { margin:30px 0 0; color:#56664d; font-size:clamp(14px,1.5vw,21px); line-height:1.8; }
 .movie { display:block; width:100%; height:auto; aspect-ratio:var(--movie-ratio,1.6); object-fit:contain; background:#101416; }
 .androidStage { padding:70px clamp(20px,6vw,100px); background:#e3e7dd; }
@@ -27,19 +41,15 @@
 .captions { position:absolute; bottom:45px; left:4vw; right:4vw; height:54px; text-align:center; }
 .captions p { position:absolute; inset:0; margin:0; color:#263020; font-size:clamp(24px,3vw,44px); font-weight:500; line-height:1.3; letter-spacing:var(--tracking-heading); visibility:hidden; }
 .detailsScene { position:absolute; z-index:6; inset:0; display:grid; place-items:center; visibility:hidden; }
-.details { display:grid; width:100%; grid-template-columns:1.4fr 1fr; gap:30px 12%; padding:48px clamp(20px,6vw,100px) 32px; }
+.details { display:flex; flex-direction:column; align-items:center; width:100%; gap:30px; padding:48px clamp(20px,6vw,100px) 32px; text-align:center; }
 .description { max-width:750px; margin:0; color:#263020; font-size:clamp(21px,2.2vw,36px); line-height:1.6; letter-spacing:var(--tracking-heading); text-wrap:balance; }
-.links { display:flex; align-items:flex-start; justify-content:flex-end; gap:32px; padding-top:12px; }
+.links { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:32px; }
 .links svg { margin-left:.3em; }
-.links button,.links a { display:inline-flex; align-items:center; min-height:44px; padding:4px 0 9px; border:0; border-bottom:1px solid #246447; background:transparent; color:#246447; font:500 clamp(18px,1.5vw,22px)/1.4 Arial,"PingFang SC",sans-serif; white-space:nowrap; cursor:pointer; }
-.links button:hover,.links a:hover { color:#122b1d; border-color:#122b1d; }
-.links button:focus-visible,.close:focus-visible { outline:2px solid #246447; outline-offset:6px; }
+.links a { display:inline-flex; align-items:center; min-height:44px; padding:4px 0 9px; border:0; border-bottom:1px solid #246447; background:transparent; color:#246447; font:500 clamp(18px,1.5vw,22px)/1.4 Arial,"PingFang SC",sans-serif; white-space:nowrap; cursor:pointer; }
+.links a:hover { color:#122b1d; border-color:#122b1d; }
+.links a:focus-visible { outline:2px solid #246447; outline-offset:6px; }
 .failure { position:absolute; inset:0; display:grid; place-content:center; color:#edf4ea; background:#101416; }
 .failure button { margin-top:16px; padding:8px; cursor:pointer; }
-.dialog { position:fixed; inset:0; width:calc(100% - 48px); max-width:none; margin:auto; max-height:calc(100dvh - 48px); padding:48px 16px 16px; border:1px solid #4d5947; border-radius:12px; background:#101416; }
-.dialog::backdrop { background:#101416eb; backdrop-filter:blur(12px); }
-.dialog video { display:block; width:auto; height:auto; max-width:100%; max-height:calc(100dvh - 130px); margin:auto; object-fit:contain; }
-.close { position:absolute; top:6px; right:15px; padding:3px 10px; border:0; background:transparent; color:#f4f5f2; font:30px Arial,sans-serif; cursor:pointer; }
 @media(max-width:900px) {
   .showcase { margin-inline:-20px; }
   .cinema { min-height:520px; }
@@ -49,8 +59,8 @@
   .frames { width:calc(100% - 32px); }
   .videoShell { border-radius:7px; }
   .captions { bottom:18%; }
-  .details { grid-template-columns:1fr; gap:20px; padding:30px 20px; }
-  .links { justify-content:flex-start; gap:28px; }
+  .details { gap:24px; padding:30px 20px; }
+  .links { gap:28px; }
 }
 @media(prefers-reduced-motion:reduce) {
   .phoneScreen { display:none; }

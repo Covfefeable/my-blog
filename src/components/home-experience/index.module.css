@@ -64,16 +64,16 @@
 .footer { display:flex; flex-wrap:wrap; gap:20px 28px; width:calc(100% - clamp(40px,6vw,120px)); margin:auto; padding:24px 0 32px; border-top:1px solid var(--portal-line); color:var(--portal-muted); font-size:12px; }
 .footer > span { margin-right:auto; }
 .footer a { color:var(--portal-muted); }
-@media(max-width:800px) {
+@media(max-width:900px) {
   .navigation,.hero,.content,.footer { width:calc(100% - 40px); }
   .navigation { height:70px; }
   .navigation > div { gap:15px; }
   .wordmark span { display:none; }
-  .hero { min-height:880px; }
-  .heroCopy { top:64px; width:100%; transform:none; }
+  .hero { min-height:0; padding:64px 0 68px; }
+  .heroCopy { position:relative; top:auto; width:100%; transform:none; }
   .hero h1 { font-size:clamp(3rem,13vw,5rem); }
   .statement { max-width:460px; font-size:16px; }
-  .lanyardStage { inset:350px -20px 0; }
+  .lanyardStage { display:none; }
   .clearance,.archive,.personnel { padding:55px 0; }
   .clearance { padding-bottom:0; }
   .clearance + .personnel { padding-top:28px; }

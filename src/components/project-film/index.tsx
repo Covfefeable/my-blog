@@ -9,7 +9,7 @@ import { createAgentAnimation } from "./agent-animation";
 import styles from "./index.module.css";
 
 const COLLAB_SPEED = 1.4;
-const COLLAB_EXTENSION = 8.12 / COLLAB_SPEED - 1.12;
+const COLLAB_EXTENSION = 9 / COLLAB_SPEED - 1.12;
 const VIDEO_SCROLL_FACTOR = 3;
 const VIDEO_WINDOWS = [{ start: .43, end: .77 }, { start: 2.4, end: 2.82 }];
 const VIDEO_EXTENSION = VIDEO_WINDOWS.reduce((total, window) => total + (window.end - window.start) * (VIDEO_SCROLL_FACTOR - 1), 0);
@@ -30,8 +30,6 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
   const root = useRef<HTMLElement>(null);
   const movie = useRef<HTMLVideoElement>(null);
   const androidMovie = useRef<HTMLVideoElement>(null);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const fullMovie = useRef<HTMLVideoElement>(null);
   const [failed, setFailed] = useState(false);
   const [videoRatio, setVideoRatio] = useState(1600 / 748);
 
@@ -62,7 +60,9 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       const letter = section.querySelector<HTMLElement>(`.${styles.initialO}`)!;
       const frames = section.querySelector<HTMLElement>(`.${styles.frames}`)!;
       const screen = section.querySelector<HTMLElement>("[data-phone-screen]")!;
+      const phoneShell = screen.querySelector<HTMLElement>("[data-phone-shell]")!;
       const rain = section.querySelector<HTMLElement>("[data-tool-rain]")!;
+      const thoughts = section.querySelector<HTMLElement>("[data-team-thoughts]")!;
       const previous = {
         background: stage.style.backgroundColor, letter: letter.style.transform, clip: frames.style.clipPath,
       };
@@ -104,6 +104,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         if (!animation) return;
         const time = narrativeTime(animation.time());
         rain.dataset.running = String(time >= 4.25 + COLLAB_EXTENSION && time < 6.58 + COLLAB_EXTENSION && !document.hidden);
+        thoughts.dataset.running = String(time >= 2.98 && time < 2.98 + 8.03 / COLLAB_SPEED && !document.hidden);
         const zoom = Math.pow(clamp((time - .12) / .3), 3);
         const scale = 1 + (geometry.scale - 1) * zoom;
         const x = geometry.shiftX * zoom, y = geometry.shiftY * zoom;
@@ -133,7 +134,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         screen.style.left = `${centerX}px`;
         screen.style.top = `${centerY}px`;
         screen.style.transform = `translate(-50%, -50%) perspective(2200px) translateZ(${65 * arc}px) rotateZ(${8 * arc}deg) rotateX(${4 * (1 - landing) + 4 * arc}deg) rotateY(${90 * (1 - flip) - 360 * landing}deg)`;
-        screen.style.filter = `drop-shadow(0 ${18 * arc}px ${24 * arc}px rgba(20,30,40,${.22 * arc}))`;
+        phoneShell.style.setProperty("--shell-opacity", String(1 - landing));
         screen.style.opacity = String(time < 1.59 ? 0 : 1 - clamp((time - 2.32) / .08));
         screen.style.visibility = time >= 1.59 && time < 2.4 ? "visible" : "hidden";
         heads.forEach((head, index) => {
@@ -267,6 +268,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         animation = undefined;
         document.removeEventListener("visibilitychange", renderFrame);
         delete rain.dataset.running;
+        delete thoughts.dataset.running;
         rain.style.removeProperty("--rain-distance");
         heads.forEach((head, index) => {
           head.video.removeEventListener("seeked", seeks[index]);
@@ -286,10 +288,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
     return () => { media.revert(); phone?.pause(); document.removeEventListener("visibilitychange", stopWhenHidden); };
   }, []);
 
-  const openFilm = () => {
-    dialog.current?.showModal();
-    if (fullMovie.current) { fullMovie.current.currentTime = 0; void fullMovie.current.play().catch(() => {}); }
-  };
+
 
   return <section className={styles.showcase} ref={root} aria-label="OhMyCode" style={{ "--movie-ratio": videoRatio } as CSSProperties}>
     <div className={styles.cinema} data-film-stage>
@@ -306,10 +305,17 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       </div>
       </div>
       <div className={styles.bridge} aria-hidden="true">
-        <h4><span data-bridge-line data-bridge-first>{isZh ? "浏览器之外，" : "Beyond the browser."}</span><span data-bridge-line data-phone-line><span data-phone-prefix>{isZh ? "还有你的" : "Onto your "}</span><span data-phone-word>{isZh ? "手机" : "phone"}</span></span></h4>
+        <h4><span data-bridge-line data-bridge-first>{isZh ? "浏览器之外，" : "Beyond the browser."}</span><span data-bridge-line data-phone-line><span data-phone-prefix>{isZh ? "还有你的" : "Onto your "}</span><span data-phone-word>{Array.from({ length: 16 }, (_, index) => <span className={styles.phoneDepth} key={index} aria-hidden="true" style={{ transform: `translateZ(${-index - 1}px)` }}>{isZh ? "手机" : "phone"}</span>)}<span className={styles.phoneFace}>{isZh ? "手机" : "phone"}</span></span></span></h4>
       </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className={styles.phoneScreen} data-phone-screen src="/projects/ohmycode/android-screen.png" alt="" aria-hidden="true" />
+      <div className={styles.phoneScreen} data-phone-screen aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/projects/ohmycode/android-screen.png" alt="" />
+        <span className={styles.phoneShell} data-phone-shell>
+          <span className={styles.phoneBack} />
+          {Array.from({ length: 16 }, (_, index) => <span className={styles.phoneRim} key={index} style={{ transform: `translateZ(${-index - 1}px)` }} />)}
+          <span className={styles.phoneNavigation}><i /><i /><i /></span>
+        </span>
+      </div>
       <CapabilityScenes isZh={isZh} />
       <div className={styles.captions} aria-hidden="true">
         <p className={styles.chapterOne}>{isZh ? "说出任务。" : "Describe the task."}</p>
@@ -319,13 +325,10 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       <div className={styles.detailsScene} data-end-content>
     <div className={styles.details}>
       <p className={styles.description}>{isZh ? "OhMyCode 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : "OhMyCode is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
-      <div className={styles.links}><button onClick={openFilm}>{isZh ? "观看真实演示" : "Watch the demo"} <ExternalArrow /></button><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
+      <div className={styles.links}><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
     </div>
       </div>
     </div>
-    <dialog ref={dialog} className={styles.dialog} onClose={() => fullMovie.current?.pause()} onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
-      <button className={styles.close} type="button" autoFocus onClick={() => dialog.current?.close()} aria-label={isZh ? "关闭视频" : "Close video"}>×</button>
-      <video ref={fullMovie} controls playsInline preload="none" poster="/projects/ohmycode/browser-poster.jpg" aria-label={isZh ? "OhMyCode 完整演示视频" : "OhMyCode demo video"}><source src="/projects/ohmycode/browser-full.mp4" type="video/mp4" /></video>
-    </dialog>
+
   </section>;
 }

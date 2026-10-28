@@ -54,6 +54,14 @@ function DecryptedName() {
 export default function HomeExperience() {
   const { i18n } = useTranslation();
   const [showAllArticles, setShowAllArticles] = useState(false);
+  const [showBadge, setShowBadge] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 901px)");
+    const update = () => setShowBadge(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
   const allArticles = useMemo(() => [...articles].reverse(), []);
   const visibleArticles = showAllArticles ? allArticles : allArticles.slice(0, 5);
   const isZh = i18n.resolvedLanguage === "zh-CN";
@@ -62,7 +70,7 @@ export default function HomeExperience() {
     roles: "前端开发工程师",
     enter: "阅读文章",
     profile: "关于我",
-    accessTitle: "当前 focus",
+    accessTitle: "当前 FOCUS",
     accessIntro: "最近在做 OhMyCode，也持续关注 Web 安全与界面交互。",
     featuredLabel: "开源项目",
     featuredKicker: "开源 Code Agent 工作空间",
@@ -97,7 +105,7 @@ export default function HomeExperience() {
     roles: "Frontend engineer",
     enter: "Read the articles",
     profile: "About me",
-    accessTitle: "Current focus",
+    accessTitle: "Current FOCUS",
     accessIntro: "Building OhMyCode and exploring web security and interface interaction.",
     featuredLabel: "FEATURED PROJECT",
     featuredKicker: "Open-source Code Agent workspace",
@@ -159,9 +167,9 @@ export default function HomeExperience() {
           </div>
         </div>
 
-        <div className={styles.lanyardStage}>
+        {showBadge && <div className={styles.lanyardStage}>
           <Lanyard ariaLabel={copy.lanyardLabel} />
-        </div>
+        </div>}
       </section>
 
       <div className={styles.content}>
