@@ -6,7 +6,8 @@
 .archiveNav .brand { font-size:19px; font-weight:700; color:var(--text); letter-spacing:var(--tracking-heading); }
 .hero { width:min(900px,calc(100% - 48px)); margin:64px auto 0; }
 .heroContent { max-width:760px; margin:0 auto 40px; }
-.hero h1 { margin:0 0 24px; font-size:clamp(2rem,4vw,3.2rem); line-height:1.35; letter-spacing:var(--tracking-heading); overflow-wrap:anywhere; }
+.hero h1 { margin:0 0 24px; font-size:clamp(1.8rem,3.2vw,2.65rem); font-weight:600; line-height:1.5; letter-spacing:var(--tracking-heading); overflow-wrap:anywhere; text-wrap:balance; }
+.archivePage :is(a,button):focus-visible { outline:2px solid var(--green); outline-offset:5px; }
 .description { color:var(--muted); font-size:18px; line-height:1.8; }
 .heroFooter { display:flex; gap:24px; margin-top:25px; color:var(--muted); font-size:13px; }
 .cover { width:100%; aspect-ratio:16/8; background-position:center; background-size:cover; border:1px solid var(--line); }
@@ -44,7 +45,7 @@
 @media(max-width:800px) {
 .archiveNav { height:70px; }
 .hero { margin-top:40px; }
-.hero h1 { font-size:clamp(1.9rem,7vw,2.6rem); }
+.hero h1 { font-size:clamp(1.65rem,6vw,2.2rem); }
 .description { font-size:16px; }
 .readingLayout { padding-top:36px; }
 .root { font-size:16px; }

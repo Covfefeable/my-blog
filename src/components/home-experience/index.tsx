@@ -12,8 +12,13 @@ import styles from "./index.module.css";
 
 const Lanyard = dynamic(() => import("@/components/lanyard"), {
   ssr: false,
-  loading: () => <div className={styles.badgeLoading}>IDENTITY TOKEN LOADING</div>,
+  loading: BadgeLoading,
 });
+
+function BadgeLoading() {
+  const { i18n } = useTranslation();
+  return <div className={styles.badgeLoading} role="status">{i18n.resolvedLanguage === "zh-CN" ? "正在加载工牌" : "Loading badge"}</div>;
+}
 
 const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
 
@@ -53,8 +58,8 @@ export default function HomeExperience() {
   const visibleArticles = showAllArticles ? allArticles : allArticles.slice(0, 5);
   const isZh = i18n.resolvedLanguage === "zh-CN";
   const copy = isZh ? {
-    statement: "用代码、好奇心，以及一点可控的混乱，构建让人记得住的数字体验。",
-    roles: "前端开发工程师 / 安全研究",
+    statement: "写前端，也折腾 Web 安全。做过的项目、遇到的问题，都记在这里。",
+    roles: "前端开发工程师",
     enter: "阅读文章",
     profile: "关于我",
     accessTitle: "当前 focus",
@@ -71,13 +76,13 @@ export default function HomeExperience() {
     loadMore: `加载其余 ${Math.max(articles.length - 5, 0)} 篇文章`,
     openRecord: "打开",
     personnelLabel: "关于我",
-    quote: "“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”",
+    quote: "最近主要在做 OhMyCode。之前写过反调试、代码混淆，也做过 TensorFlow.js 和大模型相关的实验。",
     roleLabel: "职位",
     roleValue: "前端开发工程师",
     locationLabel: "所在地",
     locationValue: "中国上海",
     focusFieldLabel: "方向",
-    focusFieldValue: "安全 / AI / 创意编程",
+    focusFieldValue: "Web 安全、AI 工具、前端交互",
     experienceLabel: "经历",
     lanyardLabel: "可拖动的数字工牌",
     dockIdentity: "主页",
@@ -86,11 +91,10 @@ export default function HomeExperience() {
     dockProfile: "档案",
     dockContact: "联系",
     dockLanguage: "语言",
-    contactTitle: "想一起做点有意思的东西吗？",
-    contactAction: "开始交流",
+    contactTitle: "联系我",
   } : {
-    statement: "Building interfaces with code, curiosity and a little controlled chaos.",
-    roles: "FRONTEND ENGINEER / SECURITY EXPLORER",
+    statement: "I build frontends and work on web security. This is where I write about my projects and the problems I run into.",
+    roles: "Frontend engineer",
     enter: "Read the articles",
     profile: "About me",
     accessTitle: "Current focus",
@@ -104,17 +108,17 @@ export default function HomeExperience() {
     resumeDescription: "View professional experience, selected projects and technical skills.",
     resumeAction: "OPEN PDF",
     archiveTitle: "Recent writing",
-    loadMore: `LOAD ${Math.max(articles.length - 5, 0)} MORE RECORDS`,
+    loadMore: `Load ${Math.max(articles.length - 5, 0)} more articles`,
     openRecord: "OPEN",
     personnelLabel: "About me",
-    quote: "“I combine technology, visual systems and interaction into things that are useful and memorable.”",
-    roleLabel: "ROLE",
+    quote: "I'm currently building OhMyCode. Earlier posts cover anti-debugging, code obfuscation, TensorFlow.js and experiments with large language models.",
+    roleLabel: "Role",
     roleValue: "Frontend Engineer",
-    locationLabel: "LOCATION",
+    locationLabel: "Location",
     locationValue: "Shanghai, China",
-    focusFieldLabel: "FOCUS",
-    focusFieldValue: "Security / AI / Creative Code",
-    experienceLabel: "EXPERIENCE",
+    focusFieldLabel: "Interests",
+    focusFieldValue: "Web security, AI tools, frontend interaction",
+    experienceLabel: "Experience",
     lanyardLabel: "Interactive draggable badge",
     dockIdentity: "IDENTITY",
     dockWork: "WORK",
@@ -122,12 +126,7 @@ export default function HomeExperience() {
     dockProfile: "PROFILE",
     dockContact: "CONTACT",
     dockLanguage: "LANGUAGE",
-    contactTitle: "Want to build something interesting?",
-    contactAction: "START A CONVERSATION",
-  };
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    contactTitle: "Get in touch",
   };
 
   const changeLanguage = () => {
@@ -155,8 +154,8 @@ export default function HomeExperience() {
           <p className={styles.roles}>{copy.roles}</p>
           <p className={styles.statement}>{copy.statement}</p>
           <div className={styles.heroActions}>
-            <button type="button" onClick={() => scrollTo("archive")}>{copy.enter} <span>↘</span></button>
-            <button type="button" className={styles.secondaryAction} onClick={() => scrollTo("personnel")}>{copy.profile} <span>→</span></button>
+            <a href="#archive">{copy.enter} <span aria-hidden="true">↓</span></a>
+            <a href="#personnel" className={styles.secondaryAction}>{copy.profile} <span aria-hidden="true">→</span></a>
           </div>
         </div>
 
@@ -172,7 +171,7 @@ export default function HomeExperience() {
             {visibleArticles.map((article) => <Link href={`/posts/${article.id}`} className={styles.logRow} key={article.id}>
               <time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time>
               <div><h3>{article.title}</h3><p>{article.description}</p></div>
-              <span className={styles.openLog}>{copy.openRecord} <ExternalArrow /></span>
+              <span className={styles.openLog} aria-hidden="true"><ExternalArrow /></span>
             </Link>)}
           </div>
           {!showAllArticles && allArticles.length > 5 && <button className={styles.loadMore} type="button" onClick={() => setShowAllArticles(true)}>{copy.loadMore} ↓</button>}
@@ -186,7 +185,6 @@ export default function HomeExperience() {
             <ProjectFilm isZh={isZh} />
             <a className={`${styles.panel} ${styles.panelStatus} ${styles.panelLink}`} href="/resume/qu-jie-frontend-engineer.pdf" target="_blank" rel="noreferrer">
               <span className={styles.panelCode}>{copy.resumeLabel}</span>
-              <span className={styles.resumeMark}>CV</span>
               <strong>{copy.resumeTitle}</strong><p>{copy.resumeDescription}</p>
               <span className={styles.panelAction}>{copy.resumeAction} <ExternalArrow /></span>
             </a>
@@ -196,20 +194,19 @@ export default function HomeExperience() {
         <section className={styles.personnel} id="personnel">
           <h2>{copy.personnelLabel}</h2>
           <div className={styles.personnelGrid}>
-            <div><p className={styles.quote}>{copy.quote}</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GITHUB / @Covfefeable <ExternalArrow /></a></div>
+            <div><p className={styles.aboutText}>{copy.quote}</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub / @Covfefeable <ExternalArrow /></a></div>
             <dl>
               <div><dt>{copy.roleLabel}</dt><dd>{copy.roleValue}</dd></div>
               <div><dt>{copy.locationLabel}</dt><dd>{copy.locationValue}</dd></div>
               <div><dt>{copy.focusFieldLabel}</dt><dd>{copy.focusFieldValue}</dd></div>
               <div><dt>{copy.experienceLabel}</dt><dd>Meizu / FreeBuf</dd></div>
-              <div><dt>GITHUB</dt><dd><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">@Covfefeable <ExternalArrow /></a></dd></div>
             </dl>
           </div>
         </section>
 
         <section className={styles.contact} id="contact">
           <h2>{copy.contactTitle}</h2>
-          <a href="mailto:rears_seasons_0n@icloud.com">{copy.contactAction} <ExternalArrow /></a>
+          <a href="mailto:rears_seasons_0n@icloud.com">rears_seasons_0n@icloud.com <ExternalArrow /></a>
         </section>
       </div>
       <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><Registration /><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a><a href="#contact">{copy.dockContact}</a></footer>

@@ -39,7 +39,7 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
         .to(card, {
           opacity: active ? 1 : .55,
           borderColor: active ? (warning ? "#b78a3f" : "#397c50") : "#bdcdbf",
-          boxShadow: active ? `0 0 0 2px ${warning ? "#c59a4d38" : "#397c5038"}, 0 20px 45px #23452b16` : "0 8px 20px #23452b08",
+          boxShadow: active ? `inset 0 0 0 1px ${warning ? "#b78a3f" : "#397c50"}` : "inset 0 0 0 1px transparent",
           duration: .16,
         }, at);
     }

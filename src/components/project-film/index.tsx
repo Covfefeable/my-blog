@@ -8,7 +8,8 @@ import ExternalArrow from "@/components/external-arrow";
 import { createAgentAnimation } from "./agent-animation";
 import styles from "./index.module.css";
 
-const COLLAB_EXTENSION = 7;
+const COLLAB_SPEED = 1.4;
+const COLLAB_EXTENSION = 8.12 / COLLAB_SPEED - 1.12;
 
 export default function ProjectFilm({ isZh }: { isZh: boolean }) {
   const root = useRef<HTMLElement>(null);
@@ -234,7 +235,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         .to(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: -55, duration: .3, ease: "power2.inOut" }, 6.99)
         .fromTo(section.querySelector("[data-end-content]"), { autoAlpha: 0, y: 55 }, { autoAlpha: 1, y: 0, duration: .3, ease: "power2.out" }, 7.12);
       timeline.shiftChildren(COLLAB_EXTENSION, true, 3.2);
-      timeline.add(createAgentAnimation(section, stage), 2.08);
+      timeline.add(createAgentAnimation(section, stage).timeScale(COLLAB_SPEED), 2.08);
       timeline.shiftChildren(.9, true, 1.98);
       timeline.fromTo(section.querySelector(`.${styles.androidShell}`),
         { autoAlpha: 0, scale: 1, yPercent: 0 },
@@ -298,9 +299,8 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       </div>
       <div className={styles.detailsScene} data-end-content>
     <div className={styles.details}>
-      <p className={styles.description}>{isZh ? "自选模型，本地执行。对话、终端和浏览器，在同一个工作空间里推进任务。" : "Your model. Local execution. Conversations, terminals and a browser, working in one workspace."}</p>
+      <p className={styles.description}>{isZh ? "OhMyCode 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : "OhMyCode is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
       <div className={styles.links}><button onClick={openFilm}>{isZh ? "观看真实演示" : "Watch the demo"} <ExternalArrow /></button><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
-      <p className={styles.support}>{isZh ? "也支持 Android 设备操控、主持人调度的多 Agent 群聊、语音，以及 MCP / Skills。" : "Also supports Android control, host-directed multi-agent chat, voice, MCP and Skills."}</p>
     </div>
       </div>
     </div>

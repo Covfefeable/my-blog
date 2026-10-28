@@ -2,7 +2,7 @@
   <rect width="800" height="1120" rx="58" fill="#07110e"/>
   <path d="M0 0h800v18H0z" fill="#39ff88"/>
   <text x="62" y="110" fill="#39ff88" font-family="monospace" font-size="28" letter-spacing="5">CURRENT PROJECT</text>
-  <text x="62" y="210" fill="#f0fff8" font-family="Arial,sans-serif" font-size="62" font-weight="700">OHMYCODE</text>
+  <text x="62" y="210" fill="#f0fff8" font-family="Arial,sans-serif" font-size="62" font-weight="700">Oh<tspan fill="#7dff98">My</tspan>Code</text>
   <text x="62" y="258" fill="#91a69e" font-family="monospace" font-size="23" letter-spacing="2">OPEN-SOURCE CODE AGENT WORKSPACE</text>
   <path d="M62 310h676" stroke="#24493c"/>
   <g font-family="monospace">
@@ -14,5 +14,5 @@
   <text x="96" y="818" fill="#91a69e" font-family="monospace" font-size="21">WORKING ACROSS</text>
   <text x="96" y="870" fill="#f0fff8" font-family="Arial,sans-serif" font-size="34" font-weight="700">TYPESCRIPT / REACT / AI</text>
   <text x="96" y="912" fill="#39ff88" font-family="monospace" font-size="22">WEB SECURITY / CREATIVE CODE</text>
-  <text x="62" y="1040" fill="#527268" font-family="monospace" font-size="22" letter-spacing="3">CLICK TO FLIP / DRAG TO INSPECT</text>
+  <text x="62" y="1040" fill="#527268" font-family="monospace" font-size="22" letter-spacing="3">GITHUB.COM/COVFEFEABLE/OHMYCODE</text>
 </svg>

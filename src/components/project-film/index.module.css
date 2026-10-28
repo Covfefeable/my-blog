@@ -34,7 +34,6 @@
 .links button,.links a { display:inline-flex; align-items:center; min-height:44px; padding:4px 0 9px; border:0; border-bottom:1px solid #246447; background:transparent; color:#246447; font:500 clamp(18px,1.5vw,22px)/1.4 Arial,"PingFang SC",sans-serif; white-space:nowrap; cursor:pointer; }
 .links button:hover,.links a:hover { color:#122b1d; border-color:#122b1d; }
 .links button:focus-visible,.close:focus-visible { outline:2px solid #246447; outline-offset:6px; }
-.support { grid-column:1/-1; color:#626c61; font-size:14px; line-height:1.8; }
 .failure { position:absolute; inset:0; display:grid; place-content:center; color:#edf4ea; background:#101416; }
 .failure button { margin-top:16px; padding:8px; cursor:pointer; }
 .dialog { position:fixed; inset:0; width:calc(100% - 48px); max-width:none; margin:auto; max-height:calc(100dvh - 48px); padding:48px 16px 16px; border:1px solid #4d5947; border-radius:12px; background:#101416; }
