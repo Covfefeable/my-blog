@@ -8,6 +8,11 @@
 .browserShell { z-index:1; visibility:hidden; }
 .androidShell { z-index:2; visibility:hidden; }
 .androidMovie { display:block; width:100%; height:auto; aspect-ratio:2038/1000; object-fit:contain; }
+.bridge { position:absolute; z-index:3; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; visibility:hidden; pointer-events:none; }
+.bridge h4 { margin:0; font-size:clamp(42px,7vw,120px); font-weight:500; line-height:1.25; letter-spacing:-.06em; }
+.bridge h4 span { display:block; }
+.bridge h4 span:last-child { color:#246447; }
+.bridge p { margin:30px 0 0; color:#56664d; font-size:clamp(14px,1.5vw,21px); line-height:1.8; }
 .movie { display:block; width:100%; height:auto; aspect-ratio:var(--movie-ratio,1.6); object-fit:contain; background:#101416; }
 .androidStage { padding:70px clamp(20px,6vw,100px); background:#e3e7dd; }
 .androidStage h4 { margin:0 0 16px; color:#202820; font-size:clamp(30px,4vw,64px); font-weight:500; letter-spacing:-.05em; }
@@ -47,5 +52,6 @@
   .frames { display:flex; flex-direction:column; gap:24px; width:100%; }
   .videoShell { transform:none; will-change:auto; }
   .browserShell,.androidShell { visibility:visible; }
+  .bridge { position:relative; inset:auto; visibility:visible; padding:30px 0; }
   .captions { display:none; }
 }

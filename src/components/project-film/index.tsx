@@ -43,13 +43,17 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         .fromTo(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .09 }, .2)
         .to(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: -15, duration: .08 }, .4)
         .fromTo(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .09 }, .43)
-        .to(heads[0], { progress: 1, ease: "none", duration: .42, onUpdate: () => update(0) }, .16)
-        .to(section.querySelector(`.${styles.browserShell}`), { scale: .84, xPercent: -13, yPercent: -9, autoAlpha: .25, duration: .24, ease: "power2.inOut" }, .54)
-        .fromTo(section.querySelector(`.${styles.androidShell}`), { autoAlpha: 0, scale: .82, xPercent: 32, yPercent: 20 }, { autoAlpha: 1, scale: 1, xPercent: 0, yPercent: 0, duration: .26, ease: "power2.inOut" }, .54)
-        .to(section.querySelector(`.${styles.browserShell}`), { autoAlpha: 0, duration: .08 }, .77)
-        .to(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: -15, duration: .08 }, .58)
-        .fromTo(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .1 }, .66)
-        .to(heads[1], { progress: 1, ease: "none", duration: .37, onUpdate: () => update(1) }, .63);
+        .to(heads[0], { progress: 1, ease: "none", duration: .34, onUpdate: () => update(0) }, .28)
+        .to(section.querySelector(`.${styles.browserShell}`), { scale: .84, xPercent: -8, yPercent: -15, autoAlpha: 0, duration: .14, ease: "power2.in" }, .6)
+        .to(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: -15, duration: .08 }, .6)
+        .to(section.querySelector(`.${styles.cinema}`), { backgroundColor: "#d4dfcf", duration: .25 }, .65)
+        .fromTo(section.querySelector(`.${styles.bridge}`), { autoAlpha: 0 }, { autoAlpha: 1, duration: .06 }, .73)
+        .fromTo(section.querySelectorAll(`.${styles.bridge} h4 span`), { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: .1, stagger: .07, ease: "power2.out" }, .74)
+        .fromTo(section.querySelector(`.${styles.bridge} p`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .1 }, .88)
+        .to(section.querySelector(`.${styles.bridge}`), { autoAlpha: 0, scale: 1.06, y: -45, duration: .13, ease: "power2.in" }, 1.01)
+        .fromTo(section.querySelector(`.${styles.androidShell}`), { autoAlpha: 0, scale: .86, xPercent: 14, yPercent: 24 }, { autoAlpha: 1, scale: 1, xPercent: 0, yPercent: 0, duration: .24, ease: "power2.out" }, 1.1)
+        .fromTo(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .1 }, 1.28)
+        .to(heads[1], { progress: 1, ease: "none", duration: .42, onUpdate: () => update(1) }, 1.28);
       return () => { heads.forEach((head, index) => head.video.removeEventListener("seeked", seeks[index])); timeline.kill(); };
     });
     const stopWhenHidden = () => { if (document.hidden) { video.pause(); androidMovie.current?.pause(); } };
@@ -75,6 +79,10 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       <div className={`${styles.videoShell} ${styles.androidShell}`}>
         <video ref={androidMovie} className={styles.androidMovie} width={2038} height={1000} muted playsInline preload="auto" poster="/projects/ohmycode/android-poster.jpg" aria-label={isZh ? "Android 设备操作实录" : "Android device recording"}><source src="/projects/ohmycode/android-demo.mp4" type="video/mp4" /></video>
       </div>
+      </div>
+      <div className={styles.bridge} aria-hidden="true">
+        <h4><span>{isZh ? "浏览器之外，" : "Beyond the browser."}</span><span>{isZh ? "还有你的手机。" : "Onto your phone."}</span></h4>
+        <p>{isZh ? "同一个工作空间，让想法走进不同的现场。" : "One workspace. More places to put ideas into action."}</p>
       </div>
       <div className={styles.captions} aria-hidden="true">
         <p className={styles.chapterOne}>{isZh ? "说出任务。" : "Describe the task."}</p>
