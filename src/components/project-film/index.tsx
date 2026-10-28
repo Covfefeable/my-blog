@@ -36,6 +36,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       const stage = section.querySelector<HTMLElement>(`.${styles.cinema}`)!;
       const letter = section.querySelector<HTMLElement>(`.${styles.initialO}`)!;
       const frames = section.querySelector<HTMLElement>(`.${styles.frames}`)!;
+      const screen = section.querySelector<HTMLElement>("[data-phone-screen]")!;
       const members = Array.from(section.querySelectorAll<HTMLElement>("[data-agent]"));
       const previous = {
         background: stage.style.backgroundColor, letter: letter.style.transform, clip: frames.style.clipPath,
@@ -65,7 +66,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         { start: 3.25, end: 3.49, from: "#dcebe3", to: "#f3e4cf" },
         { start: 4.96, end: 5.4, from: "#f3e4cf", to: "#e8e4dc" },
         { start: 5.82, end: 6.17, from: "#e8e4dc", to: "#f4f5f2" },
-      ].map(color => color.start >= 2 ? { ...color, start: color.start + .4, end: color.end + .4 } : color);
+      ].map(color => color.start >= 2 ? { ...color, start: color.start + .9, end: color.end + .9 } : color);
       let animation: gsap.core.Timeline | undefined;
       const renderFrame = () => {
         if (!animation) return;
@@ -81,12 +82,34 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
           background = gsap.utils.interpolate(color.from, color.to, clamp((time - color.start) / (color.end - color.start)));
         }
         stage.style.backgroundColor = background;
+        // The cropped first frame lands on the exact pixel region inside the Android recording.
+        const flip = clamp((time - 1.59) / .19);
+        const flight = clamp((time - 1.59) / .49);
+        const landing = gsap.parseEase("power2.inOut")(flight);
+        const arc = Math.sin(Math.PI * landing);
+        const videoWidth = frames.clientWidth;
+        const videoHeight = videoWidth * 1000 / 2038;
+        const initialHeight = Math.min(stage.clientHeight * .42, 320);
+        const initialWidth = initialHeight * 422 / 752;
+        const targetWidth = videoWidth * 422 / 2038;
+        const targetHeight = videoHeight * 752 / 1000;
+        const centerX = stage.clientWidth / 2 + (1819 / 2038 - .5) * videoWidth * landing - arc * Math.min(45, stage.clientWidth * .035);
+        const centerY = stage.clientHeight / 2 + (512 / 1000 - .5) * videoHeight * landing - arc * Math.min(130, stage.clientHeight * .15);
+        screen.style.width = `${initialWidth + (targetWidth - initialWidth) * landing}px`;
+        screen.style.height = `${initialHeight + (targetHeight - initialHeight) * landing}px`;
+        screen.style.left = `${centerX}px`;
+        screen.style.top = `${centerY}px`;
+        screen.style.transform = `translate(-50%, -50%) perspective(2200px) translateZ(${65 * arc}px) rotateZ(${8 * arc}deg) rotateX(${4 * (1 - landing) + 4 * arc}deg) rotateY(${90 * (1 - flip) - 360 * landing}deg)`;
+        screen.style.filter = `drop-shadow(0 ${18 * arc}px ${24 * arc}px rgba(20,30,40,${.22 * arc}))`;
+        screen.style.opacity = String(time < 1.59 ? 0 : 1 - clamp((time - 2.32) / .08));
+        screen.style.visibility = time >= 1.59 && time < 2.4 ? "visible" : "hidden";
         heads.forEach((head, index) => {
-          const progress = index === 0 ? clamp((time - .43) / .34) : clamp((time - 1.88) / .44);
-          head.requested = Number.isFinite(head.video.duration) ? progress * Math.max(0, head.video.duration - .1) : 0;
+          const progress = index === 0 ? clamp((time - .43) / .34) : clamp((time - 2.4) / .42);
+          const startTime = index === 1 ? 3 : 0;
+          head.requested = Number.isFinite(head.video.duration) ? startTime + progress * Math.max(0, head.video.duration - startTime - .1) : 0;
           seeks[index]();
         });
-        const activeIndex = time < 2.69 ? -1 : Math.min(4, Math.floor((time - 2.69) / .18));
+        const activeIndex = time < 3.19 ? -1 : Math.min(4, Math.floor((time - 3.19) / .18));
         const activeRole = ["host", "developer", "reviewer", "developer", "host"][activeIndex];
         members.forEach(member => {
           const active = member.dataset.agent === activeRole;
@@ -95,6 +118,8 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         });
       };
       measurePortal();
+      // Keep the camera distance fixed: tweening it from zero produces a projection singularity.
+      gsap.set(section.querySelector("[data-phone-word]"), { transformPerspective: 2200 });
       const timeline = gsap.timeline({
         onUpdate: renderFrame,
         scrollTrigger: {
@@ -120,13 +145,12 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         .to(section.querySelector("[data-phone-word]"), {
           x: () => -section.querySelector<HTMLElement>("[data-phone-prefix]")!.offsetWidth / 2,
           y: () => -parseFloat(getComputedStyle(section.querySelector("[data-phone-line]")!).lineHeight) / 2,
-          scale: 2.2, transformOrigin: "50% 50%", transformPerspective: 900,
+          scale: 2.2, transformOrigin: "50% 50%",
           duration: .62, ease: "power2.inOut",
         }, 1.16)
-        .to(section.querySelector("[data-phone-word]"), { rotationY: -90, rotationX: 12, duration: .38, ease: "power2.inOut" }, 1.4)
+        .to(section.querySelector("[data-phone-word]"), { rotationY: -90, rotationX: 4, duration: .43, ease: "sine.inOut" }, 1.16)
+        .to(section.querySelector("[data-phone-word]"), { rotationY: -180, rotationX: 6, duration: .19, ease: "none" }, 1.59)
         .to(section.querySelector("[data-phone-word]"), { autoAlpha: 0, duration: .26, ease: "power2.inOut" }, 1.52)
-        .fromTo(section.querySelector(`.${styles.androidShell}`), { autoAlpha: 0, scale: .78, yPercent: 18 }, { autoAlpha: 1, scale: 1, yPercent: 0, duration: .38, ease: "power2.inOut" }, 1.53)
-        .fromTo(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .08 }, 1.88)
         .to(section.querySelector(`.${styles.androidShell}`), { scale: .84, yPercent: -8, autoAlpha: 0, duration: .16 }, 1.98)
         .to(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, duration: .1 }, 1.98)
         .fromTo(section.querySelector("[data-collab-scene]"), { autoAlpha: 0, scale: .92, y: 50 }, { autoAlpha: 1, scale: 1, y: 0, duration: .18 }, 2.08);
@@ -169,7 +193,12 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         }, scale: 1.55, duration: .35, ease: "power2.inOut" }, 5.8)
         .to(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: -55, duration: .3, ease: "power2.inOut" }, 5.83)
         .fromTo(section.querySelector("[data-end-content]"), { autoAlpha: 0, y: 55 }, { autoAlpha: 1, y: 0, duration: .3, ease: "power2.out" }, 5.96);
-      timeline.shiftChildren(.4, true, 1.98);
+      timeline.shiftChildren(.9, true, 1.98);
+      timeline.fromTo(section.querySelector(`.${styles.androidShell}`),
+        { autoAlpha: 0, scale: 1, yPercent: 0 },
+        { autoAlpha: 1, duration: .22, ease: "power2.inOut" }, 2.1)
+        .fromTo(section.querySelector(`.${styles.chapterThree}`),
+          { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .08 }, 2.32);
       timeline.scrollTrigger?.refresh();
       renderFrame();
       return () => {
@@ -182,6 +211,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         stage.style.backgroundColor = previous.background;
         letter.style.transform = previous.letter;
         frames.style.clipPath = previous.clip;
+        screen.removeAttribute("style");
         members.forEach((member, index) => {
           member.style.backgroundColor = previous.members[index].background;
           member.style.color = previous.members[index].color;
@@ -215,6 +245,8 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       <div className={styles.bridge} aria-hidden="true">
         <h4><span data-bridge-line data-bridge-first>{isZh ? "浏览器之外，" : "Beyond the browser."}</span><span data-bridge-line data-phone-line><span data-phone-prefix>{isZh ? "还有你的" : "Onto your "}</span><span data-phone-word>{isZh ? "手机" : "phone"}</span></span></h4>
       </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className={styles.phoneScreen} data-phone-screen src="/projects/ohmycode/android-screen.png" alt="" aria-hidden="true" />
       <CapabilityScenes isZh={isZh} />
       <div className={styles.captions} aria-hidden="true">
         <p className={styles.chapterOne}>{isZh ? "说出任务。" : "Describe the task."}</p>

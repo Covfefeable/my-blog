@@ -15,6 +15,8 @@
 .bridge h4 > span { display:block; }
 .bridge h4 > span:last-child { color:#246447; }
 .bridge [data-phone-prefix],.bridge [data-phone-word] { display:inline-block; }
+.bridge [data-phone-word] { backface-visibility:hidden; }
+.phoneScreen { position:absolute; z-index:4; display:block; object-fit:fill; visibility:hidden; pointer-events:none; will-change:transform; }
 .bridge p { margin:30px 0 0; color:#56664d; font-size:clamp(14px,1.5vw,21px); line-height:1.8; }
 .movie { display:block; width:100%; height:auto; aspect-ratio:var(--movie-ratio,1.6); object-fit:contain; background:#101416; }
 .androidStage { padding:70px clamp(20px,6vw,100px); background:#e3e7dd; }
@@ -27,7 +29,7 @@
 .details { display:grid; width:100%; grid-template-columns:1.4fr 1fr; gap:30px 12%; padding:48px clamp(20px,6vw,100px) 32px; }
 .description { max-width:750px; margin:0; color:#263020; font-size:clamp(21px,2.2vw,36px); line-height:1.6; letter-spacing:-.035em; text-wrap:balance; }
 .links { display:flex; align-items:flex-start; justify-content:flex-end; gap:32px; padding-top:12px; }
-.links button,.links a { padding:0 0 6px; border:0; border-bottom:1px solid #246447; background:transparent; color:#246447; font:15px/1.4 Arial,"PingFang SC",sans-serif; white-space:nowrap; cursor:pointer; }
+.links button,.links a { display:inline-flex; align-items:center; min-height:44px; padding:4px 0 9px; border:0; border-bottom:1px solid #246447; background:transparent; color:#246447; font:500 clamp(18px,1.5vw,22px)/1.4 Arial,"PingFang SC",sans-serif; white-space:nowrap; cursor:pointer; }
 .links button:hover,.links a:hover { color:#122b1d; border-color:#122b1d; }
 .links button:focus-visible,.close:focus-visible { outline:2px solid #246447; outline-offset:6px; }
 .support { grid-column:1/-1; color:#626c61; font-size:14px; line-height:1.8; }
@@ -50,6 +52,7 @@
   .links { justify-content:flex-start; gap:28px; }
 }
 @media(prefers-reduced-motion:reduce) {
+  .phoneScreen { display:none; }
   .cinema { display:flex; flex-direction:column; gap:35px; padding:55px 20px 40px; height:auto; min-height:0; }
   .headline { position:relative; inset:auto; text-align:center; }
   .headline h3 { font-size:clamp(55px,12vw,160px); }
