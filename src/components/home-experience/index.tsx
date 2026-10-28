@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import ProjectFilm from "@/components/project-film";
+import ExternalArrow from "@/components/external-arrow";
 import Registration from "@/components/registration";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -56,26 +57,19 @@ export default function HomeExperience() {
     roles: "前端开发工程师 / 安全研究",
     enter: "阅读文章",
     profile: "关于我",
-    accessTitle: "当前工作",
+    accessTitle: "当前 focus",
     accessIntro: "最近在做 OhMyCode，也持续关注 Web 安全与界面交互。",
     featuredLabel: "开源项目",
     featuredKicker: "开源 Code Agent 工作空间",
     featuredDescription: "把本地工具、持久终端、可恢复执行和 Multi-Agent 协作放进同一套 Runtime。",
-    featuredAction: "查看 GitHub 仓库 ↗",
+    featuredAction: "查看 GitHub 仓库",
     resumeLabel: "个人简历",
     resumeTitle: "前端开发工程师",
     resumeDescription: "查看工作经历、项目经验与专业技能。",
-    resumeAction: "打开 PDF ↗",
-    securityLabel: "研究方向",
-    securityKicker: "WEB 安全研究",
-    securityDescription: "攻击面、反调试、代码保护，以及浏览器里那些不安分的细节。",
-    securityAction: "查看相关记录",
-    creativeLabel: "持续探索",
-    creativeKicker: "正在持续构建",
-    creativeDescription: "把工程、视觉和实验性交互组合成有记忆点的数字体验。",
+    resumeAction: "打开 PDF",
     archiveTitle: "最近的文章",
     loadMore: `加载其余 ${Math.max(articles.length - 5, 0)} 篇文章`,
-    openRecord: "打开 ↗",
+    openRecord: "打开",
     personnelLabel: "关于我",
     quote: "“把技术、视觉和交互组合成不只是能用，而且让人记得住的东西。”",
     roleLabel: "职位",
@@ -99,26 +93,19 @@ export default function HomeExperience() {
     roles: "FRONTEND ENGINEER / SECURITY EXPLORER",
     enter: "Read the articles",
     profile: "About me",
-    accessTitle: "Current work",
+    accessTitle: "Current focus",
     accessIntro: "Building OhMyCode and exploring web security and interface interaction.",
     featuredLabel: "FEATURED PROJECT",
     featuredKicker: "Open-source Code Agent workspace",
     featuredDescription: "One runtime for local tools, persistent terminals, recoverable execution and Multi-Agent collaboration.",
-    featuredAction: "VIEW ON GITHUB ↗",
+    featuredAction: "VIEW ON GITHUB",
     resumeLabel: "RESUME",
     resumeTitle: "Frontend Engineer",
     resumeDescription: "View professional experience, selected projects and technical skills.",
-    resumeAction: "OPEN PDF ↗",
-    securityLabel: "SECURITY LAB",
-    securityKicker: "WEB SECURITY RESEARCH",
-    securityDescription: "Attack surfaces, anti-debugging, code protection and the less obedient corners of the browser.",
-    securityAction: "VIEW RELATED RECORD",
-    creativeLabel: "CREATIVE SYSTEMS",
-    creativeKicker: "ONGOING PRACTICE",
-    creativeDescription: "Combining engineering, visual systems and experimental interaction into memorable digital experiences.",
+    resumeAction: "OPEN PDF",
     archiveTitle: "Recent writing",
     loadMore: `LOAD ${Math.max(articles.length - 5, 0)} MORE RECORDS`,
-    openRecord: "OPEN ↗",
+    openRecord: "OPEN",
     personnelLabel: "About me",
     quote: "“I combine technology, visual systems and interaction into things that are useful and memorable.”",
     roleLabel: "ROLE",
@@ -185,7 +172,7 @@ export default function HomeExperience() {
             {visibleArticles.map((article) => <Link href={`/posts/${article.id}`} className={styles.logRow} key={article.id}>
               <time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time>
               <div><h3>{article.title}</h3><p>{article.description}</p></div>
-              <span className={styles.openLog}>{copy.openRecord}</span>
+              <span className={styles.openLog}>{copy.openRecord} <ExternalArrow /></span>
             </Link>)}
           </div>
           {!showAllArticles && allArticles.length > 5 && <button className={styles.loadMore} type="button" onClick={() => setShowAllArticles(true)}>{copy.loadMore} ↓</button>}
@@ -201,42 +188,31 @@ export default function HomeExperience() {
               <span className={styles.panelCode}>{copy.resumeLabel}</span>
               <span className={styles.resumeMark}>CV</span>
               <strong>{copy.resumeTitle}</strong><p>{copy.resumeDescription}</p>
-              <span className={styles.panelAction}>{copy.resumeAction}</span>
+              <span className={styles.panelAction}>{copy.resumeAction} <ExternalArrow /></span>
             </a>
-            <article className={styles.panel}>
-              <span className={styles.panelCode}>{copy.securityLabel}</span>
-              <div className={styles.pulseOrb} aria-hidden="true"><i /><i /><i /></div>
-              <div><p>{copy.securityKicker}</p><h3>Web Security</h3><p>{copy.securityDescription}</p></div>
-              <Link href="/posts/6">{copy.securityAction} <span>↗</span></Link>
-            </article>
-            <article className={`${styles.panel} ${styles.panelWide}`}>
-              <span className={styles.panelCode}>{copy.creativeLabel}</span>
-              <div><p>{copy.creativeKicker}</p><h3>Frontend / AI / Interaction</h3><p>{copy.creativeDescription}</p></div>
-              <div className={styles.signalLines}><i /><i /><i /><i /><i /></div>
-            </article>
           </div>
         </section>
 
         <section className={styles.personnel} id="personnel">
           <h2>{copy.personnelLabel}</h2>
           <div className={styles.personnelGrid}>
-            <div><p className={styles.quote}>{copy.quote}</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GITHUB / @Covfefeable ↗</a></div>
+            <div><p className={styles.quote}>{copy.quote}</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GITHUB / @Covfefeable <ExternalArrow /></a></div>
             <dl>
               <div><dt>{copy.roleLabel}</dt><dd>{copy.roleValue}</dd></div>
               <div><dt>{copy.locationLabel}</dt><dd>{copy.locationValue}</dd></div>
               <div><dt>{copy.focusFieldLabel}</dt><dd>{copy.focusFieldValue}</dd></div>
               <div><dt>{copy.experienceLabel}</dt><dd>Meizu / FreeBuf</dd></div>
-              <div><dt>GITHUB</dt><dd><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">@Covfefeable ↗</a></dd></div>
+              <div><dt>GITHUB</dt><dd><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">@Covfefeable <ExternalArrow /></a></dd></div>
             </dl>
           </div>
         </section>
 
         <section className={styles.contact} id="contact">
           <h2>{copy.contactTitle}</h2>
-          <a href="mailto:rears_seasons_0n@icloud.com">{copy.contactAction} <span>↗</span></a>
+          <a href="mailto:rears_seasons_0n@icloud.com">{copy.contactAction} <ExternalArrow /></a>
         </section>
       </div>
-      <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><Registration /><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#contact">{copy.dockContact}</a></footer>
+      <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><Registration /><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a><a href="#contact">{copy.dockContact}</a></footer>
     </div>
   );
 }

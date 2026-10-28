@@ -1,4 +1,9 @@
 :root {
+  --tracking-body: .01em;
+  --tracking-heading: -.015em;
+  --tracking-display: -.025em;
+  --tracking-brand: -.02em;
+  --ohmycode-accent: #18843a;
   /* 主色调 */
   --primary-color: #6366f1;
   --primary-hover: #4f46e5;
@@ -74,6 +79,7 @@ html {
 }
 
 body {
+  letter-spacing: var(--tracking-body);
   background-color: var(--color-bg);
   color: var(--font-color);
   min-height: 100dvh;

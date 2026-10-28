@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CapabilityScenes from "./capability-scenes";
+import ExternalArrow from "@/components/external-arrow";
 import styles from "./index.module.css";
 
 export default function ProjectFilm({ isZh }: { isZh: boolean }) {
@@ -28,33 +29,44 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       if (!phoneVideo) return;
       const heads = [{ video, requested: 0 }, { video: phoneVideo, requested: 0 }];
       const seeks = heads.map((head) => {
-        const seek = () => { if (!head.video.seeking && Number.isFinite(head.video.duration) && Math.abs(head.video.currentTime - head.requested) > .07) head.video.currentTime = head.requested; };
+        const seek = () => {
+          if (head.video.readyState < 2 || head.video.seeking || !Number.isFinite(head.video.duration)) return;
+          if (Math.abs(head.video.currentTime - head.requested) > .07) head.video.currentTime = head.requested;
+        };
         head.video.pause();
         head.video.addEventListener("seeked", seek);
+        head.video.addEventListener("loadeddata", seek);
+        head.video.addEventListener("canplay", seek);
         return seek;
       });
       const stage = section.querySelector<HTMLElement>(`.${styles.cinema}`)!;
       const letter = section.querySelector<HTMLElement>(`.${styles.initialO}`)!;
       const frames = section.querySelector<HTMLElement>(`.${styles.frames}`)!;
       const screen = section.querySelector<HTMLElement>("[data-phone-screen]")!;
+      const rain = section.querySelector<HTMLElement>("[data-tool-rain]")!;
       const members = Array.from(section.querySelectorAll<HTMLElement>("[data-agent]"));
       const previous = {
         background: stage.style.backgroundColor, letter: letter.style.transform, clip: frames.style.clipPath,
         members: members.map(member => ({ background: member.style.backgroundColor, color: member.style.color })),
       };
       letter.style.removeProperty("transform");
-      let geometry = { centerX: 0, centerY: 0, shiftX: 0, shiftY: 0, frameX: 0, frameY: 0, width: 1, height: 1, scale: 1 };
+      let geometry = { centerX: 0, centerY: 0, shiftX: 0, shiftY: 0, frameX: 0, frameY: 0, width: 1, height: 1, scale: 1, glyphOffset: 0 };
       const measurePortal = () => {
         const stageBox = stage.getBoundingClientRect();
+        rain.style.setProperty("--rain-distance", `${stageBox.height + 100}px`);
         const wordBox = letter.parentElement!.getBoundingClientRect();
         const frameBox = frames.getBoundingClientRect();
-        const centerX = wordBox.left + letter.offsetLeft + letter.offsetWidth / 2;
+        // Negative letter spacing shortens the span's advance, but does not shrink the O glyph.
+        const spacing = parseFloat(getComputedStyle(letter).letterSpacing) || 0;
+        const glyphWidth = letter.offsetWidth - spacing;
+        const glyphOffset = -spacing / 2;
+        const centerX = wordBox.left + letter.offsetLeft + glyphWidth / 2;
         const centerY = wordBox.top + letter.offsetTop + letter.offsetHeight / 2;
         geometry = {
           centerX, centerY, shiftX: stageBox.left + stageBox.width / 2 - centerX,
           shiftY: stageBox.top + stageBox.height / 2 - centerY, frameX: frameBox.left, frameY: frameBox.top,
-          width: letter.offsetWidth, height: letter.offsetHeight,
-          scale: Math.max(stageBox.width / (letter.offsetWidth * .56), stageBox.height / (letter.offsetHeight * .54)) * 1.6,
+          width: glyphWidth, height: letter.offsetHeight, glyphOffset,
+          scale: Math.max(stageBox.width / (glyphWidth * .56), stageBox.height / (letter.offsetHeight * .54)) * 1.6,
         };
       };
       const clamp = gsap.utils.clamp(0, 1);
@@ -64,18 +76,19 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         { start: 1.53, end: 1.88, from: "#f0e3d6", to: "#e7e0f2" },
         { start: 2.04, end: 2.29, from: "#e7e0f2", to: "#dcebe3" },
         { start: 3.25, end: 3.49, from: "#dcebe3", to: "#f3e4cf" },
-        { start: 4.96, end: 5.4, from: "#f3e4cf", to: "#e8e4dc" },
-        { start: 5.82, end: 6.17, from: "#e8e4dc", to: "#f4f5f2" },
+        { start: 5.64, end: 6.19, from: "#f3e4cf", to: "#e8e4dc" },
+        { start: 6.98, end: 7.36, from: "#e8e4dc", to: "#f4f5f2" },
       ].map(color => color.start >= 2 ? { ...color, start: color.start + .9, end: color.end + .9 } : color);
       let animation: gsap.core.Timeline | undefined;
       const renderFrame = () => {
         if (!animation) return;
         const time = animation.time();
+        rain.dataset.running = String(time >= 4.25 && time < 6.58 && !document.hidden);
         const zoom = Math.pow(clamp((time - .12) / .3), 3);
         const scale = 1 + (geometry.scale - 1) * zoom;
         const x = geometry.shiftX * zoom, y = geometry.shiftY * zoom;
-        letter.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-        frames.style.clipPath = `ellipse(${geometry.width * .28 * scale}px ${geometry.height * .27 * scale}px at ${geometry.centerX + x - geometry.frameX}px ${geometry.centerY + y - geometry.frameY}px)`;
+        letter.style.transform = `translate(${x - geometry.glyphOffset * (scale - 1)}px, ${y}px) scale(${scale})`;
+        frames.style.clipPath = `ellipse(${geometry.width * .29 * scale}px ${geometry.height * .28 * scale}px at ${geometry.centerX + x - geometry.frameX}px ${geometry.centerY + y - geometry.frameY}px)`;
         let background = "#f1eee7";
         for (const color of colors) {
           if (time < color.start) break;
@@ -130,6 +143,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       });
       animation = timeline;
       heads.forEach(head => head.video.addEventListener("loadedmetadata", renderFrame));
+      document.addEventListener("visibilitychange", renderFrame);
       timeline.to(section.querySelectorAll(`.${styles.wordRest}, .${styles.headline} > p`), { autoAlpha: 0, duration: .1 }, .1)
         .fromTo(section.querySelector(`.${styles.browserShell}`), { scale: .94, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .14 }, .27)
         .to(section.querySelector(`.${styles.headline}`), { autoAlpha: 0, duration: .04 }, .42)
@@ -161,38 +175,68 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       });
       timeline.to(section.querySelector("[data-collab-scene]"), { scale: .45, autoAlpha: 0, duration: .22, ease: "power2.inOut" }, 3.2)
         .fromTo(section.querySelector("[data-ecosystem-scene]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .12 }, 3.35)
-        .fromTo(section.querySelector("[data-ability-hub]"), { xPercent: -50, yPercent: -50, x: 0, y: 0, top: "55%", scale: .4, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .2, ease: "power2.out" }, 3.36);
+        .fromTo(rain, { autoAlpha: 0 }, { autoAlpha: 1, duration: .2 }, 3.35)
+        .to(rain, { autoAlpha: 0, duration: .18 }, 5.5)
+        .fromTo(section.querySelector("[data-ability-hub]"), { xPercent: -50, yPercent: -50, x: 0, y: 0, top: "50%", scale: .4, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .2, ease: "power2.out" }, 3.36);
 
       const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-ability]")).filter(card => getComputedStyle(card).display !== "none");
-      const coordinate = (card: HTMLElement, axis: "x" | "y") => {
-        const mobile = innerWidth <= 900;
-        return Number(card.dataset[mobile ? (axis === "x" ? "mobileX" : "mobileY") : axis]) * (axis === "x" ? stage.clientWidth : stage.clientHeight);
+      const settled: Array<{ card: HTMLElement; x: number; y: number; half: number }> = [];
+      const noise = (seed: number) => {
+        const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+        return value - Math.floor(value);
       };
-      timeline.fromTo(cards, { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: .08, rotation: 0, autoAlpha: 0 }, {
-        x: (_index, card) => coordinate(card, "x"), y: (_index, card) => coordinate(card, "y"),
-        scale: index => .65 + (index % 5) * .14, rotation: index => (index % 2 ? 1 : -1) * (5 + index % 5 * 3), autoAlpha: 1,
-        duration: .34, stagger: { amount: .045, from: "center" }, ease: "expo.out",
-      }, 3.5)
-        .fromTo(section.querySelector("[data-ecosystem-header]"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .2 }, 3.65)
-        .fromTo(section.querySelector("[data-ecosystem-note]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .15 }, 3.85)
-        .to(section.querySelectorAll("[data-ecosystem-header], [data-ecosystem-note]"), { autoAlpha: 0, duration: .15 }, 4.43)
-        .to(cards, { x: (_index, card) => coordinate(card, "x") * 2.8, y: (_index, card) => coordinate(card, "y") * 2.8, scale: .55, rotation: index => index % 2 ? 40 : -40, autoAlpha: 0, duration: .4, stagger: { amount: .06, from: "edges" }, ease: "power2.in" }, 4.45)
-        .to(section.querySelector("[data-ability-hub] strong"), { autoAlpha: 0, duration: .18 }, 4.96)
-        .to(section.querySelector<HTMLElement>("[data-ability-hub]"), {
-          scale: 1.5, top: "50%", y: () => {
-            const hub = section.querySelector<HTMLElement>("[data-ability-hub]")!;
-            const image = hub.querySelector<HTMLElement>("img")!;
-            return (hub.offsetHeight / 2 - image.offsetTop - image.offsetHeight / 2) * 1.5;
-          }, duration: .55, ease: "power2.inOut",
-        }, 4.96)
-        .fromTo(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .25 }, 5.26)
-        .to(section.querySelector("[data-ability-hub]"), { autoAlpha: 0, y: () => {
-          const hub = section.querySelector<HTMLElement>("[data-ability-hub]")!;
-          const image = hub.querySelector<HTMLElement>("img")!;
-          return (hub.offsetHeight / 2 - image.offsetTop - image.offsetHeight / 2) * 1.5 - 85;
-        }, scale: 1.55, duration: .35, ease: "power2.inOut" }, 5.8)
-        .to(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: -55, duration: .3, ease: "power2.inOut" }, 5.83)
-        .fromTo(section.querySelector("[data-end-content]"), { autoAlpha: 0, y: 55 }, { autoAlpha: 1, y: 0, duration: .3, ease: "power2.out" }, 5.96);
+      cards.forEach((card, index) => {
+        const arrival = 3.5 + index / Math.max(1, cards.length - 1) * .6;
+        const size = innerWidth <= 900 ? 46 : 68;
+        const scale = .72 + noise(index + 19) * .38;
+        const tilt = (noise(index + 71) - .5) * 54;
+        const radians = Math.abs(tilt * .4) * Math.PI / 180;
+        const half = size * scale * (Math.cos(radians) + Math.sin(radians)) / 2;
+        let targetX = 0, targetY = -Infinity;
+        // Prefer gaps in the pile over building narrow towers at arbitrary random positions.
+        for (let candidate = 0; candidate < 6; candidate++) {
+          const x = (noise(index * 13 + candidate + 1) - .5) * (stage.clientWidth - size * 1.5) * .9;
+          let y = stage.clientHeight / 2 - half - 12;
+          for (const previous of settled) {
+            if (Math.abs(x - previous.x) < (half + previous.half) * .85) {
+              y = Math.min(y, previous.y - previous.half - half + 4);
+            }
+          }
+          if (y > targetY) {
+            targetX = x;
+            targetY = y;
+          }
+        }
+        settled.push({ card, x: targetX, y: targetY, half });
+        const bounce = (innerWidth <= 900 ? 18 : 28) + index % 4 * 7;
+        gsap.set(card, { autoAlpha: 0 });
+        timeline.set(card, { autoAlpha: 1 }, arrival).fromTo(card, {
+          xPercent: -50, yPercent: -50, x: targetX,
+          y: -stage.clientHeight / 2 - 100, z: 0, scale, rotation: -tilt * 2,
+        }, {
+          y: targetY, rotation: tilt, duration: .22, ease: "power2.in",
+        }, arrival)
+          .to(card, { y: targetY - bounce, rotation: -tilt, duration: .1, ease: "power2.out" }, arrival + .22)
+          .to(card, { y: targetY, rotation: tilt * .6, duration: .08, ease: "power2.in" }, arrival + .32)
+          .to(card, { y: targetY - bounce * .25, rotation: -tilt * .3, duration: .06, ease: "power2.out" }, arrival + .4)
+          .to(card, { y: targetY, rotation: tilt * .4, duration: .05, ease: "power2.in" }, arrival + .46);
+      });
+      [...settled].sort((a, b) => a.y - b.y || a.x - b.x).forEach(({ card }, index) => {
+        const absorption = 4.7 + index / Math.max(1, cards.length - 1) * .48;
+        timeline.to(card, { x: 0, y: 0, z: 0, scale: .035, rotation: 0, duration: .38, ease: "power3.in" }, absorption)
+          .to(card, { autoAlpha: 0, duration: .1 }, absorption + .28);
+      });
+      timeline.fromTo(section.querySelector("[data-ecosystem-header]"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .2 }, 4.7)
+        .fromTo(section.querySelector("[data-ecosystem-note]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .15 }, 4.7)
+        .to(section.querySelectorAll("[data-ecosystem-header], [data-ecosystem-note]"), { autoAlpha: 0, duration: .18 }, 5.5)
+        .fromTo(section.querySelector("[data-ability-hub]"), { scale: 1, top: "50%", y: 0 }, {
+          scale: 1.5, top: "45%", y: 0, duration: .55, ease: "power2.inOut",
+        }, 5.64)
+        .fromTo(section.querySelector("[data-ability-brand]"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: .22 }, 6.02)
+        .fromTo(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: .25 }, 6.32)
+        .to(section.querySelector("[data-ability-hub]"), { autoAlpha: 0, y: -85, scale: 1.55, duration: .35, ease: "power2.inOut" }, 6.96)
+        .to(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: -55, duration: .3, ease: "power2.inOut" }, 6.99)
+        .fromTo(section.querySelector("[data-end-content]"), { autoAlpha: 0, y: 55 }, { autoAlpha: 1, y: 0, duration: .3, ease: "power2.out" }, 7.12);
       timeline.shiftChildren(.9, true, 1.98);
       timeline.fromTo(section.querySelector(`.${styles.androidShell}`),
         { autoAlpha: 0, scale: 1, yPercent: 0 },
@@ -203,8 +247,13 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       renderFrame();
       return () => {
         animation = undefined;
+        document.removeEventListener("visibilitychange", renderFrame);
+        delete rain.dataset.running;
+        rain.style.removeProperty("--rain-distance");
         heads.forEach((head, index) => {
           head.video.removeEventListener("seeked", seeks[index]);
+          head.video.removeEventListener("loadeddata", seeks[index]);
+          head.video.removeEventListener("canplay", seeks[index]);
           head.video.removeEventListener("loadedmetadata", renderFrame);
         });
         timeline.kill();
@@ -230,7 +279,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
 
   return <section className={styles.showcase} ref={root} aria-label="OhMyCode" style={{ "--movie-ratio": videoRatio } as CSSProperties}>
     <div className={styles.cinema} data-film-stage>
-      <div className={styles.headline}><h3 aria-label="OhMyCode"><span className={styles.initialO} aria-hidden="true">O</span><span className={styles.wordRest} aria-hidden="true">hMyCode</span></h3><p>{isZh ? "写代码。也走出编辑器。" : "Write code. Go beyond the editor."}</p></div>
+      <div className={styles.headline}><h3 aria-label="OhMyCode"><span className={styles.initialO} aria-hidden="true">O</span><span className={styles.wordRest} aria-hidden="true">h<span className={styles.brandAccent}>My</span>Code</span></h3><p>{isZh ? "写代码。也走出编辑器。" : "Write code. Go beyond the editor."}</p></div>
       <div className={styles.frames}>
       <div className={`${styles.videoShell} ${styles.browserShell}`}>
         <video ref={movie} className={styles.movie} width={1600} height={748} muted playsInline preload="metadata" poster="/projects/ohmycode/browser-poster.jpg" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoHeight) setVideoRatio(video.videoWidth / video.videoHeight); }} onError={() => setFailed(true)} aria-label={isZh ? "OhMyCode 真实客户端：Agent 操作内置浏览器" : "Actual OhMyCode client: an agent operating its built-in browser"}>
@@ -239,7 +288,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         {failed && <p className={styles.failure}>{isZh ? "视频未能加载。" : "The video could not load."}<button onClick={() => { setFailed(false); movie.current?.load(); }}>{isZh ? "重试" : "Retry"}</button></p>}
       </div>
       <div className={`${styles.videoShell} ${styles.androidShell}`}>
-        <video ref={androidMovie} className={styles.androidMovie} width={2038} height={1000} muted playsInline preload="auto" poster="/projects/ohmycode/android-poster.jpg" aria-label={isZh ? "Android 设备操作实录" : "Android device recording"}><source src="/projects/ohmycode/android-demo.mp4" type="video/mp4" /></video>
+        <video ref={androidMovie} className={styles.androidMovie} width={2038} height={1000} muted playsInline preload="auto" poster="/projects/ohmycode/android-poster.jpg" aria-label={isZh ? "Android 设备操作实录" : "Android device recording"}><source src="/projects/ohmycode/android-scrub.mp4" type="video/mp4" /></video>
       </div>
       </div>
       <div className={styles.bridge} aria-hidden="true">
@@ -256,7 +305,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       <div className={styles.detailsScene} data-end-content>
     <div className={styles.details}>
       <p className={styles.description}>{isZh ? "自选模型，本地执行。对话、终端和浏览器，在同一个工作空间里推进任务。" : "Your model. Local execution. Conversations, terminals and a browser, working in one workspace."}</p>
-      <div className={styles.links}><button onClick={openFilm}>{isZh ? "观看真实演示" : "Watch the demo"} <span aria-hidden="true">↗</span></button><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+      <div className={styles.links}><button onClick={openFilm}>{isZh ? "观看真实演示" : "Watch the demo"} <ExternalArrow /></button><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
       <p className={styles.support}>{isZh ? "也支持 Android 设备操控、主持人调度的多 Agent 群聊、语音，以及 MCP / Skills。" : "Also supports Android control, host-directed multi-agent chat, voice, MCP and Skills."}</p>
     </div>
       </div>
