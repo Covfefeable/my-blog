@@ -10,6 +10,21 @@ import styles from "./index.module.css";
 
 const COLLAB_SPEED = 1.4;
 const COLLAB_EXTENSION = 8.12 / COLLAB_SPEED - 1.12;
+const VIDEO_SCROLL_FACTOR = 3;
+const VIDEO_WINDOWS = [{ start: .43, end: .77 }, { start: 2.4, end: 2.82 }];
+const VIDEO_EXTENSION = VIDEO_WINDOWS.reduce((total, window) => total + (window.end - window.start) * (VIDEO_SCROLL_FACTOR - 1), 0);
+
+function narrativeTime(scrollTime: number) {
+  let offset = 0;
+  for (const window of VIDEO_WINDOWS) {
+    const start = window.start + offset;
+    const duration = (window.end - window.start) * VIDEO_SCROLL_FACTOR;
+    if (scrollTime < start) return scrollTime - offset;
+    if (scrollTime <= start + duration) return window.start + (scrollTime - start) / VIDEO_SCROLL_FACTOR;
+    offset += (window.end - window.start) * (VIDEO_SCROLL_FACTOR - 1);
+  }
+  return scrollTime - offset;
+}
 
 export default function ProjectFilm({ isZh }: { isZh: boolean }) {
   const root = useRef<HTMLElement>(null);
@@ -87,7 +102,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       let animation: gsap.core.Timeline | undefined;
       const renderFrame = () => {
         if (!animation) return;
-        const time = animation.time();
+        const time = narrativeTime(animation.time());
         rain.dataset.running = String(time >= 4.25 + COLLAB_EXTENSION && time < 6.58 + COLLAB_EXTENSION && !document.hidden);
         const zoom = Math.pow(clamp((time - .12) / .3), 3);
         const scale = 1 + (geometry.scale - 1) * zoom;
@@ -135,7 +150,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         onUpdate: renderFrame,
         scrollTrigger: {
           trigger: stage, start: "top top", end: () => {
-            const distance = (innerWidth > 900 ? 1000 : 780) * (8.32 + COLLAB_EXTENSION) / 10.32;
+            const distance = (innerWidth > 900 ? 1000 : 780) * (8.32 + COLLAB_EXTENSION + VIDEO_EXTENSION) / 10.32;
             return `+=${distance}%`;
           },
           pin: true, scrub: .65, invalidateOnRefresh: false,
@@ -242,6 +257,10 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         { autoAlpha: 1, duration: .22, ease: "power2.inOut" }, 2.1)
         .fromTo(section.querySelector(`.${styles.chapterThree}`),
           { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .08 }, 2.32);
+      // Insert scrolling room only while each video is playing; keep transition speeds intact.
+      for (const window of [...VIDEO_WINDOWS].reverse()) {
+        timeline.shiftChildren((window.end - window.start) * (VIDEO_SCROLL_FACTOR - 1), true, window.end);
+      }
       timeline.scrollTrigger?.refresh();
       renderFrame();
       return () => {
