@@ -1,0 +1,242 @@
+[
+  {
+    "name": "Fetch网页内容抓取",
+    "file": "mcp-288.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "高德地图",
+    "file": "mcp-1137.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "必应搜索中文",
+    "file": "mcp-4245.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "同花顺法律ai助手",
+    "file": "mcp-20440.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "AI订阅付费组件",
+    "file": "mcp-8330.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "同花顺快查企业数据",
+    "file": "mcp-20439.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "天眼查MCP",
+    "file": "mcp-17328.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "supabase-mcp",
+    "file": "mcp-7426.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "RollingGo酒店MCP",
+    "file": "mcp-8499.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "ChatPPT-MCP",
+    "file": "mcp-8141.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "麦当劳MCP Server",
+    "file": "mcp-12449.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "12306-MCP车票查询工具",
+    "file": "mcp-3075.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Jina-AI-MCP-Tools",
+    "file": "mcp-4519.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "智能体文档处理 MCP",
+    "file": "mcp-17228.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "可视化图表-MCP-Server",
+    "file": "mcp-4240.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "MemOS 记忆操作系统",
+    "file": "mcp-8220.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "钉钉MCP",
+    "file": "mcp-6895.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "无影 Agent 开发套件 AgentBay",
+    "file": "mcp-2429.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Github的维基百科DeepWiKi",
+    "file": "mcp-4492.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "ModelScope-Image-Generation-MCP",
+    "file": "mcp-2432.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "飞常准-Aviation",
+    "file": "mcp-4228.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "mobvoi-mcp",
+    "file": "mcp-4538.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "微信读书",
+    "file": "mcp-4258.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "八字MCP",
+    "file": "mcp-4488.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "百度地图",
+    "file": "mcp-1135.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "今天吃什么",
+    "file": "mcp-2453.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Tavily智搜",
+    "file": "mcp-283.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "MiniMax",
+    "file": "mcp-1139.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "EdgeOne Pages",
+    "file": "mcp-2430.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Sequential Thinking",
+    "file": "mcp-1138.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "时间服务",
+    "file": "mcp-1136.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "GitLab版本控制工具",
+    "file": "mcp-285.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "MCP Flomo笔记助手",
+    "file": "mcp-1128.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "MCP上下文模型文档",
+    "file": "mcp-4196.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "FireCrawl网络抓取服务器",
+    "file": "mcp-37.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Perplexity Ask",
+    "file": "mcp-1125.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Exa搜索",
+    "file": "mcp-171.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "Figma",
+    "file": "mcp-27.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "MasterGo设计协作工具",
+    "file": "mcp-1127.png",
+    "kind": "MCP"
+  },
+  {
+    "name": "React Best Practices",
+    "file": "react.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Composition Patterns",
+    "file": "vercel.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Frontend Design",
+    "file": "claude.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Web App Testing",
+    "file": "playwright.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Skill Creator",
+    "file": "claude.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Web Design Guidelines",
+    "file": "vercel.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "React Patterns",
+    "file": "react.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "UI Testing",
+    "file": "playwright.svg",
+    "kind": "SKILL"
+  },
+  {
+    "name": "Frontend Skills",
+    "file": "claude.svg",
+    "kind": "SKILL"
+  }
+]
