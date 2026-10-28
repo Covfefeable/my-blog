@@ -37,24 +37,43 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         head.requested = Number.isFinite(head.video.duration) ? head.progress * Math.max(0, head.video.duration - .1) : 0;
         seeks[index]();
       };
+      const stage = section.querySelector<HTMLElement>(`.${styles.cinema}`)!;
+      const letter = section.querySelector<HTMLElement>(`.${styles.initialO}`)!;
+      const frames = section.querySelector<HTMLElement>(`.${styles.frames}`)!;
+      const stageBox = stage.getBoundingClientRect();
+      const letterBox = letter.getBoundingClientRect();
+      const frameBox = frames.getBoundingClientRect();
+      const centerX = letterBox.left + letterBox.width / 2;
+      const centerY = letterBox.top + letterBox.height / 2;
+      const shiftX = stageBox.left + stageBox.width / 2 - centerX;
+      const shiftY = stageBox.top + stageBox.height / 2 - centerY;
+      const portal = { scale: 1, shift: 0 };
+      const targetScale = Math.max(stageBox.width / (letterBox.width * .56), stageBox.height / (letterBox.height * .54)) * 1.6;
+      const drawPortal = () => {
+        gsap.set(letter, { scale: portal.scale, x: shiftX * portal.shift, y: shiftY * portal.shift, transformOrigin: "50% 50%" });
+        frames.style.clipPath = `ellipse(${letterBox.width * .28 * portal.scale}px ${letterBox.height * .27 * portal.scale}px at ${centerX + shiftX * portal.shift - frameBox.left}px ${centerY + shiftY * portal.shift - frameBox.top}px)`;
+      };
+      drawPortal();
       const timeline = gsap.timeline({ scrollTrigger: { trigger: section.querySelector(`.${styles.cinema}`), start: "top top", end: () => innerWidth > 900 ? "+=320%" : "+=240%", pin: true, scrub: .65, invalidateOnRefresh: true } });
-      timeline.to(section.querySelector(`.${styles.headline}`), { autoAlpha: 0, y: -70, duration: .12 }, .1)
-        .fromTo(section.querySelector(`.${styles.browserShell}`), { scale: .76, yPercent: 20, autoAlpha: 0 }, { scale: 1, yPercent: 0, autoAlpha: 1, duration: .17 }, .2)
-        .fromTo(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .09 }, .2)
-        .to(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: -15, duration: .08 }, .4)
-        .fromTo(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .09 }, .43)
-        .to(heads[0], { progress: 1, ease: "none", duration: .34, onUpdate: () => update(0) }, .28)
-        .to(section.querySelector(`.${styles.browserShell}`), { scale: .84, xPercent: -8, yPercent: -15, autoAlpha: 0, duration: .14, ease: "power2.in" }, .6)
-        .to(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: -15, duration: .08 }, .6)
-        .to(section.querySelector(`.${styles.cinema}`), { backgroundColor: "#d4dfcf", duration: .25 }, .65)
-        .fromTo(section.querySelector(`.${styles.bridge}`), { autoAlpha: 0 }, { autoAlpha: 1, duration: .06 }, .73)
-        .fromTo(section.querySelectorAll(`.${styles.bridge} h4 span`), { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: .1, stagger: .07, ease: "power2.out" }, .74)
-        .fromTo(section.querySelector(`.${styles.bridge} p`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .1 }, .88)
-        .to(section.querySelector(`.${styles.bridge}`), { autoAlpha: 0, scale: 1.06, y: -45, duration: .13, ease: "power2.in" }, 1.01)
-        .fromTo(section.querySelector(`.${styles.androidShell}`), { autoAlpha: 0, scale: .86, xPercent: 14, yPercent: 24 }, { autoAlpha: 1, scale: 1, xPercent: 0, yPercent: 0, duration: .24, ease: "power2.out" }, 1.1)
-        .fromTo(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .1 }, 1.28)
-        .to(heads[1], { progress: 1, ease: "none", duration: .42, onUpdate: () => update(1) }, 1.28);
-      return () => { heads.forEach((head, index) => head.video.removeEventListener("seeked", seeks[index])); timeline.kill(); };
+      timeline.to(section.querySelectorAll(`.${styles.wordRest}, .${styles.headline} > p`), { autoAlpha: 0, duration: .1 }, .1)
+        .to(portal, { scale: targetScale, shift: 1, duration: .3, ease: "power2.in", onUpdate: drawPortal }, .12)
+        .fromTo(section.querySelector(`.${styles.browserShell}`), { scale: .94, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: .14 }, .27)
+        .to(section.querySelector(`.${styles.headline}`), { autoAlpha: 0, duration: .04 }, .42)
+        .fromTo(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .07 }, .44)
+        .to(section.querySelector(`.${styles.chapterOne}`), { autoAlpha: 0, y: -15, duration: .06 }, .54)
+        .fromTo(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .08 }, .58)
+        .to(heads[0], { progress: 1, ease: "none", duration: .34, onUpdate: () => update(0) }, .43)
+        .to(section.querySelector(`.${styles.browserShell}`), { scale: .84, yPercent: -10, autoAlpha: 0, duration: .13 }, .77)
+        .to(section.querySelector(`.${styles.chapterTwo}`), { autoAlpha: 0, duration: .06 }, .78)
+        .to(stage, { backgroundColor: "#d4dfcf", duration: .2 }, .83)
+        .fromTo(section.querySelector(`.${styles.bridge}`), { autoAlpha: 0 }, { autoAlpha: 1, duration: .06 }, .89)
+        .fromTo(section.querySelectorAll(`.${styles.bridge} h4 span`), { autoAlpha: 0, y: 45 }, { autoAlpha: 1, y: 0, duration: .09, stagger: .06 }, .9)
+        .to(section.querySelector(`.${styles.bridge} h4 span:first-child`), { autoAlpha: 0, y: -65, duration: .22, ease: "power2.inOut" }, 1.14)
+        .to(section.querySelector(`.${styles.bridge} h4 span:last-child`), { scale: 2.2, y: -95, autoAlpha: 0, duration: .36, ease: "power2.inOut", transformOrigin: "50% 50%" }, 1.2)
+        .fromTo(section.querySelector(`.${styles.androidShell}`), { autoAlpha: 0, scale: .78, yPercent: 18 }, { autoAlpha: 1, scale: 1, yPercent: 0, duration: .38, ease: "power2.inOut" }, 1.24)
+        .fromTo(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .08 }, 1.52)
+        .to(heads[1], { progress: 1, ease: "none", duration: .4, onUpdate: () => update(1) }, 1.52);
+      return () => { heads.forEach((head, index) => head.video.removeEventListener("seeked", seeks[index])); timeline.kill(); frames.style.removeProperty("clip-path"); };
     });
     const stopWhenHidden = () => { if (document.hidden) { video.pause(); androidMovie.current?.pause(); } };
     document.addEventListener("visibilitychange", stopWhenHidden);
@@ -68,7 +87,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
 
   return <section className={styles.showcase} ref={root} aria-label="OhMyCode" style={{ "--movie-ratio": videoRatio } as CSSProperties}>
     <div className={styles.cinema}>
-      <div className={styles.headline}><h3>OhMyCode</h3><p>{isZh ? "写代码。也走出编辑器。" : "Write code. Go beyond the editor."}</p></div>
+      <div className={styles.headline}><h3 aria-label="OhMyCode"><span className={styles.initialO} aria-hidden="true">O</span><span className={styles.wordRest} aria-hidden="true">hMyCode</span></h3><p>{isZh ? "写代码。也走出编辑器。" : "Write code. Go beyond the editor."}</p></div>
       <div className={styles.frames}>
       <div className={`${styles.videoShell} ${styles.browserShell}`}>
         <video ref={movie} className={styles.movie} width={1600} height={748} muted playsInline preload="metadata" poster="/projects/ohmycode/browser-poster.jpg" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoHeight) setVideoRatio(video.videoWidth / video.videoHeight); }} onLoadedData={() => setReady(true)} onError={() => setFailed(true)} aria-label={isZh ? "OhMyCode 真实客户端：Agent 操作内置浏览器" : "Actual OhMyCode client: an agent operating its built-in browser"}>
@@ -82,7 +101,6 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       </div>
       <div className={styles.bridge} aria-hidden="true">
         <h4><span>{isZh ? "浏览器之外，" : "Beyond the browser."}</span><span>{isZh ? "还有你的手机。" : "Onto your phone."}</span></h4>
-        <p>{isZh ? "同一个工作空间，让想法走进不同的现场。" : "One workspace. More places to put ideas into action."}</p>
       </div>
       <div className={styles.captions} aria-hidden="true">
         <p className={styles.chapterOne}>{isZh ? "说出任务。" : "Describe the task."}</p>

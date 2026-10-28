@@ -2,6 +2,8 @@
 .cinema { position:relative; display:grid; place-items:center; height:100dvh; min-height:680px; overflow:hidden; isolation:isolate; perspective:1800px; background:#e3e7dd; }
 .headline { position:absolute; z-index:2; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
 .headline h3 { margin:0; color:#202820; font-size:clamp(100px,17vw,340px); line-height:1; font-weight:600; letter-spacing:-.075em; }
+.initialO,.wordRest { display:inline-block; }
+.initialO { position:relative; z-index:1; will-change:transform; }
 .headline p { margin:25px 0 0; color:#394632; font-size:clamp(20px,2.2vw,40px); font-weight:500; line-height:1.4; letter-spacing:-.04em; }
 .frames { display:grid; width:min(92vw,calc((100dvh - 190px) * 2.038)); align-items:center; }
 .videoShell { position:relative; grid-area:1/1; width:100%; border-radius:12px; overflow:hidden; background:#101416; box-shadow:0 30px 80px #17251028; transform-origin:50% 65%; will-change:transform; }
