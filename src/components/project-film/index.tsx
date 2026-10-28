@@ -5,7 +5,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CapabilityScenes from "./capability-scenes";
 import ExternalArrow from "@/components/external-arrow";
+import { createAgentAnimation } from "./agent-animation";
 import styles from "./index.module.css";
+
+const COLLAB_EXTENSION = 7;
 
 export default function ProjectFilm({ isZh }: { isZh: boolean }) {
   const root = useRef<HTMLElement>(null);
@@ -44,10 +47,8 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       const frames = section.querySelector<HTMLElement>(`.${styles.frames}`)!;
       const screen = section.querySelector<HTMLElement>("[data-phone-screen]")!;
       const rain = section.querySelector<HTMLElement>("[data-tool-rain]")!;
-      const members = Array.from(section.querySelectorAll<HTMLElement>("[data-agent]"));
       const previous = {
         background: stage.style.backgroundColor, letter: letter.style.transform, clip: frames.style.clipPath,
-        members: members.map(member => ({ background: member.style.backgroundColor, color: member.style.color })),
       };
       letter.style.removeProperty("transform");
       let geometry = { centerX: 0, centerY: 0, shiftX: 0, shiftY: 0, frameX: 0, frameY: 0, width: 1, height: 1, scale: 1, glyphOffset: 0 };
@@ -78,12 +79,15 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         { start: 3.25, end: 3.49, from: "#dcebe3", to: "#f3e4cf" },
         { start: 5.64, end: 6.19, from: "#f3e4cf", to: "#e8e4dc" },
         { start: 6.98, end: 7.36, from: "#e8e4dc", to: "#f4f5f2" },
-      ].map(color => color.start >= 2 ? { ...color, start: color.start + .9, end: color.end + .9 } : color);
+      ].map(color => {
+        const offset = (color.start >= 2 ? .9 : 0) + (color.start >= 3.2 ? COLLAB_EXTENSION : 0);
+        return { ...color, start: color.start + offset, end: color.end + offset };
+      });
       let animation: gsap.core.Timeline | undefined;
       const renderFrame = () => {
         if (!animation) return;
         const time = animation.time();
-        rain.dataset.running = String(time >= 4.25 && time < 6.58 && !document.hidden);
+        rain.dataset.running = String(time >= 4.25 + COLLAB_EXTENSION && time < 6.58 + COLLAB_EXTENSION && !document.hidden);
         const zoom = Math.pow(clamp((time - .12) / .3), 3);
         const scale = 1 + (geometry.scale - 1) * zoom;
         const x = geometry.shiftX * zoom, y = geometry.shiftY * zoom;
@@ -122,13 +126,6 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
           head.requested = Number.isFinite(head.video.duration) ? startTime + progress * Math.max(0, head.video.duration - startTime - .1) : 0;
           seeks[index]();
         });
-        const activeIndex = time < 3.19 ? -1 : Math.min(4, Math.floor((time - 3.19) / .18));
-        const activeRole = ["host", "developer", "reviewer", "developer", "host"][activeIndex];
-        members.forEach(member => {
-          const active = member.dataset.agent === activeRole;
-          member.style.backgroundColor = active ? "#cfe2c4" : "#edf1e9";
-          member.style.color = active ? "#244f30" : "#63725b";
-        });
       };
       measurePortal();
       // Keep the camera distance fixed: tweening it from zero produces a projection singularity.
@@ -136,7 +133,10 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       const timeline = gsap.timeline({
         onUpdate: renderFrame,
         scrollTrigger: {
-          trigger: stage, start: "top top", end: () => innerWidth > 900 ? "+=1000%" : "+=780%",
+          trigger: stage, start: "top top", end: () => {
+            const distance = (innerWidth > 900 ? 1000 : 780) * (8.32 + COLLAB_EXTENSION) / 10.32;
+            return `+=${distance}%`;
+          },
           pin: true, scrub: .65, invalidateOnRefresh: false,
           onRefresh: () => { measurePortal(); renderFrame(); },
         },
@@ -169,10 +169,6 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         .to(section.querySelector(`.${styles.chapterThree}`), { autoAlpha: 0, duration: .1 }, 1.98)
         .fromTo(section.querySelector("[data-collab-scene]"), { autoAlpha: 0, scale: .92, y: 50 }, { autoAlpha: 1, scale: 1, y: 0, duration: .18 }, 2.08);
 
-      section.querySelectorAll<HTMLElement>("[data-agent-message]").forEach((message, index) => {
-        const at = 2.25 + index * .18;
-        timeline.fromTo(message, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: .13, ease: "power2.out" }, at);
-      });
       timeline.to(section.querySelector("[data-collab-scene]"), { scale: .45, autoAlpha: 0, duration: .22, ease: "power2.inOut" }, 3.2)
         .fromTo(section.querySelector("[data-ecosystem-scene]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .12 }, 3.35)
         .fromTo(rain, { autoAlpha: 0 }, { autoAlpha: 1, duration: .2 }, 3.35)
@@ -237,6 +233,8 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         .to(section.querySelector("[data-ability-hub]"), { autoAlpha: 0, y: -85, scale: 1.55, duration: .35, ease: "power2.inOut" }, 6.96)
         .to(section.querySelector("[data-ecosystem-outro]"), { autoAlpha: 0, y: -55, duration: .3, ease: "power2.inOut" }, 6.99)
         .fromTo(section.querySelector("[data-end-content]"), { autoAlpha: 0, y: 55 }, { autoAlpha: 1, y: 0, duration: .3, ease: "power2.out" }, 7.12);
+      timeline.shiftChildren(COLLAB_EXTENSION, true, 3.2);
+      timeline.add(createAgentAnimation(section, stage), 2.08);
       timeline.shiftChildren(.9, true, 1.98);
       timeline.fromTo(section.querySelector(`.${styles.androidShell}`),
         { autoAlpha: 0, scale: 1, yPercent: 0 },
@@ -261,10 +259,6 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
         letter.style.transform = previous.letter;
         frames.style.clipPath = previous.clip;
         screen.removeAttribute("style");
-        members.forEach((member, index) => {
-          member.style.backgroundColor = previous.members[index].background;
-          member.style.color = previous.members[index].color;
-        });
       };
     });
     const stopWhenHidden = () => { if (document.hidden) { video.pause(); androidMovie.current?.pause(); } };
