@@ -39,7 +39,7 @@ export default function AgentScene({ isZh }: { isZh: boolean }) {
         })}
       </div></div>)}
     </div>
-    <header className={styles.heading} data-team-heading><p>Multi-Agent</p><h4>{isZh ? "多Agent协同，事半功倍" : "Multiple agents. Greater impact."}</h4></header>
+    <header className={styles.heading} data-team-heading><p>Multi-Agent</p><h4>{isZh ? "多 Agent 协同，事半功倍" : "Multiple agents. Greater impact."}</h4></header>
     <div className={styles.task} data-team-task>
       <div><span>{roles.host}</span><strong data-team-task-text>{isZh ? "给文章中的图片加上点击预览功能" : "Add click-to-preview functionality to article images"}</strong></div>
       <span className={styles.dispatch} data-team-dispatch>{isZh ? "拆解任务" : "Delegate"}<svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 10h14m-5-5 5 5-5 5" /></svg></span>

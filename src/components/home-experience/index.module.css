@@ -33,16 +33,6 @@
 .sectionHeader h2,.personnel > h2 { margin:0; font-size:28px; font-weight:600; line-height:1.4; letter-spacing:var(--tracking-heading); }
 .sectionHeader p { margin-top:14px; max-width:580px; color:var(--portal-muted); font-size:16px; line-height:1.8; }
 .bento { display:grid; grid-template-columns:minmax(0,1fr); }
-.panel { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:22px; padding:32px 0; min-width:0; border-top:1px solid var(--portal-line); color:var(--portal-text); }
-.panelCode { color:var(--portal-muted); font-size:13px; }
-.panel h3 { margin:6px 0 16px; max-width:100%; font-size:clamp(1.7rem,3vw,2.5rem); line-height:1.2; font-weight:600; letter-spacing:var(--tracking-heading); }
-.panel p { max-width:540px; color:var(--portal-muted); font-size:15px; line-height:1.8; }
-.panel > a,.panelAction { color:var(--portal-green); font-size:14px; }
-.panelLink:hover h3,.panelLink:hover .panelAction { text-decoration:underline; text-underline-offset:5px; }
-.panelLink:focus-visible,.navigation a:focus-visible,.logRow:focus-visible { outline:2px solid var(--portal-green); outline-offset:6px; }
-.panelStatus { grid-column:1/-1; flex-direction:row; align-items:center; gap:24px; padding:24px 0; }
-.panelStatus > strong { font-size:16px; font-weight:500; }
-.panelStatus > p { flex:1; }
 .logRow { display:grid; grid-template-columns:120px minmax(0,1fr) 24px; gap:26px; align-items:baseline; padding:25px 0; color:var(--portal-text); }
 .logRow:first-child { padding-top:0; }
 .logRow time { color:var(--portal-muted); font-size:12px; font-variant-numeric:tabular-nums; }
@@ -53,14 +43,10 @@
 .loadMore { display:block; margin:30px 0 0 146px; padding:0 0 5px; border:0; border-bottom:1px solid var(--portal-green); background:transparent; color:var(--portal-green); font:14px Arial,sans-serif; cursor:pointer; }
 .personnelGrid { display:grid; grid-template-columns:1fr 1fr; gap:90px; margin-top:36px; }
 .aboutText { max-width:520px; font-size:20px; line-height:1.9; }
-.personnelGrid > div > a { display:inline-block; margin-top:26px; color:var(--portal-green); font-size:13px; }
 .personnel dl div { display:grid; grid-template-columns:90px 1fr; padding:13px 0; }
 .personnel dt { color:var(--portal-muted); font-size:13px; }
 .personnel dd { color:var(--portal-text); font-size:14px; }
 .personnel dd a { color:var(--portal-green); }
-.contact { padding:46px 0 60px; border-top:1px solid var(--portal-line); }
-.contact h2 { margin:0 0 18px; font-size:22px; font-weight:500; line-height:1.5; }
-.contact > a { color:var(--portal-green); font-size:clamp(16px,2vw,24px); overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:6px; }
 .footer { display:flex; flex-wrap:wrap; gap:20px 28px; width:calc(100% - clamp(40px,6vw,120px)); margin:auto; padding:24px 0 32px; border-top:1px solid var(--portal-line); color:var(--portal-muted); font-size:12px; }
 .footer > span { margin-right:auto; }
 .footer a { color:var(--portal-muted); }
@@ -78,8 +64,6 @@
   .clearance { padding-bottom:0; }
   .clearance + .personnel { padding-top:28px; }
   .bento { grid-template-columns:1fr; }
-  .panelStatus { flex-wrap:wrap; gap:15px; }
-  .panelStatus > p { flex-basis:100%; }
   .logRow { grid-template-columns:minmax(0,1fr) 24px; gap:8px; }
   .logRow time { grid-column:1/-1; font-size:11px; }
   .logRow h3 { font-size:19px; }
@@ -88,3 +72,6 @@
   .aboutText { font-size:18px; }
 }
 @media(prefers-reduced-motion:reduce) { .heroActions a { transition:none; } }
+.aboutLinks { display:flex; flex-wrap:wrap; align-items:center; gap:18px 26px; margin-top:26px; }
+.aboutLinks a { display:inline-flex; align-items:center; gap:5px; color:var(--portal-green); font-size:13px; line-height:1.6; scroll-margin-top:40px; }
+.aboutLinks a:hover { text-decoration:underline; text-underline-offset:5px; }

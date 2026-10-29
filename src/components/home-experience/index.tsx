@@ -66,31 +66,28 @@ export default function HomeExperience() {
   const visibleArticles = showAllArticles ? allArticles : allArticles.slice(0, 5);
   const isZh = i18n.resolvedLanguage === "zh-CN";
   const copy = isZh ? {
-    statement: "写前端，也折腾 Web 安全。做过的项目、遇到的问题，都记在这里。",
-    roles: "前端开发工程师",
+    statement: "做全栈开发，也折腾 Web 安全。做过的项目、遇到的问题，都记在这里。",
+    roles: "全栈开发工程师",
     enter: "阅读文章",
     profile: "关于我",
     accessTitle: "当前 FOCUS",
-    accessIntro: "最近在做 OhMyCode，也持续关注 Web 安全与界面交互。",
+    accessIntro: "自 2026 年 8 月开始做 OhMyCode，一个桌面优先的 Code Agent。",
     featuredLabel: "开源项目",
     featuredKicker: "开源 Code Agent 工作空间",
     featuredDescription: "把本地工具、持久终端、可恢复执行和 Multi-Agent 协作放进同一套 Runtime。",
     featuredAction: "查看 GitHub 仓库",
     resumeLabel: "个人简历",
-    resumeTitle: "前端开发工程师",
-    resumeDescription: "查看工作经历、项目经验与专业技能。",
-    resumeAction: "打开 PDF",
     archiveTitle: "最近的文章",
     loadMore: `加载其余 ${Math.max(articles.length - 5, 0)} 篇文章`,
     openRecord: "打开",
     personnelLabel: "关于我",
     quote: "最近主要在做 OhMyCode。之前写过反调试、代码混淆，也做过 TensorFlow.js 和大模型相关的实验。",
     roleLabel: "职位",
-    roleValue: "前端开发工程师",
+    roleValue: "全栈开发工程师",
     locationLabel: "所在地",
     locationValue: "中国上海",
     focusFieldLabel: "方向",
-    focusFieldValue: "Web 安全、AI 工具、前端交互",
+    focusFieldValue: "Web 安全、AI 工具、全栈开发",
     experienceLabel: "经历",
     lanyardLabel: "可拖动的数字工牌",
     dockIdentity: "主页",
@@ -99,33 +96,29 @@ export default function HomeExperience() {
     dockProfile: "档案",
     dockContact: "联系",
     dockLanguage: "语言",
-    contactTitle: "联系我",
   } : {
-    statement: "I build frontends and work on web security. This is where I write about my projects and the problems I run into.",
-    roles: "Frontend engineer",
+    statement: "I build full-stack applications and work on web security. This is where I write about my projects and the problems I run into.",
+    roles: "Full-stack engineer",
     enter: "Read the articles",
     profile: "About me",
     accessTitle: "Current FOCUS",
-    accessIntro: "Building OhMyCode and exploring web security and interface interaction.",
+    accessIntro: "Building OhMyCode since August 2026, a desktop-first Code Agent.",
     featuredLabel: "FEATURED PROJECT",
     featuredKicker: "Open-source Code Agent workspace",
     featuredDescription: "One runtime for local tools, persistent terminals, recoverable execution and Multi-Agent collaboration.",
     featuredAction: "VIEW ON GITHUB",
     resumeLabel: "RESUME",
-    resumeTitle: "Frontend Engineer",
-    resumeDescription: "View professional experience, selected projects and technical skills.",
-    resumeAction: "OPEN PDF",
     archiveTitle: "Recent writing",
     loadMore: `Load ${Math.max(articles.length - 5, 0)} more articles`,
     openRecord: "OPEN",
     personnelLabel: "About me",
     quote: "I'm currently building OhMyCode. Earlier posts cover anti-debugging, code obfuscation, TensorFlow.js and experiments with large language models.",
     roleLabel: "Role",
-    roleValue: "Frontend Engineer",
+    roleValue: "Full-stack Engineer",
     locationLabel: "Location",
     locationValue: "Shanghai, China",
     focusFieldLabel: "Interests",
-    focusFieldValue: "Web security, AI tools, frontend interaction",
+    focusFieldValue: "Web security, AI tools, full-stack development",
     experienceLabel: "Experience",
     lanyardLabel: "Interactive draggable badge",
     dockIdentity: "IDENTITY",
@@ -134,7 +127,6 @@ export default function HomeExperience() {
     dockProfile: "PROFILE",
     dockContact: "CONTACT",
     dockLanguage: "LANGUAGE",
-    contactTitle: "Get in touch",
   };
 
   const changeLanguage = () => {
@@ -191,18 +183,17 @@ export default function HomeExperience() {
           </header>
           <div className={styles.bento}>
             <ProjectFilm isZh={isZh} />
-            <a className={`${styles.panel} ${styles.panelStatus} ${styles.panelLink}`} href="/resume/qu-jie-frontend-engineer.pdf" target="_blank" rel="noreferrer">
-              <span className={styles.panelCode}>{copy.resumeLabel}</span>
-              <strong>{copy.resumeTitle}</strong><p>{copy.resumeDescription}</p>
-              <span className={styles.panelAction}>{copy.resumeAction} <ExternalArrow /></span>
-            </a>
           </div>
         </section>
 
         <section className={styles.personnel} id="personnel">
           <h2>{copy.personnelLabel}</h2>
           <div className={styles.personnelGrid}>
-            <div><p className={styles.aboutText}>{copy.quote}</p><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub / @Covfefeable <ExternalArrow /></a></div>
+            <div><p className={styles.aboutText}>{copy.quote}</p><div className={styles.aboutLinks}>
+              <a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub / @Covfefeable <ExternalArrow /></a>
+              <a href="/resume/full-stack-engineer.pdf" target="_blank" rel="noreferrer">{copy.resumeLabel} <ExternalArrow /></a>
+              <a id="contact" href="mailto:rears_seasons_0n@icloud.com">{isZh ? "邮件联系" : "Email me"} <ExternalArrow /></a>
+            </div></div>
             <dl>
               <div><dt>{copy.roleLabel}</dt><dd>{copy.roleValue}</dd></div>
               <div><dt>{copy.locationLabel}</dt><dd>{copy.locationValue}</dd></div>
@@ -212,10 +203,6 @@ export default function HomeExperience() {
           </div>
         </section>
 
-        <section className={styles.contact} id="contact">
-          <h2>{copy.contactTitle}</h2>
-          <a href="mailto:rears_seasons_0n@icloud.com">rears_seasons_0n@icloud.com <ExternalArrow /></a>
-        </section>
       </div>
       <footer className={styles.footer}><span>© {new Date().getFullYear()} Jay Chiu</span><Registration /><a href="https://github.com/Covfefeable" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a><a href="#contact">{copy.dockContact}</a></footer>
     </div>

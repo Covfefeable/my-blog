@@ -324,7 +324,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       </div>
       <div className={styles.detailsScene} data-end-content>
     <div className={styles.details}>
-      <p className={styles.description}>Oh<span className={styles.brandAccent}>My</span>Code{isZh ? " 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : " is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
+      <p className={styles.description}><strong className={styles.inlineBrand}>Oh<span className={styles.brandAccent}>My</span>Code</strong>{isZh ? " 是我在做的开源 Code Agent。它可以直接使用本地终端、浏览器和 Android 设备。" : " is an open-source Code Agent I'm building. It works with local terminals, a browser and Android devices."}</p>
       <div className={styles.links}><a href="https://github.com/Covfefeable/ohmycode" target="_blank" rel="noreferrer">GitHub <ExternalArrow /></a></div>
     </div>
       </div>

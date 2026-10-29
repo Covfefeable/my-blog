@@ -3,6 +3,7 @@
 .headline { position:absolute; z-index:2; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
 .headline h3 { position:relative; margin:0; color:#202820; font-size:clamp(100px,17vw,340px); line-height:1; font-weight:600; letter-spacing:var(--tracking-display); }
 .initialO,.wordRest { display:inline-block; }
+.inlineBrand { font-weight:700; letter-spacing:var(--tracking-brand,-.02em); white-space:nowrap; }
 .brandAccent { color:var(--ohmycode-accent); }
 .initialO { position:relative; z-index:1; will-change:transform; }
 .headline p { margin:25px 0 0; color:#394632; font-size:clamp(20px,2.2vw,40px); font-weight:500; line-height:1.4; letter-spacing:var(--tracking-heading); }

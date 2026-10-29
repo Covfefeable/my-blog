@@ -35,7 +35,6 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
     .to(find("task"), { top: mobile ? "20%" : "22%", scale: mobile ? .94 : .85, duration: .3, ease: "power2.inOut" }, .45)
     .to(find("dispatch"), { autoAlpha: 0, duration: .16 }, .54)
     .fromTo(find("thoughts"), { autoAlpha: 0 }, { autoAlpha: 1, duration: .3 }, .72)
-    .fromTo(cards, { x: 0, y: -70, scale: .7, autoAlpha: 0 }, { x: index => index * (mobile ? 15 : 22), y: index => index * 15, z: index => -index * 16, scale: index => 1 - index * .035, rotation: index => index === 0 ? 0 : index % 2 ? -3 : 4, autoAlpha: 1, duration: .35, stagger: .045 }, .72)
     .fromTo(section.querySelectorAll("[data-team-code]"), { autoAlpha: 0, clipPath: "inset(0 100% 0 0)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0)", duration: .2, stagger: .1, ease: "none" }, 1.58)
     .fromTo(find("lens"), { autoAlpha: 0, x: -10, y: 0 }, { autoAlpha: 1, x: 30, y: 12, duration: .22, ease: "power2.inOut" }, 2.66)
     .to(find("lens"), { x: 70, y: 42, duration: .3, ease: "power2.inOut" }, 2.94)
@@ -90,6 +89,20 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
       ],
     }, (index % 5) * .025);
   });
+  const deck = find("deck");
+  // Account for each card's low transform origin so its small starting face
+  // is centered on the host, rather than above the destination stack.
+  const sourceY = stage.clientHeight * (mobile ? .2 : .22) - deck.offsetTop - deck.offsetHeight * (.85 - .35 * .16);
+  [...cards].reverse().forEach((card, dealIndex) => {
+    const rank = cards.indexOf(card);
+    const at = .66 + dealIndex * .09;
+    animation.set(card, { zIndex: 3 - rank }, at)
+      .fromTo(card, { x: 0, y: sourceY, z: 0, scale: .16, rotation: -12 + dealIndex * 9, autoAlpha: 0 }, {
+        x: rank * (mobile ? 15 : 22), y: rank * 15, z: -rank * 16,
+        scale: 1 - rank * .035, rotation: rank === 0 ? 0 : rank % 2 ? -3 : 4,
+        autoAlpha: 1, duration: .34, ease: "power2.out",
+      }, at);
+  });
   focus("developer", 1.2);
   focus("reviewer", 2.3);
   focus("tester", 3.98);
@@ -108,6 +121,9 @@ export function createAgentAnimation(section: HTMLElement, stage: HTMLElement) {
   animation.to({}, { duration: .85 }, 10.68);
   animation.eventCallback("onUpdate", () => {
     const time = animation.time();
+    const voice = find("voice");
+    voice.dataset.voiceProgress = String(gsap.utils.clamp(0, 1, (time - .18) / 1.3));
+    voice.dispatchEvent(new Event("voice-progress"));
     if (time < 9.9) celebrated = false;
     if (time >= 10.72 && !celebrated) {
       celebrated = true;

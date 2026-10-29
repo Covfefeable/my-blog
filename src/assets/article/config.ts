@@ -14,7 +14,7 @@ export const articles = [
     id: 1,
   },
   {
-    title: "Web安全之XSS攻击与防范",
+    title: "Web 安全之 XSS 攻击与防范",
     date: "2020-07-05",
     description:
       "Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。",
@@ -85,7 +85,7 @@ export const articles = [
     id: 11,
   },
   {
-    title: "我为什么又写了一个 Code Agent？OhMyCode 的设计与实现",
+    title: "我为什么写了一个 Code Agent？OhMyCode 的设计与实现",
     date: "2026-08-31",
     description:
       "从本地终端、文件工具和可恢复执行，到上下文压缩与 Multi-Agent，记录 OhMyCode 从聊天界面逐渐长成 Agent 工作空间的过程。",

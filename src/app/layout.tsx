@@ -8,14 +8,14 @@ const siteUrl = "https://llmol.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "JayChiu's Blog", template: "%s | JayChiu's Blog" },
-  description: "记录前端开发、网络安全、AI 与个人项目实践。",
+  description: "记录全栈开发、网络安全、AI 与个人项目实践。",
   icons: { icon: "/favicon.ico" },
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName: "JayChiu's Blog",
     title: "JayChiu's Blog",
-    description: "记录前端开发、网络安全、AI 与个人项目实践。",
+    description: "记录全栈开发、网络安全、AI 与个人项目实践。",
   },
 };
 

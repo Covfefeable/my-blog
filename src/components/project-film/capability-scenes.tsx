@@ -23,7 +23,7 @@ export default function CapabilityScenes({ isZh }: { isZh: boolean }) {
           } as CSSProperties}><Image src={`/projects/ohmycode/icons/${ability.file}`} alt="" width={40} height={40} unoptimized /></span>;
         })}
       </div>
-      <div className={styles.ecosystemHeader} data-ecosystem-header><h4>{isZh ? "海量MCP和SKILL" : "Countless MCP tools and skills"}<br /><span>{isZh ? "随心接入" : "Connect your way"}</span></h4></div>
+      <div className={styles.ecosystemHeader} data-ecosystem-header><h4>{isZh ? "海量 MCP 和 SKILL" : "Countless MCP tools and skills"}<br /><span>{isZh ? "随心接入" : "Connect your way"}</span></h4></div>
       <div className={styles.hub} data-ability-hub><Image src="/projects/ohmycode/icon.png" alt="" width={128} height={128} /><strong data-ability-brand>Oh<span className={styles.brandAccent}>My</span>Code</strong></div>
       {fallingAbilities.map((ability,index) => {
         const originalIndex = index % abilities.length;

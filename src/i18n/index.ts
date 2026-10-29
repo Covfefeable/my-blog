@@ -9,7 +9,7 @@ const resources = {
     translation: {
       nav: { home: "Home", posts: "Posts", about: "About", switchLanguage: "切换为中文", toggleTheme: "Toggle theme" },
       home: {
-        role: "Frontend engineer,",
+        role: "Full-stack engineer,",
         interest: "Cybersecurity researcher",
         introduction: "I previously worked as a frontend engineer at <meizu>Meizu</meizu> and as a cybersecurity editor at <freebuf>FreeBuf</freebuf>.",
         recentPosts: "Recent Posts",
@@ -17,7 +17,7 @@ const resources = {
       posts: { all: "All Posts" },
       about: {
         greeting: "Hi there!",
-        introduction: "I am JayChiu and I have worked as a frontend engineer for more than {{years}} years. I am also a cybersecurity researcher interested in finding vulnerabilities in web applications. In recent years, I have focused on deep learning and large language models and built several related projects.",
+        introduction: "I am JayChiu, a full-stack engineer with more than {{years}} years of development experience. I am also a cybersecurity researcher interested in finding vulnerabilities in web applications. In recent years, I have focused on deep learning and large language models and built several related projects.",
         sendEmail: "Send me an email",
         emailTooltip: "Click to send me an email!",
       },
@@ -28,7 +28,7 @@ const resources = {
     translation: {
       nav: { home: "首页", posts: "文章", about: "关于", switchLanguage: "Switch to English", toggleTheme: "切换主题" },
       home: {
-        role: "前端工程师，",
+        role: "全栈工程师，",
         interest: "网络安全爱好者",
         introduction: "曾在 <meizu>魅族</meizu> 从事前端开发工作，也曾担任 <freebuf>FreeBuf</freebuf> 网络安全编辑。",
         recentPosts: "最近更新",
@@ -36,7 +36,7 @@ const resources = {
       posts: { all: "全部文章" },
       about: {
         greeting: "你好，我是 JayChiu",
-        introduction: "我从事前端开发已有 {{years}} 年。在从事前端开发之余，我也持续关注网络安全、深度学习和大语言模型，并尝试将这些技术应用到一些有意思的项目中。",
+        introduction: "我是一名全栈开发工程师，已有 {{years}} 年开发经验。在开发工作之余，我也持续关注网络安全、深度学习和大语言模型，并尝试将这些技术应用到一些有意思的项目中。",
         sendEmail: "给我发邮件",
         emailTooltip: "点击发送邮件",
       },
