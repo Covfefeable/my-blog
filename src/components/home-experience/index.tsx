@@ -56,6 +56,38 @@ export default function HomeExperience() {
   const [showAllArticles, setShowAllArticles] = useState(false);
   const [showBadge, setShowBadge] = useState(false);
   useEffect(() => {
+    const saved = sessionStorage.getItem("blog:article-return");
+    if (!saved) return;
+    if (location.hash && location.hash !== "#archive") {
+      sessionStorage.removeItem("blog:article-return");
+      return;
+    }
+    setShowAllArticles(saved === "all");
+    const previousRestoration = history.scrollRestoration;
+    history.scrollRestoration = "manual";
+    let firstFrame = 0;
+    let secondFrame = 0;
+    const restore = () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+      firstFrame = requestAnimationFrame(() => {
+        secondFrame = requestAnimationFrame(() => {
+          document.getElementById("archive")?.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+          sessionStorage.removeItem("blog:article-return");
+        });
+      });
+    };
+    // Next's history restoration can run before the pinned film finishes layout.
+    window.addEventListener("project-film-ready", restore);
+    restore();
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+      window.removeEventListener("project-film-ready", restore);
+      history.scrollRestoration = previousRestoration;
+    };
+  }, []);
+  useEffect(() => {
     const query = window.matchMedia("(min-width: 901px)");
     const update = () => setShowBadge(query.matches);
     update();
@@ -168,7 +200,7 @@ export default function HomeExperience() {
         <section className={styles.archive} id="archive">
           <header className={styles.sectionHeader}><h2>{copy.archiveTitle}</h2></header>
           <div className={styles.logList}>
-            {visibleArticles.map((article) => <Link href={`/posts/${article.id}`} className={styles.logRow} key={article.id}>
+            {visibleArticles.map((article) => <Link href={`/posts/${article.id}`} className={styles.logRow} key={article.id} onClick={() => sessionStorage.setItem("blog:article-return", showAllArticles ? "all" : "recent")}>
               <time dateTime={article.date}>{article.date.replaceAll("-", ".")}</time>
               <div><h3>{article.title}</h3><p>{article.description}</p></div>
               <span className={styles.openLog} aria-hidden="true"><ExternalArrow /></span>

@@ -21,9 +21,9 @@ export default function VoiceOrb() {
       const start = levels[index];
       const end = levels[index + 1];
       // Short attacks and uneven pauses feel like syllables rather than breathing.
-      const envelope = end > start ? Math.min(1, fraction / .24) : Math.pow(fraction, .7);
+      const envelope = end > start ? Math.min(1, fraction / .4) : Math.pow(fraction, .9);
       const level = start + (end - start) * envelope;
-      if (container.current) container.current.style.transform = `scale(${reduced.matches ? 1 : .98 + level * .65})`;
+      if (container.current) container.current.style.transform = `scale(${reduced.matches ? 1 : .98 + level * .58})`;
       if (animation?.isLoaded) animation.goToAndStop(reduced.matches ? 0 : progress * (animation.totalFrames - 1), true);
     };
     void import("lottie-web").then(({ default: lottie }) => {

@@ -264,6 +264,7 @@ export default function ProjectFilm({ isZh }: { isZh: boolean }) {
       }
       timeline.scrollTrigger?.refresh();
       renderFrame();
+      window.dispatchEvent(new Event("project-film-ready"));
       return () => {
         animation = undefined;
         document.removeEventListener("visibilitychange", renderFrame);

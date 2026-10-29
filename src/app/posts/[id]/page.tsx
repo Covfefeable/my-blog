@@ -62,8 +62,8 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <main className={styles.archivePage} data-archive-page>
       <nav className={styles.archiveNav} aria-label="文章导航">
-        <Link href="/" className={styles.brand}>Jay Chiu</Link>
-        <div><Link href="/">首页</Link><Link href="/#archive">文章</Link><Link href="/#personnel">关于</Link></div>
+        <Link href="/#archive" className={styles.brand}>Jay Chiu</Link>
+        <div><Link href="/#archive">首页</Link><Link href="/#archive">文章</Link><Link href="/#personnel">关于</Link></div>
       </nav>
       <header className={styles.hero}>
         <div className={styles.heroContent}>
